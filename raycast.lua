@@ -55,7 +55,7 @@ function castSingleRay(rayAngle, stripIdx )
     if right then x = math.ceil(player.x) else x = math.floor(player.x) end
     local y = player.y + (x - player.x) * slope
 
-    while (x >= 0 and x < mapWidth and y >= 0 and y < mapHeight) do
+    while (x >= 0 and x < mapProp.mapWidth and y >= 0 and y < mapProp.mapHeight) do
         local wallX
         if right then
             wallX = math.floor(x)
@@ -66,7 +66,7 @@ function castSingleRay(rayAngle, stripIdx )
 
         --is point inside wall block?
 
-        k = 1+(math.floor(wallY) * mapWidth) + math.floor(wallX)
+        k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
         if (map[k] > 0) then
             local distX = x - player.x
             local distY = y - player.y
@@ -100,7 +100,7 @@ function castSingleRay(rayAngle, stripIdx )
     if (up) then y = math.floor(player.y) else y = math.ceil(player.y) end
     local x = player.x + (y - player.y) * slope
   
-    while (x >= 0 and x < mapWidth and y >= 0 and y < mapHeight) do
+    while (x >= 0 and x < mapProp.mapWidth and y >= 0 and y < mapProp.mapHeight) do
         local wallY
         if (up) then
             wallY = math.floor(y - 1)
@@ -108,7 +108,7 @@ function castSingleRay(rayAngle, stripIdx )
             wallY = math.floor(y)
         end
         local wallX = math.floor(x)
-        k = 1+(math.floor(wallY) * mapWidth) + math.floor(wallX)
+        k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
         if (map[k] > 0) then
             local distX = x - player.x
             local distY = y - player.y

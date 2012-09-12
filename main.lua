@@ -2,6 +2,7 @@ require "raycast"
 require "controls"
 require "player"
 require "util"
+require "map"
 
 local spriteBatch
 map = {
@@ -33,14 +34,11 @@ map = {
 
 QUADS = {}
 
-mapWidth = 0
-mapHeight = 0
 
 local selectedWall = 0
-local wallPushDirection = 0
-local tileSize = 64
-local miniMapScale = 6
-local numberOfImages = nil
+--local wallPushDirection = 0
+--local miniMapScale = 6
+--local numberOfImages = nil
 local windowWidth = love.graphics.getWidth() 
 local windowHeight = love.graphics.getHeight() 
 local screenScale = 0.5
@@ -50,9 +48,13 @@ screenHeight = windowHeight / screenScale
 local lastGameCycleTime = 0
 local gameCycleDelay = 1000 / 60 -- 60 fps for game logic
 
-fov = 60 * math.pi / 180
-fovHalf = fov/2
+do
+    local fov = 60 * math.pi / 180
+    fovHalf = fov/2
+end
+
 viewDist = (screenWidth/2) / math.tan(fovHalf)
+
 numRays = math.ceil(screenWidth)  -- THIS SHOULDN"T BE GLOBAL
 twoPI = 2 * math.pi
 
@@ -75,11 +77,7 @@ function move(dt)
         love.mouse.setPosition(screenWidth/2,screenHeight/2)
     end
 
-    -- make sure player is within 360 degrees
-    player.rot = (player.rot % twoPI)
-    if (player.rot < 0) then
-        player.rot = player.rot + twoPI
-    end
+    convertPlayerRotation() -- make sure player is within 360 degrees
 
     player.rot = player.rot + (player.dir * player.rotSpeed * dt) + mouseLook
     local newX = player.x + math.cos(player.rot ) * moveStep
@@ -87,19 +85,8 @@ function move(dt)
     newX = newX + math.cos(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
     newY = newY + math.sin(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
 
-    if not (isBlocking(newX,player.y)) then
-        player.x = newX
-    end
-
-    if not (isBlocking(player.x,newY)) then
-        player.y = newY
-    end
-
-    --local pos = checkCollision(player.x, player.y, newX, newY, 0.35)
-   
-    --player.x = pos.x
-    --player.y = pos.y
-
+    if not (isBlocking(newX,player.y)) then player.x = newX end
+    if not (isBlocking(player.x,newY)) then player.y = newY end
 end
 
 function gameCycle()
@@ -143,28 +130,26 @@ function love.update(dt)
     move(dt)
 end
 
-function setQuads()
+function setQuads(numberOfImages)
     for i=0,numberOfImages-1 do
         QUADS[i]= {}
-        for s=0, tileSize-1 do
-            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*tileSize),1,tileSize,tileSize,tileSize*numberOfImages)
+        for s=0, mapProp.tileSize-1 do
+            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,mapProp.tileSize,mapProp.tileSize*numberOfImages)
         end
     end
-    floorQuad = love.graphics.newQuad(1,1,1,1,tileSize,tileSize*numberOfImages)
+    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
 end
 
 function love.load()
-    mapWidth = 24
-    mapHeight = 24
     wallsImgs = love.graphics.newImage("walls.png")
-    numberOfImages = (wallsImgs:getHeight()/tileSize)
+    local numberOfImages = (wallsImgs:getHeight()/mapProp.tileSize)
    
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
 
 
     love.graphics.setColorMode("replace")
     love.graphics.setMode(640,480, false, true)
-    setQuads()
+    setQuads(numberOfImages)
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)
     love.mouse.setGrab(true)

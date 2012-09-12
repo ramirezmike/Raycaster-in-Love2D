@@ -13,3 +13,10 @@ player = {
     mouseSpeed = 0.05
 
 }
+
+function convertPlayerRotation()
+    player.rot = (player.rot % twoPI)
+    if (player.rot < 0) then
+        player.rot = player.rot + twoPI
+    end
+end
