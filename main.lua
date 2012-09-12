@@ -59,7 +59,7 @@ numRays = math.ceil(screenWidth)  -- THIS SHOULDN"T BE GLOBAL
 twoPI = 2 * math.pi
 
 local displayDebug = true
-local displayMap = false
+local displayMap = true 
 
 
 local success = love.graphics.setMode( windowWidth, windowHeight)

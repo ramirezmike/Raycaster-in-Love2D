@@ -44,7 +44,7 @@ function love.keypressed(key, unicode)
         changeTexture()
     end
     if key == 'm' then
-    --    displayMap = not(displayMap)
+        displayMap = not(displayMap)
     end
     if key == 'tab' then
         displayDebug = not(displayDebug)
