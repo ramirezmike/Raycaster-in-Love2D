@@ -58,9 +58,7 @@ viewDist = (screenWidth/2) / math.tan(fovHalf)
 numRays = math.ceil(screenWidth)  -- THIS SHOULDN"T BE GLOBAL
 twoPI = 2 * math.pi
 
-local displayDebug = true
-local displayMap = true 
-
+displayDebug = true
 
 local success = love.graphics.setMode( windowWidth, windowHeight)
 
@@ -112,7 +110,7 @@ function love.draw()
 
     castRays()
 
-    if (displayMap) then
+    if (mapProp.displayMap) then
         drawMiniMap()
     end
 
