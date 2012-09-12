@@ -1,10 +1,3 @@
-function drawStrip(texX,height,texture,stripIdx,dist,screenHeight)
-    local stripTop = math.floor((screenHeight - height)/2 + 0.5)
-    local stripBottom = math.floor((screenHeight + height)/2 + 0.5)
-    texX = math.floor(texX*64)
-    love.graphics.drawq(wallsImgs,QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
-end
-
 function castRays()
     local stripIdx = 0
     for i = 0,numRays - 1 do
@@ -51,8 +44,8 @@ function castSingleRay(rayAngle, stripIdx )
     -- first check against vertical mapp/wall lines
     -- move to the right or left edge of the block we're standing in
     -- moving in 1 map units, step horizontally
-    -- the amount we move verticalically is determined by the slope of the ray
-    -- which is simply defined as sin(angle)/cos(angle) 
+    -- the amount move verticalically is determined by the slope of the ray
+    -- which is sin(angle)/cos(angle) 
 
     local slope = angleSin / angleCos
     local dX
@@ -145,7 +138,15 @@ function castSingleRay(rayAngle, stripIdx )
     end
 end
 
-function drawRay(vHit,rayX, rayY)
+function drawStrip(texX,height,texture,stripIdx,dist,screenHeight)
+    local stripTop = math.floor((screenHeight - height)/2 + 0.5)
+    local stripBottom = math.floor((screenHeight + height)/2 + 0.5)
+    texX = math.floor(texX*64)
+    love.graphics.drawq(wallsImgs,QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
+end
+
+
+function drawRay(vHit, rayX, rayY)
     if vHit then
         love.graphics.setColor(125,0,0)
     else
