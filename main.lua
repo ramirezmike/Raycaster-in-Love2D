@@ -1,6 +1,7 @@
 require "raycast"
 require "controls"
 require "player"
+require "util"
 
 local spriteBatch
 map = {
@@ -101,34 +102,6 @@ function move(dt)
 
 end
 
-
-function isBlocking(x,y)
-    if (y < 0 or y > mapHeight or x < 0 or x > mapWidth) then
-        return true
-    else
-
-    local i = 1+(math.floor(y) * mapWidth) + math.floor(x)
-    return (map[i] > 0)
-    end
-end
-
-function indexFromCoordinates(x,y)
-    index = 1 + (math.floor(y)*mapWidth) + (math.floor(x))
-    return index
-end
-
-function positionXFromArrayIndex(index)
-    local x = (index % mapWidth)-1
-    local y = (index - x)/mapWidth
-    return x
-end
-
-function positionYFromArrayIndex(index)
-    local x = (index % mapWidth)-1
-    local y = (index - x)/mapWidth
-    return y
-end
-
 function gameCycle()
     local dt = love.timer.getDelta()
     move(dt)
@@ -150,13 +123,12 @@ function love.draw()
         0,0,screenWidth,screenHeight/2
     )
 
-
-   
     castRays()
 
     if (displayMap) then
         drawMiniMap()
     end
+
     if (displayDebug) then
         love.graphics.print("Current FPS: "..tostring(love.timer.getFPS()), 10, 10)
         love.graphics.print("player.X   : "..tostring(player.x), 10, 25)
@@ -165,11 +137,6 @@ function love.draw()
         love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
         love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
     end
-
---  if not (map[selectedWall] == 5 or map[selectedWall] == 0) then
---          map[selectedWall] = 2 
---      end
-
 end
 
 function love.update(dt)
