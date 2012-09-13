@@ -1,12 +1,11 @@
 function love.mousepressed(x, y, button)
     if button == "l" then
         if not (love.mouse.isGrabbed()) then
-            love.mouse.setVisible(false)
             love.mouse.setGrab(true)
         else
             wallPushDirection = player.rot
             if not (map[selectedWall] == 5) then
-                pushWall(selectedWall)
+     --           pushWall(selectedWall)
             end
         end
     end
@@ -78,5 +77,3 @@ function love.keyreleased(key, unicode)
         player.moveSpeed = 4
     end
 end
-
-
