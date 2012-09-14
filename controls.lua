@@ -4,7 +4,7 @@ function love.mousepressed(x, y, button)
             love.mouse.setGrab(true)
         else
             wallPushDirection = player.rot
-            if not (map[selectedWall] == 5) then
+            if not (mapProp.map[selectedWall] == 5) then
      --           pushWall(selectedWall)
             end
         end
@@ -43,7 +43,7 @@ function love.keypressed(key, unicode)
         changeTexture()
     end
     if key == 'i' then
-        saveMapToDisk(map)
+        saveMapToDisk(mapProp.map)
     end
     if key == 'm' then
         mapProp.displayMap = not(mapProp.displayMap)

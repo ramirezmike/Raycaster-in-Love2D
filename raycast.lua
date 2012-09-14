@@ -67,12 +67,12 @@ function castSingleRay(rayAngle, stripIdx )
         --is point inside wall block?
 
         k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
-        if (map[k] > 0) then
+        if (mapProp.map[k] > 0) then
             local distX = x - player.x
             local distY = y - player.y
             dist = distX*distX + distY*distY
 
-            texture = (map[k]-1)
+            texture = (mapProp.map[k]-1)
             textureX = y % 1
 
             if (not right) then
@@ -109,12 +109,12 @@ function castSingleRay(rayAngle, stripIdx )
         end
         local wallX = math.floor(x)
         k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
-        if (map[k] > 0) then
+        if (mapProp.map[k] > 0) then
             local distX = x - player.x
             local distY = y - player.y
             local blockDist = distX*distX + distY*distY
             if(dist == 0 or blockDist < dist) then
-            texture = (map[k]-1)
+            texture = (mapProp.map[k]-1)
                 dist = blockDist
                 xHit = x
                 yHit = y

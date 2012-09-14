@@ -21,7 +21,7 @@ function isBlocking(x,y)
     else
 
     local i = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x)
-    return (map[i] > 0)
+    return (mapProp.map[i] > 0)
     end
 end
 
@@ -49,7 +49,7 @@ function drawMiniMap()
     local i=1
     for y=0,mapProp.mapHeight-1 do
         for x=0,mapProp.mapWidth-1 do
-            local wall = map[i]
+            local wall = mapProp.map[i]
    
             if (wall>0) then
                 love.graphics.setColor(0,0,200)

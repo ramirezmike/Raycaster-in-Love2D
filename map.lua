@@ -3,7 +3,8 @@ mapProp = {
     mapWidth = 0,
     mapHeight = 0,
     miniMapScale = 6,
-    displayMap = false
+    displayMap = false,
+    map = {}
 }
 
 function saveMapToDisk(map)
@@ -18,3 +19,9 @@ function saveMapToDisk(map)
     file:close()
 end
 
+function loadMapFromDisk()
+    chunk = love.filesystem.load( "map01.lua") 
+    mapProp.map = chunk()
+    mapProp.mapWidth =  (math.sqrt(table.getn(map)))
+    mapProp.mapHeight = (math.sqrt(table.getn(map)))
+end

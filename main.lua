@@ -6,11 +6,7 @@ require "map"
 
 local spriteBatch
 
-chunk = love.filesystem.load( "map01.lua") 
-map = chunk()
-
-mapProp.mapWidth =  (math.sqrt(table.getn(map)))
-mapProp.mapHeight = (math.sqrt(table.getn(map)))
+loadMapFromDisk()
 
 QUADS = {}
 
@@ -107,11 +103,11 @@ end
 
 function changeTexture()
     for i = 0,(mapProp.mapWidth*mapProp.mapHeight) do
-        if (map[i] == 4) then map[i] = 5 end
-        if (map[i] == 3) then map[i] = 4 end
-        if (map[i] == 2) then map[i] = 3 end
-        if (map[i] == 1) then map[i] = 2 end
-        if (map[i] == 5) then map[i] = 1 end
+        if (mapProp.map[i] == 4) then mapProp.map[i] = 5 end
+        if (mapProp.map[i] == 3) then mapProp.map[i] = 4 end
+        if (mapProp.map[i] == 2) then mapProp.map[i] = 3 end
+        if (mapProp.map[i] == 1) then mapProp.map[i] = 2 end
+        if (mapProp.map[i] == 5) then mapProp.map[i] = 1 end
     end
 end
 
