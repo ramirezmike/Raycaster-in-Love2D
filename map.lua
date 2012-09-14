@@ -19,8 +19,8 @@ function saveMapToDisk(map)
     file:close()
 end
 
-function loadMapFromDisk()
-    chunk = love.filesystem.load( "map01.lua") 
+function loadMapFromDisk(mapName)
+    chunk = love.filesystem.load(mapName) 
     mapProp.map = chunk()
     mapProp.mapWidth =  (math.sqrt(table.getn(map)))
     mapProp.mapHeight = (math.sqrt(table.getn(map)))

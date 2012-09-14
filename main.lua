@@ -1,41 +1,40 @@
+require "globals"
 require "raycast"
 require "controls"
 require "player"
 require "util"
 require "map"
 
-local spriteBatch
 
-loadMapFromDisk()
+--local spriteBatch
+
+loadMapFromDisk("map01.lua")
 
 QUADS = {}
 
-local selectedWall = 0
+--local selectedWall = 0
 --local wallPushDirection = 0
 --local miniMapScale = 6
 --local numberOfImages = nil
-local windowWidth = love.graphics.getWidth() 
-local windowHeight = love.graphics.getHeight() 
-local screenScale = 0.5
-local screenWidth = windowWidth / screenScale
-screenHeight = windowHeight / screenScale
+--local windowWidth = love.graphics.getWidth() 
+--local windowHeight = love.graphics.getHeight() 
+--local screenScale = 0.5
+--local screenWidth = windowWidth / screenScale
+--screenHeight = windowHeight / screenScale
 
-local lastGameCycleTime = 0
-local gameCycleDelay = 1000 / 60 -- 60 fps for game logic
-
-do
-    local fov = 60 * math.pi / 180
-    fovHalf = fov/2
-end
-
-viewDist = (screenWidth/2) / math.tan(fovHalf)
-
-numRays = math.ceil(screenWidth)  -- WHY IS THIS STILL GLOBAL
-twoPI = 2 * math.pi
-
-displayDebug = true
-
-local success = love.graphics.setMode( windowWidth, windowHeight)
+--local lastGameCycleTime = 0
+--local gameCycleDelay = 1000 / 60 -- 60 fps for game logic
+--
+--do
+--    local fov = 60 * math.pi / 180
+--    fovHalf = fov/2
+--end
+--
+--viewDist = (screenWidth/2) / math.tan(fovHalf)
+--
+--numRays = math.ceil(screenWidth)  -- WHY IS THIS STILL GLOBAL
+--
+--displayDebug = true
 
 function move(dt)
     local moveStep = player.speed * player.moveSpeed * dt

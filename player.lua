@@ -10,8 +10,7 @@ player = {
 --  rotSpeed =  math.pi / 180 * 2,
 --  mouseSpeed = (math.pi / 180 * 2)/12
     rotSpeed = 2,
-    mouseSpeed = 0.05
-
+    mouseSpeed = 0.05,
 }
 
 function convertPlayerRotation()
