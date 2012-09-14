@@ -42,6 +42,9 @@ function love.keypressed(key, unicode)
     if key == 'c' then
         changeTexture()
     end
+    if key == 'i' then
+        saveMapToDisk(map)
+    end
     if key == 'm' then
         mapProp.displayMap = not(mapProp.displayMap)
     end

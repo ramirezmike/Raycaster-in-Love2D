@@ -5,3 +5,16 @@ mapProp = {
     miniMapScale = 6,
     displayMap = false
 }
+
+function saveMapToDisk(map)
+    local mapString = "map = {"  
+    for i = 1, #map - 1 do
+        mapString = mapString .. tostring(map[i]) .. ","
+    end
+    mapString = mapString .. tostring(map[#map]) .. "} \n return map"
+
+    local file = (io.open("map02.lua", "w"))
+    file:write(mapString)
+    file:close()
+end
+
