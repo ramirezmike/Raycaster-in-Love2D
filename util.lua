@@ -25,13 +25,41 @@ function isBlocking(x,y)
     end
 end
 
+function changeTexture()
+    for i = 0,(mapProp.mapWidth*mapProp.mapHeight) do
+        if (mapProp.map[i] == 4) then mapProp.map[i] = 5 end
+        if (mapProp.map[i] == 3) then mapProp.map[i] = 4 end
+        if (mapProp.map[i] == 2) then mapProp.map[i] = 3 end
+        if (mapProp.map[i] == 1) then mapProp.map[i] = 2 end
+        if (mapProp.map[i] == 5) then mapProp.map[i] = 1 end
+    end 
+end
+
+function setQuads(numberOfImages)
+    for i=0,numberOfImages-1 do
+        QUADS[i]= {}
+        for s=0, mapProp.tileSize-1 do
+            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,mapProp.tileSize,mapProp.tileSize*numberOfImages)
+        end 
+    end 
+    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
+end 
+
+function drawDebug()
+    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS()), 10, 10)
+    love.graphics.print("player.X   : "..tostring(player.x), 10, 25)
+    love.graphics.print("player.Y   : "..tostring(player.y), 10, 40)
+    love.graphics.print("player.R   : "..tostring(player.rot), 10, 55)
+    love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
+    love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
+end
 
 function drawMiniMap()
     miniMapWidth = mapProp.mapWidth * mapProp.miniMapScale
     miniMapHeight = mapProp.mapHeight * mapProp.miniMapScale
 
-    mapOffsetX = 500
-    mapOffsetY = 340
+    mapOffsetX = 0 --500
+    mapOffsetY = 0 --340
 
     love.graphics.setColor(255,255,255)
     love.graphics.rectangle( "fill",
@@ -61,4 +89,29 @@ function drawMiniMap()
             i = i + 1
         end
     end
+end
+
+function move(dt)
+    local moveStep = player.speed * player.moveSpeed * dt
+    local strafeStep = player.strafeSpeed * math.pi/2
+
+    local mouseLook = 0
+    if (love.mouse.isGrabbed()) then
+        mouseLook = love.mouse.getX()
+        mouseLook = (screenWidth/2) - mouseLook
+        mouseLook = mouseLook * player.mouseSpeed * dt
+        mouseLook = mouseLook * -1
+        love.mouse.setPosition(screenWidth/2,screenHeight/2)
+    end
+
+    convertPlayerRotation() -- make sure player is within 360 degrees
+
+    player.rot = player.rot + (player.dir * player.rotSpeed * dt) + mouseLook
+    local newX = player.x + math.cos(player.rot ) * moveStep
+    local newY = player.y + math.sin(player.rot ) * moveStep
+    newX = newX + math.cos(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
+    newY = newY + math.sin(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
+
+    if not (isBlocking(newX,player.y)) then player.x = newX end
+    if not (isBlocking(player.x,newY)) then player.y = newY end
 end

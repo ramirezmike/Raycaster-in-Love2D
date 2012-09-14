@@ -5,67 +5,15 @@ require "player"
 require "util"
 require "map"
 
-
---local spriteBatch
-
 loadMapFromDisk("map01.lua")
 
 QUADS = {}
 
---local selectedWall = 0
---local wallPushDirection = 0
---local miniMapScale = 6
---local numberOfImages = nil
---local windowWidth = love.graphics.getWidth() 
---local windowHeight = love.graphics.getHeight() 
---local screenScale = 0.5
---local screenWidth = windowWidth / screenScale
---screenHeight = windowHeight / screenScale
-
---local lastGameCycleTime = 0
---local gameCycleDelay = 1000 / 60 -- 60 fps for game logic
---
---do
---    local fov = 60 * math.pi / 180
---    fovHalf = fov/2
---end
---
---viewDist = (screenWidth/2) / math.tan(fovHalf)
---
---numRays = math.ceil(screenWidth)  -- WHY IS THIS STILL GLOBAL
---
---displayDebug = true
-
-function move(dt)
-    local moveStep = player.speed * player.moveSpeed * dt
-    local strafeStep = player.strafeSpeed * math.pi/2
-
-    local mouseLook = 0
-    if (love.mouse.isGrabbed()) then
-        mouseLook = love.mouse.getX()
-        mouseLook = (screenWidth/2) - mouseLook
-        mouseLook = mouseLook * player.mouseSpeed * dt
-        mouseLook = mouseLook * -1
-        love.mouse.setPosition(screenWidth/2,screenHeight/2)
-    end
-
-    convertPlayerRotation() -- make sure player is within 360 degrees
-
-    player.rot = player.rot + (player.dir * player.rotSpeed * dt) + mouseLook
-    local newX = player.x + math.cos(player.rot ) * moveStep
-    local newY = player.y + math.sin(player.rot ) * moveStep
-    newX = newX + math.cos(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
-    newY = newY + math.sin(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
-
-    if not (isBlocking(newX,player.y)) then player.x = newX end
-    if not (isBlocking(player.x,newY)) then player.y = newY end
-end
-
 function gameCycle()
     local dt = love.timer.getDelta()
     move(dt)
-    local cycleDelay = gameCycleDelay
 
+    local cycleDelay = gameCycleDelay
     if (dt > cycleDelay) then
         cycleDelay = math.max(1, cycleDelay - (dt - cycleDelay))
     end
@@ -83,45 +31,12 @@ function love.draw()
     )
 
     castRays()
-
-    if (mapProp.displayMap) then
-        drawMiniMap()
-    end
-
-    if (displayDebug) then
-        love.graphics.print("Current FPS: "..tostring(love.timer.getFPS()), 10, 10)
-        love.graphics.print("player.X   : "..tostring(player.x), 10, 25)
-        love.graphics.print("player.Y   : "..tostring(player.y), 10, 40)
-        love.graphics.print("player.R   : "..tostring(player.rot), 10, 55)
-        love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
-        love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
-    end
-end
-
-
-
-function changeTexture()
-    for i = 0,(mapProp.mapWidth*mapProp.mapHeight) do
-        if (mapProp.map[i] == 4) then mapProp.map[i] = 5 end
-        if (mapProp.map[i] == 3) then mapProp.map[i] = 4 end
-        if (mapProp.map[i] == 2) then mapProp.map[i] = 3 end
-        if (mapProp.map[i] == 1) then mapProp.map[i] = 2 end
-        if (mapProp.map[i] == 5) then mapProp.map[i] = 1 end
-    end
+    if (mapProp.displayMap) then drawMiniMap() end
+    if (displayDebug) then drawDebug() end
 end
 
 function love.update(dt)
     move(dt)
-end
-
-function setQuads(numberOfImages)
-    for i=0,numberOfImages-1 do
-        QUADS[i]= {}
-        for s=0, mapProp.tileSize-1 do
-            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,mapProp.tileSize,mapProp.tileSize*numberOfImages)
-        end
-    end
-    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
 end
 
 function love.load()
