@@ -64,6 +64,10 @@ function castSingleRay(rayAngle, stripIdx )
         end
         local wallY = math.floor(y)
 
+        if(spriteMap[indexFromCoordinates(wallX,wallY)] == 1) then
+            SPRITES.visible = true
+        end
+
         --is point inside wall block?
 
         k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
@@ -108,6 +112,11 @@ function castSingleRay(rayAngle, stripIdx )
             wallY = math.floor(y)
         end
         local wallX = math.floor(x)
+
+        if(spriteMap[indexFromCoordinates(wallX,wallY)] == 1) then
+            SPRITES.visible = true
+        end
+
         k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
         if (mapProp.map[k] > 0) then
             local distX = x - player.x
@@ -142,7 +151,8 @@ function drawStrip(texX,height,texture,stripIdx,dist,screenHeight)
     local stripTop = math.floor((screenHeight - height)/2 + 0.5)
     local stripBottom = math.floor((screenHeight + height)/2 + 0.5)
     texX = math.floor(texX*64)
-    love.graphics.drawq(wallsImgs,QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
+--    love.graphics.drawq(wallsImgs,QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
+    spriteBatch:addq(QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
 end
 
 

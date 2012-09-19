@@ -2,6 +2,8 @@ spriteBatch = 0
 selectedWall = 0
 windowWidth = love.graphics.getWidth() 
 windowHeight = love.graphics.getHeight()
+print (windowWidth)
+print (windowHeight)
 screenScale = 0.5
 screenWidth = windowWidth / screenScale
 screenHeight = windowHeight / screenScale

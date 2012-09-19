@@ -1,4 +1,6 @@
 function indexFromCoordinates(x,y)
+    local x = math.abs(x)
+    local y = math.abs(y)
     index = 1 + (math.floor(y)*mapProp.mapWidth) + (math.floor(x))
     return index
 end
