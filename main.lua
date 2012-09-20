@@ -4,6 +4,7 @@ require "raycast"
 require "controls"
 require "util"
 require "map"
+require "sprite"
 
 loadMapFromDisk("map01.lua")
 
@@ -12,20 +13,6 @@ SPRITES = {
     y=5,
     visible=false
     }
-spriteMap = {}
-
-function makeSpriteMap()
-    for i=1,#map do
-        spriteMap[i] = 0
-    end
-    spriteMap[(indexFromCoordinates(SPRITES.x,SPRITES.y))] = 1
-end
-
-makeSpriteMap()
-
-drawCalls = {}
-QUADS = {}
-SPRITEQUAD = {}
 
 function gameCycle()
     local dt = love.timer.getDelta()
@@ -37,37 +24,6 @@ function gameCycle()
     end
 end
 
-function renderSprites()
-    local dx = SPRITES.x + 0.5 - player.x
-    local dy = SPRITES.y + 0.5 - player.y
-
-    local dist = math.sqrt(dx*dx + dy*dy)
-    local spriteAngle = math.atan2(dy, dx) - player.rot
-
-    local spriteSize = viewDist / (math.cos(spriteAngle) * dist) 
-
-    local spriteX = math.tan(spriteAngle) * viewDist
-    local top = (screenHeight - spriteSize)/2
-    local left = (screenWidth/2 + spriteX - spriteSize/2)
-    local dbx = SPRITES.x - player.x
-    local dby = SPRITES.y - player.y
-    local blockDist = dbx*dbx + dby*dby
-    local z = -math.floor(dist*10000)
-    if (SPRITES.visible) then
-        --love.graphics.drawq(harrisImg,SPRITEQUAD[0],left,top,0,spriteSize/mapProp.tileSize,spriteSize/mapProp.tileSize)
-        drawCalls[#drawCalls+1] = 
-        {
-            z = z,
-            x = left,
-            y = top,
-            dist = dist,
-            sx = spriteSize / mapProp.tileSize,
-            sy = spriteSize / 64,
-            quad = SPRITEQUAD[0]
-        } 
-        SPRITES.visible = false
-    end
-end
 
 function love.draw()
     love.graphics.setColor(50,50,50)
@@ -105,9 +61,7 @@ function love.load()
    
     SPRITEQUAD[0] = love.graphics.newQuad(mapProp.tileSize, 0, mapProp.tileSize, mapProp.tileSize, -1+2*mapProp.tileSize, numberOfImages*mapProp.tileSize)
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
-
-    harrisImg = love.graphics.newImage("harrison.png")
-    harrisonBatch = love.graphics.newSpriteBatch( harrisImg, 9)
+    makeSpriteMap()
 
     love.graphics.setColorMode("replace")
     love.graphics.setMode(640,480, false, false)

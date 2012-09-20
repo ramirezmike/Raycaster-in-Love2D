@@ -1,3 +1,8 @@
+spriteMap = {}
+drawCalls = {}
+QUADS = {} 
+SPRITEQUAD = {}
+
 spriteBatch = 0
 selectedWall = 0
 windowWidth = love.graphics.getWidth() 
