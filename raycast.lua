@@ -65,7 +65,12 @@ function castSingleRay(rayAngle, stripIdx )
         local wallY = math.floor(y)
 
         if(spriteMap[indexFromCoordinates(wallX,wallY)] == 1) then
-            SPRITES.visible = true
+            for i=1,#SPRITES do
+                local sprite = SPRITES[i]
+                if (sprite.x == wallX and sprite.y == wallY) then
+                    sprite.visible = true
+                end
+            end
         end
 
         --is point inside wall block?
@@ -114,7 +119,12 @@ function castSingleRay(rayAngle, stripIdx )
         local wallX = math.floor(x)
 
         if(spriteMap[indexFromCoordinates(wallX,wallY)] == 1) then
-            SPRITES.visible = true
+            for i=1,#SPRITES do
+                local sprite = SPRITES[i]
+                if (sprite.x == wallX and sprite.y == wallY) then
+                    sprite.visible = true
+                end
+            end
         end
 
         k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)

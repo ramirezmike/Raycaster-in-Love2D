@@ -46,7 +46,11 @@ function setQuads(numberOfImages)
             QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,mapProp.tileSize*2,mapProp.tileSize*numberOfImages)
         end 
     end 
-    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
+    for i=0,numberOfImages-1 do
+       SPRITEQUAD[i] = love.graphics.newQuad(mapProp.tileSize+1, 0+(i*mapProp.tileSize), 
+        mapProp.tileSize, mapProp.tileSize,2*mapProp.tileSize, numberOfImages*mapProp.tileSize) 
+    end
+--    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
 end 
 
 function drawDebug()

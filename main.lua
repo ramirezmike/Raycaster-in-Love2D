@@ -8,10 +8,12 @@ require "sprite"
 
 loadMapFromDisk("map01.lua")
 
-SPRITES = {
-    x=5,
-    y=5,
-    visible=false
+SPRITES = {}
+SPRITES[1] = 
+    {
+        x = 5,
+        y = 5,
+        visible = false
     }
 
 function gameCycle()
@@ -31,10 +33,10 @@ function love.draw()
      0,screenHeight/2,screenWidth,screenHeight/2
     )
 
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.rectangle( "fill",
-     0,0,screenWidth,screenHeight/2
-    )
+--    love.graphics.setColor(0, 0, 0)
+ --   love.graphics.rectangle( "fill",
+  --   0,0,screenWidth,screenHeight/2
+   -- )
     spriteBatch:clear()
     drawCalls = {}
     castRays()
@@ -58,14 +60,14 @@ end
 function love.load()
     wallsImgs = love.graphics.newImage("images.png")
     local numberOfImages = (wallsImgs:getHeight()/mapProp.tileSize)
-   
-    SPRITEQUAD[0] = love.graphics.newQuad(mapProp.tileSize, 0, mapProp.tileSize, mapProp.tileSize, -1+2*mapProp.tileSize, numberOfImages*mapProp.tileSize)
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
+    setQuads(numberOfImages)
+
     makeSpriteMap()
 
     love.graphics.setColorMode("replace")
     love.graphics.setMode(640,480, false, false)
-    setQuads(numberOfImages)
+
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)
     love.mouse.setGrab(true)
