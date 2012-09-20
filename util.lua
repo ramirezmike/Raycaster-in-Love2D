@@ -1,3 +1,5 @@
+function sort(T) table.sort(T, function(a, b) return a.z < b.z end ) end
+
 function indexFromCoordinates(x,y)
     local x = math.abs(x)
     local y = math.abs(y)
@@ -41,7 +43,7 @@ function setQuads(numberOfImages)
     for i=0,numberOfImages-1 do
         QUADS[i]= {}
         for s=0, mapProp.tileSize-1 do
-            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,mapProp.tileSize,mapProp.tileSize*numberOfImages)
+            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,mapProp.tileSize*2,mapProp.tileSize*numberOfImages)
         end 
     end 
     floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)

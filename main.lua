@@ -23,9 +23,9 @@ end
 
 makeSpriteMap()
 
+drawCalls = {}
 QUADS = {}
 SPRITEQUAD = {}
-SPRITEQUAD[0] = love.graphics.newQuad(0, 0, mapProp.tileSize, mapProp.tileSize, mapProp.tileSize, mapProp.tileSize)
 
 function gameCycle()
     local dt = love.timer.getDelta()
@@ -54,7 +54,17 @@ function renderSprites()
     local blockDist = dbx*dbx + dby*dby
     local z = -math.floor(dist*10000)
     if (SPRITES.visible) then
-        love.graphics.drawq(harrisImg,SPRITEQUAD[0],left,top,0,spriteSize/mapProp.tileSize,spriteSize/mapProp.tileSize)
+        --love.graphics.drawq(harrisImg,SPRITEQUAD[0],left,top,0,spriteSize/mapProp.tileSize,spriteSize/mapProp.tileSize)
+        drawCalls[#drawCalls+1] = 
+        {
+            z = z,
+            x = left,
+            y = top,
+            dist = dist,
+            sx = spriteSize / mapProp.tileSize,
+            sy = spriteSize / 64,
+            quad = SPRITEQUAD[0]
+        } 
         SPRITES.visible = false
     end
 end
@@ -70,11 +80,19 @@ function love.draw()
      0,0,screenWidth,screenHeight/2
     )
     spriteBatch:clear()
+    drawCalls = {}
     castRays()
+    renderSprites()
+    sort(drawCalls)    
+
+    for i = 1, #drawCalls do
+        strip = drawCalls[i]
+        spriteBatch:addq(strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
+    end
+
     love.graphics.draw(spriteBatch)
 --    if (mapProp.displayMap) then drawMiniMap() end
     if (displayDebug) then drawDebug() end
-    renderSprites()
 end
 
 function love.update(dt)
@@ -82,9 +100,10 @@ function love.update(dt)
 end
 
 function love.load()
-    wallsImgs = love.graphics.newImage("walls.png")
+    wallsImgs = love.graphics.newImage("images.png")
     local numberOfImages = (wallsImgs:getHeight()/mapProp.tileSize)
    
+    SPRITEQUAD[0] = love.graphics.newQuad(mapProp.tileSize, 0, mapProp.tileSize, mapProp.tileSize, -1+2*mapProp.tileSize, numberOfImages*mapProp.tileSize)
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
 
     harrisImg = love.graphics.newImage("harrison.png")

@@ -152,7 +152,20 @@ function drawStrip(texX,height,texture,stripIdx,dist,screenHeight)
     local stripBottom = math.floor((screenHeight + height)/2 + 0.5)
     texX = math.floor(texX*64)
 --    love.graphics.drawq(wallsImgs,QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
-    spriteBatch:addq(QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
+--    spriteBatch:addq(QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
+    drawCalls[stripIdx] = 
+        {
+            z = -math.floor(dist*10000), 
+            x = stripIdx, 
+            y = stripTop, 
+--            id = math.random(1000,9999), 
+            dist = dist,
+ --           img = wallImg, 
+            quad = QUADS[texture][texX], 
+            sx = 1, 
+            sy = height/64, 
+            type = "wall"
+        }
 end
 
 
