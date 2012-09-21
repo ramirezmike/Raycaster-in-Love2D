@@ -51,7 +51,7 @@ function setQuads(imagesPerHeight,imagesPerWidth)
         end 
     end 
     for i=0,imagesPerHeight-1 do
-       SPRITEQUAD[i] = love.graphics.newQuad(mapProp.tileSize+1, 0+(i*mapProp.tileSize), 
+       SPRITEQUAD[i] = love.graphics.newQuad(mapProp.tileSize+1, 0+(i*mapProp.tileSize+1), 
         mapProp.tileSize, mapProp.tileSize,imagesPerWidth*mapProp.tileSize, imagesPerHeight*mapProp.tileSize) 
     end
     BGQUAD[1] = love.graphics.newQuad(0,0,1,480,1,480)
