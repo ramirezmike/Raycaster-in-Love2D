@@ -42,16 +42,17 @@ function changeTexture()
     end 
 end
 
-function setQuads(numberOfImages)
-    for i=0,numberOfImages-1 do
+function setQuads(imagesPerHeight,imagesPerWidth)
+    for i=0,imagesPerHeight-1 do
         QUADS[i]= {}
         for s=0, mapProp.tileSize-1 do
-            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,mapProp.tileSize*2,mapProp.tileSize*numberOfImages)
+            QUADS[i][s] = love.graphics.newQuad(s,0 + ((i)*mapProp.tileSize),1,mapProp.tileSize,
+                mapProp.tileSize*imagesPerWidth,mapProp.tileSize*imagesPerHeight)
         end 
     end 
-    for i=0,numberOfImages-1 do
+    for i=0,imagesPerHeight-1 do
        SPRITEQUAD[i] = love.graphics.newQuad(mapProp.tileSize+1, 0+(i*mapProp.tileSize), 
-        mapProp.tileSize, mapProp.tileSize,2*mapProp.tileSize, numberOfImages*mapProp.tileSize) 
+        mapProp.tileSize, mapProp.tileSize,imagesPerWidth*mapProp.tileSize, imagesPerHeight*mapProp.tileSize) 
     end
     BGQUAD[1] = love.graphics.newQuad(0,0,1,480,1,480)
 --    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)

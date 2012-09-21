@@ -101,9 +101,10 @@ end
 function love.load()
     wallsImgs = love.graphics.newImage("images.png")
     bgImg = love.graphics.newImage("bg.png")
-    local numberOfImages = (wallsImgs:getHeight()/mapProp.tileSize)
+    local imagesPerHeight = (wallsImgs:getHeight()/mapProp.tileSize)
+    local imagesPerWidth = (wallsImgs:getWidth()/mapProp.tileSize)
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
-    setQuads(numberOfImages)
+    setQuads(imagesPerHeight,imagesPerWidth)
 
     makeSpriteMap()
 
