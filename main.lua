@@ -14,7 +14,8 @@ SPRITES[1] =
         x = 5,
         y = 5,
         img = 0,
-        visible = false
+        visible = false,
+        block = true
     }
 
 SPRITES[2] = 
@@ -22,7 +23,8 @@ SPRITES[2] =
         x = 4,
         y = 5,
         img = 1,
-        visible = false
+        visible = false,
+        block = true
     }
 
 SPRITES[3] = 
@@ -30,7 +32,8 @@ SPRITES[3] =
         x = 4,
         y = 4,
         img = 2,
-        visible = false
+        visible = false,
+        block = false 
     }
 
 SPRITES[4] = 
@@ -38,7 +41,8 @@ SPRITES[4] =
         x = 5,
         y = 4,
         img = 3,
-        visible = false
+        visible = false,
+        block = false
     }
 
 SPRITES[5] = 
@@ -46,7 +50,8 @@ SPRITES[5] =
         x = 6,
         y = 4,
         img = 4,
-        visible = false
+        visible = false,
+        block = false
     }
 
 function gameCycle()
@@ -66,10 +71,6 @@ function love.draw()
      0,screenHeight/2,screenWidth,screenHeight/2
     )
 
---    love.graphics.setColor(0, 0, 0)
- --   love.graphics.rectangle( "fill",
-  --   0,0,screenWidth,screenHeight/2
-   -- )
     spriteBatch:clear()
     drawCalls = {}
     castRays()
@@ -78,7 +79,6 @@ function love.draw()
 
  --   drawBackground()
 
---    love.graphics.setColorMode("modulate")
     for i = 1, #drawCalls do
         local strip = drawCalls[i]
 --        local light = 1 - (strip.dist/20) 

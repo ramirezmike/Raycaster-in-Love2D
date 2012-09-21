@@ -22,6 +22,9 @@ end
 function isBlocking(x,y)
     if (y < 0 or y > mapProp.mapHeight or x < 0 or x > mapProp.mapWidth) then
         return true
+    end
+    if (spriteMap[indexFromCoordinates(x,y)] > 0) then
+        return true
     else
 
     local i = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x)
