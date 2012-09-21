@@ -2,6 +2,7 @@ spriteMap = {}
 drawCalls = {}
 QUADS = {} 
 SPRITEQUAD = {}
+BGQUAD = {}
 
 spriteBatch = 0
 selectedWall = 0

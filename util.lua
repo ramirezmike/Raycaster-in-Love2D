@@ -50,6 +50,7 @@ function setQuads(numberOfImages)
        SPRITEQUAD[i] = love.graphics.newQuad(mapProp.tileSize+1, 0+(i*mapProp.tileSize), 
         mapProp.tileSize, mapProp.tileSize,2*mapProp.tileSize, numberOfImages*mapProp.tileSize) 
     end
+    BGQUAD[1] = love.graphics.newQuad(0,0,1,480,1,480)
 --    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
 end 
 
@@ -122,4 +123,10 @@ function move(dt)
 
     if not (isBlocking(newX,player.y)) then player.x = newX end
     if not (isBlocking(player.x,newY)) then player.y = newY end
+end
+
+function drawBackground()
+    for i = 1, screenWidth do
+       love.graphics.drawq(bgImg,BGQUAD[1],i,0,0,1,1)
+    end
 end
