@@ -36,9 +36,9 @@ function renderSprites()
                 dist = dist,
                 sx = spriteSize / mapProp.tileSize,
                 sy = spriteSize / 64,
-                quad = SPRITEQUAD[sprite.img]
+                quad = SPRITEQUAD[sprite.img][sprite.state]
             }
-            sprite.visible = false
-        end
+            sprite.visible = false 
+       end
     end
 end

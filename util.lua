@@ -19,17 +19,129 @@ function positionYFromArrayIndex(index)
     return y
 end
 
+function checkCollision(fromX, fromY, toX, toY, radius)
+    local pos = {
+        x = fromX,
+        y = fromY
+    }
+
+--    if toY < 0 or toY >= mapProp.mapHeight or toX < 0 or toX >= mapProp.mapWidth then
+--            return pos
+--    end
+--
+--    local blockX = math.floor(toX)
+--    local blockY = math.floor(toY)
+--
+--    if isBlocking(blockX,blockY) then
+--        return pos
+--    end
+--    
+--    pos.x = toX
+--    pos.y = toY
+--
+--    local blockTop = isBlocking(blockX,blockY-1)
+--    local blockBottom = isBlocking(blockX,blockY+1)
+--    local blockLeft = isBlocking(blockX-1,blockY)
+--    local blockRight = isBlocking(blockX+1,blockY)
+--
+--    if (blockTop ~= 0) and (toY - blockY < radius) then
+--        toY = blockY + radius
+--        pos.y = toY
+--    end
+--    if (blockBottom ~= 0) and ((blockY+1) - toY < radius) then
+--        toY = (blockY + 1) - radius
+--        pos.y = toY
+--    end
+--    if (blockLeft ~= 0) and (toX - blockX < radius) then
+--        toX = blockX + radius
+--        pos.x = toX
+--    end
+--    if (blockRight ~= 0) and ((blockX+1) - toX < radius) then
+--        toX = (blockX+1) - radius
+--        pos.x = toX
+--    end
+--
+--    -- tile to top left
+--    if (isBlocking(blockX-1,blockY-1) ~= 0) and (blockTop == 0 or blockLeft == 0) then
+--        local dx = toX - blockX
+--        local dy = toY - blockY
+--        if (dx*dx+dy*dy < radius*radius) then
+--            if (dx*dx > dy*dy) then
+--                toX = blockX + radius
+--                pos.x = toX 
+--            else
+--                toY = blockY + radius
+--                pos.y = toY
+--            end
+--        end
+--
+--    end
+--        
+--    -- tile to top right 
+--    if (isBlocking(blockX+1,blockY-1) ~= 0) and (blockTop == 0 or blockRight == 0) then
+--        local dx = toX - (blockX+1)
+--        local dy = toY - blockY
+--        if (dx*dx+dy*dy < radius*radius) then
+--            if (dx*dx > dy*dy) then
+--                toX = (blockX+1) + radius
+--                pos.x = toX 
+--            else
+--                toY = blockY + radius
+--                pos.y = toY
+--            end
+--        end
+--
+--    end
+--
+--    -- tile to bottom left 
+--    if (isBlocking(blockX-1,blockY+1) ~= 0) and (blockBottom == 0 or blockLeft == 0) then
+--        local dx = toX - blockX
+--        local dy = toY - (blockY+1)
+--        if (dx*dx+dy*dy < radius*radius) then
+--            if (dx*dx > dy*dy) then
+--                toX = blockX + radius
+--                pos.x = toX 
+--            else
+--                toY = (blockY+1) + radius
+--                pos.y = toY
+--            end
+--        end
+--
+--    end
+--
+--    -- tile to bottom right 
+--    if (isBlocking(blockX+1,blockY+1) ~= 0) and (blockBottom == 0 or blockRight == 0) then
+--        local dx = toX - (blockX+1)
+--        local dy = toY - (blockY+1)
+--        if (dx*dx+dy*dy < radius*radius) then
+--            if (dx*dx > dy*dy) then
+--                toX = (blockX+1) + radius
+--                pos.x = toX 
+--            else
+--                toY = (blockY+1) + radius
+--                pos.y = toY
+--            end
+--        end
+--
+--    end
+--
+    return pos
+end
+
 function isBlocking(x,y)
     if (y < 0 or y > mapProp.mapHeight or x < 0 or x > mapProp.mapWidth) then
         return true
     end
-    if (spriteMap[indexFromCoordinates(x,y)] > 0) then
-        return true
-    else
-
+    for i=1,#SPRITES do
+        local sprite = SPRITES[i]
+        if (math.floor(sprite.x + 0.5) == x and 
+            math.floor(sprite.y + 0.5) == y and
+             sprite.block == true) then
+            return true
+        end
+    end
     local i = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x)
     return (mapProp.map[i] > 0)
-    end
 end
 
 function changeTexture()
@@ -51,8 +163,11 @@ function setQuads(imagesPerHeight,imagesPerWidth)
         end 
     end 
     for i=0,imagesPerHeight-1 do
-       SPRITEQUAD[i] = love.graphics.newQuad(mapProp.tileSize+1, 0+(i*mapProp.tileSize+1), 
-        mapProp.tileSize, mapProp.tileSize,imagesPerWidth*mapProp.tileSize, imagesPerHeight*mapProp.tileSize) 
+        SPRITEQUAD[i] = {}
+        for s=0,imagesPerWidth-1 do
+           SPRITEQUAD[i][s] = love.graphics.newQuad(mapProp.tileSize+1+(s*mapProp.tileSize), 0+(i*mapProp.tileSize+1), 
+            mapProp.tileSize, mapProp.tileSize,imagesPerWidth*mapProp.tileSize, imagesPerHeight*mapProp.tileSize) 
+        end
     end
     BGQUAD[1] = love.graphics.newQuad(0,0,1,480,1,480)
 --    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
@@ -104,9 +219,9 @@ function drawMiniMap()
     end
 end
 
-function move(dt)
-    local moveStep = player.speed * player.moveSpeed * dt
-    local strafeStep = player.strafeSpeed * math.pi/2
+function move(object, dt)
+    local moveStep = object.speed * object.moveSpeed * dt
+    local strafeStep = object.strafeSpeed * math.pi/2
 
     local mouseLook = 0
     if (love.mouse.isGrabbed()) then
@@ -119,14 +234,18 @@ function move(dt)
 
     convertPlayerRotation() -- make sure player is within 360 degrees
 
-    player.rot = player.rot + (player.dir * player.rotSpeed * dt) + mouseLook
-    local newX = player.x + math.cos(player.rot ) * moveStep
-    local newY = player.y + math.sin(player.rot ) * moveStep
-    newX = newX + math.cos(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
-    newY = newY + math.sin(player.rot + math.abs(strafeStep)) * player.strafeSpeed*player.moveSpeed * dt
+    object.rot = object.rot + (object.dir * object.rotSpeed * dt) + mouseLook
+    local newX = object.x + math.cos(object.rot ) * moveStep
+    local newY = object.y + math.sin(object.rot ) * moveStep
+    newX = newX + math.cos(object.rot + math.abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
+    newY = newY + math.sin(object.rot + math.abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
+    
+    local pos = checkCollision(object.x, object.y, newX, newY, 0.35)
+    object.x = pos.x
+    object.y = pos.y
 
-    if not (isBlocking(newX,player.y)) then player.x = newX end
-    if not (isBlocking(player.x,newY)) then player.y = newY end
+    if not (isBlocking(newX,object.y)) then object.x = newX end
+    if not (isBlocking(object.x,newY)) then object.y = newY end
 end
 
 function drawBackground()
