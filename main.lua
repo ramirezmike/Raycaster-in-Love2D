@@ -9,6 +9,7 @@ require "ai"
 
 SPRITES = {}
 loadMapFromDisk("map01.lua")
+setPlayerSpawnPoint()
 
 
 function gameCycle()

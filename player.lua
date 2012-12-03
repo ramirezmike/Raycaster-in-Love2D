@@ -19,3 +19,9 @@ function convertPlayerRotation()
         player.rot = player.rot + twoPI
     end
 end
+
+function setPlayerSpawnPoint()
+    player.x = SPAWNPOINT.x
+    player.y = SPAWNPOINT.y
+    print "umm..."
+end
