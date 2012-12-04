@@ -3,10 +3,17 @@ function love.mousepressed(x, y, button)
         if not (love.mouse.isGrabbed()) then
             love.mouse.setGrab(true)
         else
-            wallPushDirection = player.rot
-            if not (mapProp.map[selectedWall] == 5) then
+--            wallPushDirection = player.rot
+--            if not (mapProp.map[selectedWall] == 5) then
      --           pushWall(selectedWall)
-            end
+ --           end
+ 
+            local startX = player.x
+            local startY = player.y
+            local angle = player.rot
+            local bulletDx = player.bulletSpeed * math.cos(angle)                         
+            local bulletDy = player.bulletSpeed * math.sin(angle)                         
+            table.insert(bullets, {x = startX, y = startY, dx = bulletDx, dy = bulletDy, visible = false})
         end
     end
 end
@@ -38,6 +45,9 @@ function love.keypressed(key, unicode)
     --    if not (map[selectedWall] == 5) then
     --        pushWall(selectedWall)
     --    end
+       for i,v in ipairs(bullets) do 
+            table.remove(bullets,i)
+       end
     end
     if key == 'c' then
         changeTexture()

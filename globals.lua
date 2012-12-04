@@ -3,6 +3,7 @@ drawCalls = {}
 QUADS = {} 
 SPRITEQUAD = {}
 BGQUAD = {}
+bullets = {}
 
 spriteBatch = 0
 selectedWall = 0
@@ -23,6 +24,8 @@ do
 end
 
 viewDist = (screenWidth/2) / math.tan(fovHalf)
-numRays = math.ceil(screenWidth)  -- WHY IS THIS STILL GLOBAL
+numRays = math.ceil(screenWidth)
 displayDebug = true
 twoPI = 2 * math.pi
+
+distanceFromWalls = 0.6 

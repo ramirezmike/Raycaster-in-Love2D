@@ -6,6 +6,7 @@ require "util"
 require "map"
 require "sprite"
 require "ai"
+require "bullets"
 
 SPRITES = {}
 loadMapFromDisk("map01.lua")
@@ -33,6 +34,7 @@ function love.draw()
     drawCalls = {}
     castRays()
     renderSprites()
+    renderBullets()
     sort(drawCalls)    
 
  --   drawBackground()
@@ -49,6 +51,7 @@ function love.draw()
     end
 
     love.graphics.draw(spriteBatch)
+
 --    if (mapProp.displayMap) then drawMiniMap() end
     if (displayDebug) then drawDebug() end
 end
@@ -56,6 +59,7 @@ end
 function love.update(dt)
     move(player, dt)
     ai(dt)
+    manageBullets(dt)
 end
 
 function love.load()

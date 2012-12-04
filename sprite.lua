@@ -11,8 +11,8 @@ end
 function renderSprites()
     for i=1,#SPRITES do
         local sprite = SPRITES[i]
-        local dx = sprite.x + 0.5 - player.x
-        local dy = sprite.y + 0.5 - player.y
+        local dx = sprite.x - player.x
+        local dy = sprite.y - player.y -- These two had + 0.5 to fix upside down sprites..
         
         local dist = math.sqrt(dx*dx + dy*dy)
         local spriteAngle = math.atan2(dy, dx) - player.rot

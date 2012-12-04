@@ -66,8 +66,14 @@ function castSingleRay(rayAngle, stripIdx )
 
         for i=1,#SPRITES do
             local sprite = SPRITES[i]
-            if (math.floor(sprite.x+0.5) == wallX and math.floor(sprite.y+0.5) == wallY) then
+            if (math.floor(sprite.x) == wallX and math.floor(sprite.y) == wallY) then
                 sprite.visible = true
+            end
+        end
+
+        for i,v in ipairs(bullets) do
+            if (math.floor(v["x"]) == wallX and math.floor(v["y"]) == wallY) then
+                v["visible"] = true
             end
         end
 
@@ -118,8 +124,14 @@ function castSingleRay(rayAngle, stripIdx )
 
         for i=1,#SPRITES do
             local sprite = SPRITES[i]
-            if (math.floor(sprite.x+0.5) == wallX and math.floor(sprite.y+0.5) == wallY) then
+            if (math.floor(sprite.x) == wallX and math.floor(sprite.y) == wallY) then
                 sprite.visible = true
+            end
+        end
+
+        for i,v in ipairs(bullets) do
+            if (math.floor(v["x"]) == wallX and math.floor(v["y"]) == wallY) then
+                v["visible"] = true
             end
         end
 

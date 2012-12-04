@@ -128,20 +128,44 @@ function checkCollision(fromX, fromY, toX, toY, radius)
     return pos
 end
 
-function isBlocking(x,y)
-    if (y < 0 or y > mapProp.mapHeight or x < 0 or x > mapProp.mapWidth) then
+function isBlocking(object, newObjectPosition)
+    local x = newObjectPosition.x
+    local y = newObjectPosition.y
+
+    if (y < 0 + distanceFromWalls or y > mapProp.mapHeight - distanceFromWalls or x < 0 + distanceFromWalls or x > mapProp.mapWidth - distanceFromWalls) then
         return true
     end
+
     for i=1,#SPRITES do
         local sprite = SPRITES[i]
-        if (math.floor(sprite.x + 0.5) == x and 
-            math.floor(sprite.y + 0.5) == y and
-             sprite.block == true) then
-            return true
+        if (sprite.block == true) then
+            local dx = sprite.x - x
+            local dy = sprite.y - y
+            local dist = math.sqrt(dx*dx + dy*dy)
+            if (dist < 1 and sprite ~= object) then
+                return true
+            end
         end
     end
-    local i = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x)
-    return (mapProp.map[i] > 0)
+
+    local up = 1+(math.floor(y+distanceFromWalls) * mapProp.mapWidth) + math.floor(x)
+    local dw = 1+(math.floor(y-distanceFromWalls) * mapProp.mapWidth) + math.floor(x)
+    local rg = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x+distanceFromWalls)
+    local lf = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x-distanceFromWalls)
+    local reg = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x)
+
+    if (mapProp.map[reg] > 0) then
+        return true
+    end
+
+    if (player == object) then
+        return false
+    end
+    if (mapProp.map[up] > 0 or mapProp.map[dw] > 0 or mapProp.map[rg] > 0 or mapProp.map[lf] > 0) then
+        return true
+    end
+
+    return false
 end
 
 function changeTexture()
@@ -180,6 +204,8 @@ function drawDebug()
     love.graphics.print("player.R   : "..tostring(player.rot), 10, 55)
     love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
     love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
+--    love.graphics.print("sprite.X   : "..tostring(SPRITES[1].x), 10, 100)
+--    love.graphics.print("sprite.Y   : "..tostring(SPRITES[1].y), 10, 115)
 end
 
 function drawMiniMap()
@@ -244,8 +270,18 @@ function move(object, dt)
     object.x = pos.x
     object.y = pos.y
 
-    if not (isBlocking(newX,object.y)) then object.x = newX end
-    if not (isBlocking(object.x,newY)) then object.y = newY end
+    local moveX = {
+        x = newX,
+        y = object.y
+    }
+
+    local moveY = {
+        x = object.x,
+        y = newY
+    }
+
+    if not (isBlocking(object, moveX)) then object.x = newX end
+    if not (isBlocking(object, moveY)) then object.y = newY end
 end
 
 function drawBackground()

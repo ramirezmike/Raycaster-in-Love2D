@@ -11,6 +11,7 @@ player = {
 --  mouseSpeed = (math.pi / 180 * 2)/12
     rotSpeed = 2,
     mouseSpeed = 0.05,
+    bulletSpeed = 5.5
 }
 
 function convertPlayerRotation()
@@ -23,5 +24,4 @@ end
 function setPlayerSpawnPoint()
     player.x = SPAWNPOINT.x
     player.y = SPAWNPOINT.y
-    print "umm..."
 end
