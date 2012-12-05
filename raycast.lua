@@ -80,7 +80,7 @@ function castSingleRay(rayAngle, stripIdx )
 
         for i=1,#SPRITES do
             local sprite = SPRITES[i]
-            if (floor(sprite.x) == wallX and floor(sprite.y) == wallY) then
+            if (sprite.wallPositionX == wallX and sprite.wallPositionY == wallY) then
                 sprite.visible = true
             end
         end
@@ -139,7 +139,7 @@ function castSingleRay(rayAngle, stripIdx )
 
         for i=1,#SPRITES do
             local sprite = SPRITES[i]
-            if (floor(sprite.x) == wallX and floor(sprite.y) == wallY) then
+            if (sprite.wallPositionX == wallX and sprite.wallPositionY == wallY) then
                 sprite.visible = true
             end
         end
