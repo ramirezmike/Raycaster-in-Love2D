@@ -1,17 +1,22 @@
 function castRays()
+    local sqrt = math.sqrt
+    local asin = math.asin
     local stripIdx = 0
+    local rot = player.rot
+    local vDist = viewDist
+
     for i = 0,numRays - 1 do
         --where does ray go?
         local rayScreenPos = (-numRays/2 + i) 
         -- distance from viewer to point on screen
-        local rayViewDist = math.sqrt(rayScreenPos*rayScreenPos + viewDist*viewDist)
+        local rayViewDist = sqrt(rayScreenPos*rayScreenPos + vDist*vDist)
 
         --angle of ray, relative to viewing direction
         --right triangle: a = sin(A) * c
-        local rayAngle = math.asin(rayScreenPos / rayViewDist)
+        local rayAngle = asin(rayScreenPos / rayViewDist)
         
         castSingleRay(
-            player.rot + rayAngle,
+            rot + rayAngle,
             stripIdx
             );
 
@@ -20,6 +25,14 @@ function castRays()
 end
 
 function castSingleRay(rayAngle, stripIdx )
+    local floor = math.floor
+    local ceil = math.ceil
+    local sin = math.sin
+    local cos = math.cos
+
+    local plyr = player
+    local vDist = viewDist
+
     --make sure angle is between 0 and 360 degrees
     rayAngle = rayAngle % twoPI
     if (rayAngle < 0) then
@@ -29,8 +42,8 @@ function castSingleRay(rayAngle, stripIdx )
     local right = (rayAngle > twoPI * 0.75) or (rayAngle < twoPI * 0.25)
     local up = (rayAngle < 0) or (rayAngle > math.pi)
 
-    local angleSin = math.sin(rayAngle)
-    local angleCos = math.cos(rayAngle)
+    local angleSin = sin(rayAngle)
+    local angleCos = cos(rayAngle)
 
     local vHit = false
     local dist = 0 -- distance to block hit
@@ -52,37 +65,38 @@ function castSingleRay(rayAngle, stripIdx )
     if right then dX = 1 else dX = -1 end
     local dY = dX * slope
     local x
-    if right then x = math.ceil(player.x) else x = math.floor(player.x) end
-    local y = player.y + (x - player.x) * slope
+    if right then x = ceil(plyr.x) else x = floor(plyr.x) end
+    local y = plyr.y + (x - plyr.x) * slope
 
+--    local floor = math.floor
     while (x >= 0 and x < mapProp.mapWidth and y >= 0 and y < mapProp.mapHeight) do
         local wallX
         if right then
-            wallX = math.floor(x)
+            wallX = floor(x)
         else
-            wallX = math.floor(x - 1)
+            wallX = floor(x - 1)
         end
-        local wallY = math.floor(y)
+        local wallY = floor(y)
 
         for i=1,#SPRITES do
             local sprite = SPRITES[i]
-            if (math.floor(sprite.x) == wallX and math.floor(sprite.y) == wallY) then
+            if (floor(sprite.x) == wallX and floor(sprite.y) == wallY) then
                 sprite.visible = true
             end
         end
 
         for i,v in ipairs(bullets) do
-            if (math.floor(v["x"]) == wallX and math.floor(v["y"]) == wallY) then
+            if (floor(v["x"]) == wallX and floor(v["y"]) == wallY) then
                 v["visible"] = true
             end
         end
 
         --is point inside wall block?
 
-        k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
+        k = 1+(floor(wallY) * mapProp.mapWidth) + floor(wallX)
         if (mapProp.map[k] > 0) then
-            local distX = x - player.x
-            local distY = y - player.y
+            local distX = x - plyr.x
+            local distY = y - plyr.y
             dist = distX*distX + distY*distY
 
             texture = (mapProp.map[k]-1)
@@ -110,35 +124,36 @@ function castSingleRay(rayAngle, stripIdx )
     local dX = dY * slope
 
     local y
-    if (up) then y = math.floor(player.y) else y = math.ceil(player.y) end
-    local x = player.x + (y - player.y) * slope
+    if (up) then y = floor(plyr.y) else y = ceil(plyr.y) end
+    local x = plyr.x + (y - plyr.y) * slope
   
+    local floor = floor
     while (x >= 0 and x < mapProp.mapWidth and y >= 0 and y < mapProp.mapHeight) do
         local wallY
         if (up) then
-            wallY = math.floor(y - 1)
+            wallY = floor(y - 1)
         else
-            wallY = math.floor(y)
+            wallY = floor(y)
         end
-        local wallX = math.floor(x)
+        local wallX = floor(x)
 
         for i=1,#SPRITES do
             local sprite = SPRITES[i]
-            if (math.floor(sprite.x) == wallX and math.floor(sprite.y) == wallY) then
+            if (floor(sprite.x) == wallX and floor(sprite.y) == wallY) then
                 sprite.visible = true
             end
         end
 
         for i,v in ipairs(bullets) do
-            if (math.floor(v["x"]) == wallX and math.floor(v["y"]) == wallY) then
+            if (floor(v["x"]) == wallX and floor(v["y"]) == wallY) then
                 v["visible"] = true
             end
         end
 
-        k = 1+(math.floor(wallY) * mapProp.mapWidth) + math.floor(wallX)
+        k = 1+(floor(wallY) * mapProp.mapWidth) + floor(wallX)
         if (mapProp.map[k] > 0) then
-            local distX = x - player.x
-            local distY = y - player.y
+            local distX = x - plyr.x
+            local distY = y - plyr.y
             local blockDist = distX*distX + distY*distY
             if(dist == 0 or blockDist < dist) then
             texture = (mapProp.map[k]-1)
@@ -158,22 +173,24 @@ function castSingleRay(rayAngle, stripIdx )
     end
     if (dist)then
         dist = math.sqrt(dist)
-        dist = dist * math.cos(player.rot - rayAngle)
+        dist = dist * cos(plyr.rot - rayAngle)
 
-        height = math.floor(viewDist / dist+0.5)
-        drawStrip(textureX,height,texture,stripIdx,dist,screenHeight)
+        height = floor(vDist / dist+0.5)
+        drawStrip(textureX,height,texture,stripIdx,dist)
     end
 end
 
-function drawStrip(texX,height,texture,stripIdx,dist,screenHeight)
-    local stripTop = math.floor((screenHeight - height)/2 + 0.5)
-    local stripBottom = math.floor((screenHeight + height)/2 + 0.5)
-    texX = math.floor(texX*64)
+function drawStrip(texX,height,texture,stripIdx,dist)
+    local scrHeight = screenHeight
+    local floor = math.floor
+    local stripTop = floor((scrHeight - height)/2 + 0.5)
+    local stripBottom = floor((scrHeight + height)/2 + 0.5)
+    texX = floor(texX*64)
 --    love.graphics.drawq(wallsImgs,QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
 --    spriteBatch:addq(QUADS[texture][texX],stripIdx,stripTop,0,1,height/64)
     drawCalls[stripIdx] = 
         {
-            z = -math.floor(dist*10000), 
+            z = -floor(dist*10000), 
             x = stripIdx, 
             y = stripTop, 
 --            id = math.random(1000,9999), 
