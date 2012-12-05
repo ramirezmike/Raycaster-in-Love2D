@@ -128,9 +128,9 @@ function checkCollision(fromX, fromY, toX, toY, radius)
     return pos
 end
 
-function isBlocking(object, newObjectPosition)
-    local x = newObjectPosition.x
-    local y = newObjectPosition.y
+function isBlocking(object, newX, newY)
+    local x = newX
+    local y = newY 
 
     if (y < 0 + distanceFromWalls or y > mapProp.mapHeight - distanceFromWalls or x < 0 + distanceFromWalls or x > mapProp.mapWidth - distanceFromWalls) then
         return true
@@ -270,18 +270,8 @@ function move(object, dt)
     object.x = pos.x
     object.y = pos.y
 
-    local moveX = {
-        x = newX,
-        y = object.y
-    }
-
-    local moveY = {
-        x = object.x,
-        y = newY
-    }
-
-    if not (isBlocking(object, moveX)) then object.x = newX end
-    if not (isBlocking(object, moveY)) then object.y = newY end
+    if not (isBlocking(object, newX, object.y)) then object.x = newX end
+    if not (isBlocking(object, object.x, newY)) then object.y = newY end
 end
 
 function drawBackground()
