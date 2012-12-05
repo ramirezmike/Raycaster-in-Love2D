@@ -86,7 +86,7 @@ function castSingleRay(rayAngle, stripIdx )
         end
 
         for i,v in ipairs(bullets) do
-            if (floor(v["x"]) == wallX and floor(v["y"]) == wallY) then
+            if (v["bulletWallPositionX"] == wallX and v["bulletWallPositionY"] == wallY) then
                 v["visible"] = true
             end
         end
@@ -145,7 +145,7 @@ function castSingleRay(rayAngle, stripIdx )
         end
 
         for i,v in ipairs(bullets) do
-            if (floor(v["x"]) == wallX and floor(v["y"]) == wallY) then
+            if (v["bulletWallPositionX"] == wallX and v["bulletWallPositionY"] == wallY) then
                 v["visible"] = true
             end
         end
