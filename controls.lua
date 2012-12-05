@@ -33,9 +33,17 @@ function love.keypressed(key, unicode)
     end
     if key == 'a' then
         player.strafeSpeed  = -1
+        down = love.keyboard.isDown('d') 
+        if (down) then
+            player.strafeSpeed  = -1
+        end
     end
     if key == 'd' then
         player.strafeSpeed  = 1
+        down = love.keyboard.isDown('a') 
+        if (down) then
+            player.strafeSpeed  = 1
+        end
     end
     if key == "lshift" then
         player.moveSpeed = 8
@@ -82,9 +90,17 @@ function love.keyreleased(key, unicode)
     end
     if key == 'a' then
         player.strafeSpeed  = 0
+        down = love.keyboard.isDown('d') 
+        if (down) then
+            player.strafeSpeed  = 1
+        end
     end
     if key == 'd' then
         player.strafeSpeed  = 0
+        down = love.keyboard.isDown('a') 
+        if (down) then
+            player.strafeSpeed  = -1
+        end
     end
     if key == "lshift" then
         player.moveSpeed = 4
