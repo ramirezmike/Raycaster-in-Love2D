@@ -52,3 +52,12 @@ function renderBullets()
         end
     end
 end
+
+function createBullet()
+    local startX = player.x                                                                                                                                                  
+    local startY = player.y                                                
+    local angle = player.rot                                               
+    local bulletDx = player.bulletSpeed * math.cos(angle)                   
+    local bulletDy = player.bulletSpeed * math.sin(angle)                   
+    table.insert(bullets, {x = startX, y = startY, dx = bulletDx, dy = bulletDy, visible = false, objType = "bullet"})
+end

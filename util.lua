@@ -158,7 +158,7 @@ function isBlocking(object, newX, newY)
         return true
     end
 
-    if (player == object) then
+    if (player == object or object.objType == "bullet") then
         return false
     end
     if (mapProp.map[up] > 0 or mapProp.map[dw] > 0 or mapProp.map[rg] > 0 or mapProp.map[lf] > 0) then

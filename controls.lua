@@ -7,13 +7,7 @@ function love.mousepressed(x, y, button)
 --            if not (mapProp.map[selectedWall] == 5) then
      --           pushWall(selectedWall)
  --           end
- 
-            local startX = player.x
-            local startY = player.y
-            local angle = player.rot
-            local bulletDx = player.bulletSpeed * math.cos(angle)                         
-            local bulletDy = player.bulletSpeed * math.sin(angle)                         
-            table.insert(bullets, {x = startX, y = startY, dx = bulletDx, dy = bulletDy, visible = false})
+            createBullet() 
         end
     end
 end
