@@ -131,6 +131,8 @@ end
 function isBlocking(object, newX, newY)
     local x = newX
     local y = newY 
+    local floor = math.floor
+    local sqrt = math.sqrt
 
     if (y < 0 + distanceFromWalls or y > mapProp.mapHeight - distanceFromWalls or x < 0 + distanceFromWalls or x > mapProp.mapWidth - distanceFromWalls) then
         return true
@@ -141,18 +143,18 @@ function isBlocking(object, newX, newY)
         if (sprite.block == true) then
             local dx = sprite.x - x
             local dy = sprite.y - y
-            local dist = math.sqrt(dx*dx + dy*dy)
+            local dist = sqrt(dx*dx + dy*dy)
             if (dist < 1 and sprite ~= object) then
                 return true
             end
         end
     end
 
-    local up = 1+(math.floor(y+distanceFromWalls) * mapProp.mapWidth) + math.floor(x)
-    local dw = 1+(math.floor(y-distanceFromWalls) * mapProp.mapWidth) + math.floor(x)
-    local rg = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x+distanceFromWalls)
-    local lf = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x-distanceFromWalls)
-    local reg = 1+(math.floor(y) * mapProp.mapWidth) + math.floor(x)
+    local up = 1+(floor(y+distanceFromWalls) * mapProp.mapWidth) + floor(x)
+    local dw = 1+(floor(y-distanceFromWalls) * mapProp.mapWidth) + floor(x)
+    local rg = 1+(floor(y) * mapProp.mapWidth) + floor(x+distanceFromWalls)
+    local lf = 1+(floor(y) * mapProp.mapWidth) + floor(x-distanceFromWalls)
+    local reg = 1+(floor(y) * mapProp.mapWidth) + floor(x)
 
     if (mapProp.map[reg] > 0) then
         return true
@@ -203,7 +205,7 @@ function drawDebug()
     love.graphics.print("player.Y   : "..tostring(player.y), 10, 40)
     love.graphics.print("player.R   : "..tostring(player.rot), 10, 55)
     love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
-    love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
+--    love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
 --    love.graphics.print("sprite.X   : "..tostring(SPRITES[1].x), 10, 100)
 --    love.graphics.print("sprite.Y   : "..tostring(SPRITES[1].y), 10, 115)
 end
