@@ -3,8 +3,21 @@ function manageBullets(dt)
         v["x"] = v["x"] + (v["dx"] * dt)                                           
         v["y"] = v["y"] + (v["dy"] * dt)                                           
         if (isBlocking(v, v["x"], v["y"])) then
+            table.insert(DECALS, 
+                {
+                    x = v["previousX"], 
+                    y = v["previousY"], 
+                    wallX = v["bulletWallPositionX"],
+                    wallY = v["bulletWallPositionY"],
+                    sprite = 4, 
+                    state = 3, 
+                    visible = false, 
+                    decay = 0.1
+                })
             table.remove(bullets,i)
         end
+        v["previousX"] = v["x"] - ((v["dx"] * dt) * 2)
+        v["previousY"] = v["y"] - ((v["dy"] * dt) * 2)
     end                                                                            
 end  
 
@@ -45,7 +58,7 @@ function renderBullets()
                 dist = dist,                                                       
                 sx = spriteSize / mTileSize,                                
                 sy = spriteSize / 64,                                              
-                quad = SPRITEQUAD[1][1]                        
+                quad = SPRITEQUAD[4][1]                        
             }
 
             v["visible"] = false

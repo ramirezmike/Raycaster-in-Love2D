@@ -22,7 +22,20 @@ function ai(dt)
             sprite.state = 0
             sprite.speed = 0
         end
+        if (sprite.hit) then
+            aiHandleHit(sprite, dt)
+        end
         move(SPRITES[i], dt)
     end
 
+end
+
+function aiHandleHit(sprite, dt)
+    sprite.hitPause = sprite.hitPause - dt
+    if (sprite.hitPause <= 0) then
+        sprite.hit = false
+        sprite.hitPause = 0.2
+    else
+        sprite.state = 5
+    end
 end

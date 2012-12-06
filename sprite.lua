@@ -46,3 +46,7 @@ function renderSprites()
        end
     end
 end
+
+function handleSpriteHit(sprite)
+    sprite.hit = true
+end

@@ -7,6 +7,7 @@ require "map"
 require "sprite"
 require "ai"
 require "bullets"
+require "decals"
 
 SPRITES = {}
 loadMapFromDisk("map01.lua")
@@ -34,6 +35,7 @@ function love.draw()
     drawCalls = {}
     castRays()
     renderSprites()
+    renderDecals()
     renderBullets()
     sort(drawCalls)    
 
@@ -60,6 +62,7 @@ function love.update(dt)
     move(player, dt)
     ai(dt)
     manageBullets(dt)
+    manageDecals(dt)
 end
 
 function love.load()

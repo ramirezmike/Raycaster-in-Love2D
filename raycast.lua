@@ -91,6 +91,12 @@ function castSingleRay(rayAngle, stripIdx )
             end
         end
 
+        for i,v in ipairs(DECALS) do
+            if (v["wallX"] == wallX and v["wallY"] == wallY) then
+                v["visible"] = true
+            end
+        end
+
         --is point inside wall block?
 
         k = 1+(floor(wallY) * mapProp.mapWidth) + floor(wallX)
@@ -146,6 +152,12 @@ function castSingleRay(rayAngle, stripIdx )
 
         for i,v in ipairs(bullets) do
             if (v["bulletWallPositionX"] == wallX and v["bulletWallPositionY"] == wallY) then
+                v["visible"] = true
+            end
+        end
+
+        for i,v in ipairs(DECALS) do
+            if (v["wallX"] == wallX and v["wallY"] == wallY) then
                 v["visible"] = true
             end
         end

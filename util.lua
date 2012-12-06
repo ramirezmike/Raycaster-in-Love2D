@@ -144,7 +144,13 @@ function isBlocking(object, newX, newY)
             local dx = sprite.x - x
             local dy = sprite.y - y
             local dist = sqrt(dx*dx + dy*dy)
-            if (dist < 1 and sprite ~= object) then
+            if (object.objType == "bullet") then
+                if (dist < 0.3) then
+                    handleSpriteHit(sprite)
+                    return true
+                end
+            end
+            if (dist < 1 and sprite ~= object and object.objType ~= "bullet") then
                 return true
             end
         end
@@ -163,6 +169,7 @@ function isBlocking(object, newX, newY)
     if (player == object or object.objType == "bullet") then
         return false
     end
+
     if (mapProp.map[up] > 0 or mapProp.map[dw] > 0 or mapProp.map[rg] > 0 or mapProp.map[lf] > 0) then
         return true
     end
@@ -248,6 +255,10 @@ function drawMiniMap()
 end
 
 function move(object, dt)
+    local cos = math.cos
+    local sin = math.sin
+    local abs = math.abs
+
     local moveStep = object.speed * object.moveSpeed * dt
     local strafeStep = object.strafeSpeed * math.pi/2
 
@@ -263,10 +274,10 @@ function move(object, dt)
     convertPlayerRotation() -- make sure player is within 360 degrees
 
     object.rot = object.rot + (object.dir * object.rotSpeed * dt) + mouseLook
-    local newX = object.x + math.cos(object.rot ) * moveStep
-    local newY = object.y + math.sin(object.rot ) * moveStep
-    newX = newX + math.cos(object.rot + math.abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
-    newY = newY + math.sin(object.rot + math.abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
+    local newX = object.x + cos(object.rot ) * moveStep
+    local newY = object.y + sin(object.rot ) * moveStep
+    newX = newX + cos(object.rot + abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
+    newY = newY + sin(object.rot + abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
     
     local pos = checkCollision(object.x, object.y, newX, newY, 0.35)
     object.x = pos.x

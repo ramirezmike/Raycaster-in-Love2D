@@ -4,6 +4,7 @@ QUADS = {}
 SPRITEQUAD = {}
 BGQUAD = {}
 bullets = {}
+DECALS = {}
 
 spriteBatch = 0
 selectedWall = 0
