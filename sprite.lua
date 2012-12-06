@@ -49,4 +49,5 @@ end
 
 function handleSpriteHit(sprite)
     sprite.hit = true
+    sprite.health = sprite.health - 1
 end

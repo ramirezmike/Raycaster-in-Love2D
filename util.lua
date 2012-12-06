@@ -129,10 +129,15 @@ function checkCollision(fromX, fromY, toX, toY, radius)
 end
 
 function isBlocking(object, newX, newY)
+    if (object.objType == "sprite") then
+        return false
+    end
     local x = newX
     local y = newY 
     local floor = math.floor
     local sqrt = math.sqrt
+
+
 
     if (y < 0 + distanceFromWalls or y > mapProp.mapHeight - distanceFromWalls or x < 0 + distanceFromWalls or x > mapProp.mapWidth - distanceFromWalls) then
         return true
@@ -170,9 +175,9 @@ function isBlocking(object, newX, newY)
         return false
     end
 
-    if (mapProp.map[up] > 0 or mapProp.map[dw] > 0 or mapProp.map[rg] > 0 or mapProp.map[lf] > 0) then
-        return true
-    end
+--    if (mapProp.map[up] > 0 or mapProp.map[dw] > 0 or mapProp.map[rg] > 0 or mapProp.map[lf] > 0) then
+--        return true
+--    end
 
     return false
 end

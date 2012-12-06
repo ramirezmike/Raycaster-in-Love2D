@@ -7,6 +7,19 @@ mapProp = {
     map = {}
 }
 
+wallPositions = {}
+
+function makeWallPositions()
+    for i,v in ipairs(map) do
+        if (v > 0) then
+            table.insert(wallPositions,{
+                x = positionXFromArrayIndex(i), 
+                y = positionYFromArrayIndex(i) 
+            })
+        end
+    end
+end
+
 function saveMapToDisk(map)
     local mapString = "map = {"  
     for i = 1, #map - 1 do
