@@ -7,7 +7,7 @@ function love.mousepressed(x, y, button)
 --            if not (mapProp.map[selectedWall] == 5) then
      --           pushWall(selectedWall)
  --           end
-            createBullet() 
+            createBullet(player) 
         end
     end
 end
@@ -24,6 +24,9 @@ function love.keypressed(key, unicode)
     end
     if key == 'right' then
         player.dir = 1
+    end
+    if key == 'i' then
+        createBullet(SPRITES[1])
     end
     if key == 'a' then
         player.strafeSpeed  = -1

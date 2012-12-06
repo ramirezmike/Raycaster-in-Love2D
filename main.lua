@@ -48,11 +48,16 @@ function love.draw()
 --        if (light < 0) then light = 0 end
 --        spriteBatch:setColor(255,255,255,255*light) 
 --        print ("Quad: " .. tostring(strip.quad) .. "StripX: " .. tostring(strip.x) .. "StripY: " .. tostring(strip.y) .. "StripSX: " .. tostring(strip.sx) .. "StripSY: " .. tostring(strip.sy))
+        if (strip.hit) then
+            spriteBatch:setColor( 255, 0, 0, 255)
+        end
         spriteBatch:addq(strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
+        spriteBatch:setColor()
 --        love.graphics.setColor(255,255,255,255*light)
 --        love.graphics.drawq(wallsImgs,strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
     end
 
+    spriteBatch:setColor( 255, 255, 255, 255)
     love.graphics.draw(spriteBatch)
 
 --    if (mapProp.displayMap) then drawMiniMap() end
@@ -76,7 +81,7 @@ function love.load()
 
     makeSpriteMap()
 
-    love.graphics.setColorMode("replace")
+    love.graphics.setColorMode("modulate")
     love.graphics.setMode(640,480, false, false)
 
     love.mouse.setVisible(false)

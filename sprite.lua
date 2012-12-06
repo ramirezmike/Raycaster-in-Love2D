@@ -12,10 +12,15 @@ function renderSprites()
     local floor = math.floor
 
     for i=1,#SPRITES do
+        local isHit = false
         local sprite = SPRITES[i]
         sprite.wallPositionX = floor(sprite.x)
         sprite.wallPositionY = floor(sprite.y)
         if (sprite.visible) then 
+            if (sprite.hit) then
+                isHit = true
+            end
+
             local dy = sprite.y - player.y -- These two had + 0.5 to fix upside down sprites..
             local dx = sprite.x - player.x
             
@@ -40,7 +45,8 @@ function renderSprites()
                 dist = dist,
                 sx = spriteSize / mapProp.tileSize,
                 sy = spriteSize / 64,
-                quad = SPRITEQUAD[sprite.img][sprite.state]
+                quad = SPRITEQUAD[sprite.img][sprite.state],
+                hit = isHit
             }
             sprite.visible = false 
        end

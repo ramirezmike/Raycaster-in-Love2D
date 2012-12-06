@@ -19,115 +19,6 @@ function positionYFromArrayIndex(index)
     return y
 end
 
-function checkCollision(fromX, fromY, toX, toY, radius)
-    local pos = {
-        x = fromX,
-        y = fromY
-    }
-
---    if toY < 0 or toY >= mapProp.mapHeight or toX < 0 or toX >= mapProp.mapWidth then
---            return pos
---    end
---
---    local blockX = math.floor(toX)
---    local blockY = math.floor(toY)
---
---    if isBlocking(blockX,blockY) then
---        return pos
---    end
---    
---    pos.x = toX
---    pos.y = toY
---
---    local blockTop = isBlocking(blockX,blockY-1)
---    local blockBottom = isBlocking(blockX,blockY+1)
---    local blockLeft = isBlocking(blockX-1,blockY)
---    local blockRight = isBlocking(blockX+1,blockY)
---
---    if (blockTop ~= 0) and (toY - blockY < radius) then
---        toY = blockY + radius
---        pos.y = toY
---    end
---    if (blockBottom ~= 0) and ((blockY+1) - toY < radius) then
---        toY = (blockY + 1) - radius
---        pos.y = toY
---    end
---    if (blockLeft ~= 0) and (toX - blockX < radius) then
---        toX = blockX + radius
---        pos.x = toX
---    end
---    if (blockRight ~= 0) and ((blockX+1) - toX < radius) then
---        toX = (blockX+1) - radius
---        pos.x = toX
---    end
---
---    -- tile to top left
---    if (isBlocking(blockX-1,blockY-1) ~= 0) and (blockTop == 0 or blockLeft == 0) then
---        local dx = toX - blockX
---        local dy = toY - blockY
---        if (dx*dx+dy*dy < radius*radius) then
---            if (dx*dx > dy*dy) then
---                toX = blockX + radius
---                pos.x = toX 
---            else
---                toY = blockY + radius
---                pos.y = toY
---            end
---        end
---
---    end
---        
---    -- tile to top right 
---    if (isBlocking(blockX+1,blockY-1) ~= 0) and (blockTop == 0 or blockRight == 0) then
---        local dx = toX - (blockX+1)
---        local dy = toY - blockY
---        if (dx*dx+dy*dy < radius*radius) then
---            if (dx*dx > dy*dy) then
---                toX = (blockX+1) + radius
---                pos.x = toX 
---            else
---                toY = blockY + radius
---                pos.y = toY
---            end
---        end
---
---    end
---
---    -- tile to bottom left 
---    if (isBlocking(blockX-1,blockY+1) ~= 0) and (blockBottom == 0 or blockLeft == 0) then
---        local dx = toX - blockX
---        local dy = toY - (blockY+1)
---        if (dx*dx+dy*dy < radius*radius) then
---            if (dx*dx > dy*dy) then
---                toX = blockX + radius
---                pos.x = toX 
---            else
---                toY = (blockY+1) + radius
---                pos.y = toY
---            end
---        end
---
---    end
---
---    -- tile to bottom right 
---    if (isBlocking(blockX+1,blockY+1) ~= 0) and (blockBottom == 0 or blockRight == 0) then
---        local dx = toX - (blockX+1)
---        local dy = toY - (blockY+1)
---        if (dx*dx+dy*dy < radius*radius) then
---            if (dx*dx > dy*dy) then
---                toX = (blockX+1) + radius
---                pos.x = toX 
---            else
---                toY = (blockY+1) + radius
---                pos.y = toY
---            end
---        end
---
---    end
---
-    return pos
-end
-
 function isBlocking(object, newX, newY)
     if (object.objType == "sprite") then
         return false
@@ -136,8 +27,6 @@ function isBlocking(object, newX, newY)
     local y = newY 
     local floor = math.floor
     local sqrt = math.sqrt
-
-
 
     if (y < 0 + distanceFromWalls or y > mapProp.mapHeight - distanceFromWalls or x < 0 + distanceFromWalls or x > mapProp.mapWidth - distanceFromWalls) then
         return true
@@ -149,7 +38,7 @@ function isBlocking(object, newX, newY)
             local dx = sprite.x - x
             local dy = sprite.y - y
             local dist = sqrt(dx*dx + dy*dy)
-            if (object.objType == "bullet") then
+            if (object.objType == "bullet" and SPRITES[object.origin] ~= sprite) then
                 if (dist < 0.3) then
                     handleSpriteHit(sprite)
                     return true
@@ -161,23 +50,11 @@ function isBlocking(object, newX, newY)
         end
     end
 
-    local up = 1+(floor(y+distanceFromWalls) * mapProp.mapWidth) + floor(x)
-    local dw = 1+(floor(y-distanceFromWalls) * mapProp.mapWidth) + floor(x)
-    local rg = 1+(floor(y) * mapProp.mapWidth) + floor(x+distanceFromWalls)
-    local lf = 1+(floor(y) * mapProp.mapWidth) + floor(x-distanceFromWalls)
     local reg = 1+(floor(y) * mapProp.mapWidth) + floor(x)
 
     if (mapProp.map[reg] > 0) then
         return true
     end
-
-    if (player == object or object.objType == "bullet") then
-        return false
-    end
-
---    if (mapProp.map[up] > 0 or mapProp.map[dw] > 0 or mapProp.map[rg] > 0 or mapProp.map[lf] > 0) then
---        return true
---    end
 
     return false
 end
@@ -284,10 +161,6 @@ function move(object, dt)
     newX = newX + cos(object.rot + abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
     newY = newY + sin(object.rot + abs(strafeStep)) * object.strafeSpeed*object.moveSpeed * dt
     
-    local pos = checkCollision(object.x, object.y, newX, newY, 0.35)
-    object.x = pos.x
-    object.y = pos.y
-
     if not (isBlocking(object, newX, object.y)) then object.x = newX end
     if not (isBlocking(object, object.x, newY)) then object.y = newY end
 end

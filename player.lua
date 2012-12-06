@@ -12,7 +12,8 @@ player = {
     rotSpeed = 2,
     mouseSpeed = 0.05,
     bulletSpeed = 5.5,
-    objType = "player"
+    objType = "player",
+    id = 0
 }
 
 function convertPlayerRotation()
