@@ -76,10 +76,15 @@ function limitVelocity(sprite, vector)
 end
 
 function steerTowardPlayer(sprite,vector)
-    vector.x = (player.x - sprite.x)
-    vector.y = (player.y - sprite.y)
+    newVectorX = (player.x - sprite.x)
+    newVectorY = (player.y - sprite.y)
 
-    if (math.sqrt(vector.x*vector.x + vector.y*vector.y)) < 3 then
+    local mag = math.sqrt(newVectorX*newVectorX + newVectorY*newVectorY)
+    if (mag < 10) then  -- this will be based on sprite's acceptable distance from player and if "chase" is true
+        vector.x = newVectorX 
+        vector.y = newVectorY 
+    end
+    if (mag < 3) then
         local pushVectorX = 0
         local pushVectorY = 0
         pushVectorX = pushVectorX - (vector.x)
@@ -120,8 +125,6 @@ function steerAwayFromSprites(sprite,vector)
         end
     end
     
---    print (newVectorX .. "  " .. newVectorY)
-    
     vector.x = vector.x + newVectorX
     vector.y = vector.y + newVectorY
 end
@@ -139,8 +142,6 @@ function steerAwayFromWalls(sprite,vector)
             newVectorY = (newVectorY - dy) * 4
         end
     end
-    
---    print (newVectorX .. "  " .. newVectorY)
     
     vector.x = vector.x + newVectorX
     vector.y = vector.y + newVectorY
