@@ -23,6 +23,7 @@ function isBlocking(object, newX, newY)
     if (object.objType == "sprite") then
         return false
     end
+
     local x = newX
     local y = newY 
     local floor = math.floor
@@ -163,6 +164,20 @@ function move(object, dt)
     
     if not (isBlocking(object, newX, object.y)) then object.x = newX end
     if not (isBlocking(object, object.x, newY)) then object.y = newY end
+end
+
+function polarOffset(x, y, dist, angle)
+    point = {}
+    point.x = x + dist * math.cos(angle)
+    point.y = y + dist * math.sin(angle)
+    return point
+end
+
+function rotateAroundOrigin(x, y, originX, originY, angle)
+    point = {}
+    point.x = ((x - originX) * math.cos(angle)) - ((originY - y) * math.sin(angle)) + originX
+    point.y = ((y - originY) * math.cos(angle)) - ((originY - y) * math.sin(angle)) + originY
+    return point
 end
 
 function drawBackground()

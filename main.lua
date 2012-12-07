@@ -51,6 +51,7 @@ function love.draw()
         if (strip.hit) then
             spriteBatch:setColor( 255, 0, 0, 255)
         end
+--        spriteBatch:setColor( 255/strip.dist, 255/strip.dist, 255/strip.dist, 255)
         spriteBatch:addq(strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
         spriteBatch:setColor()
 --        love.graphics.setColor(255,255,255,255*light)

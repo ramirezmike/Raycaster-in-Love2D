@@ -22,7 +22,7 @@ function renderDecals()
             local top = (scrHeight - spriteSize)/2
             local left = (scrWidth/2 + spriteX - spriteSize/2)
             local z = -floor(dist*10000)
-
+            local state = v["state"]
             drawCalls[#drawCalls+1] =
             {
             
@@ -32,7 +32,7 @@ function renderDecals()
                 dist = dist,
                 sx = spriteSize / mTileSize,
                 sy = spriteSize / 64,
-                quad = SPRITEQUAD[4][2]
+                quad = SPRITEQUAD[4][state]
             }
             v["visible"] = false
         end

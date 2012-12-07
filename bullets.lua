@@ -15,7 +15,7 @@ function manageBullets(dt)
                         wallX = v["bulletWallPositionX"],
                         wallY = v["bulletWallPositionY"],
                         sprite = 4, 
-                        state = 3, 
+                        state = 2, 
                         visible = false, 
                         decay = 0.1
                     })
