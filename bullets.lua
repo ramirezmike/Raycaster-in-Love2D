@@ -3,11 +3,11 @@ function manageBullets(dt)
         v["x"] = v["x"] + (v["dx"] * dt)                                           
         v["y"] = v["y"] + (v["dy"] * dt)                                           
         if (v["origin"] > 0) then
-            if (enemyBulletHitPlayerChecek(v)) then
+            if (enemyBulletHitPlayerCheck(v)) then
                 table.remove(bullets,i)
             end
-        else 
-            if (isBlocking(v, v["x"], v["y"])) then
+        end
+        if (isBlocking(v, v["x"], v["y"])) then
                 table.insert(DECALS, 
                     {
                         x = v["x"] - ((v["dx"]*dt) * 3), 
@@ -20,7 +20,6 @@ function manageBullets(dt)
                         decay = 0.1
                     })
                 table.remove(bullets,i)
-            end
         end
     end                                                                            
 end  
@@ -71,14 +70,13 @@ function renderBullets()
 end
 
 
-function enemyBulletHitPlayerChecek(v)
+function enemyBulletHitPlayerCheck(v)
     local plyr = player
     local dx = v["x"] - plyr.x
     local dy = v["y"] - plyr.y
     local dist = math.sqrt(dx*dx+dy*dy)
 
     if (dist < 0.4) then
-        print ("hit")
         return true
     end
 

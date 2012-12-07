@@ -119,8 +119,8 @@ function steerAwayFromSprites(sprite,vector)
             dx = v["x"] - sprite.x
             dy = v["y"] - sprite.y
             if (math.sqrt(dx*dx + dy*dy) < 1.0) then
-                newVectorX = newVectorX - dx
-                newVectorY = newVectorY - dy
+                newVectorX = (newVectorX - dx)*2
+                newVectorY = (newVectorY - dy)*2
             end
         end
     end
