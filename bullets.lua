@@ -83,6 +83,17 @@ function enemyBulletHitPlayerCheck(v)
     return false
 end
 
+function createBulletSprite(object)
+    local tarX = player.x - object.x
+    local tarY = player.y - object.y
+    local mag = math.sqrt(tarX*tarX + tarY * tarY)
+    local nVectorX = tarX / mag    
+    local nVectorY = tarY / mag    
+    local bulletDx = nVectorX * object.bulletSpeed
+    local bulletDy = nVectorY * object.bulletSpeed 
+    table.insert(bullets, {x = object.x, y = object.y, dx = bulletDx, dy = bulletDy, visible = false, objType = "bullet",origin = object.id})
+end
+
 function createBullet(object)
     local startX = object.x                                                                                                                                                  
     local startY = object.y                                                

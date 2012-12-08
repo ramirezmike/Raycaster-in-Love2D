@@ -26,7 +26,7 @@ function love.keypressed(key, unicode)
         player.dir = 1
     end
     if key == 'i' then
-        createBullet(SPRITES[1])
+        createBulletSprite(SPRITES[1])
     end
     if key == 'a' then
         player.strafeSpeed  = -1
