@@ -13,6 +13,7 @@ function ai(dt)
                 y = 0 
             }
              
+            handleFire(sprite,dt)
             steerTowardPlayer(sprite,vector)
             steerAwayFromSprites(sprite,vector)
             steerAwayFromWalls(sprite,vector)
@@ -81,6 +82,7 @@ function steerTowardPlayer(sprite,vector)
 
     local mag = math.sqrt(newVectorX*newVectorX + newVectorY*newVectorY)
     if (mag < 10) then  -- this will be based on sprite's acceptable distance from player and if "chase" is true
+        sprite.playerVisible = true
         vector.x = newVectorX 
         vector.y = newVectorY 
     end
@@ -108,6 +110,19 @@ function steerWithinBoundry(sprite)
     elseif (sprite.x > xMax) then
     end
 
+end
+
+function handleFire(sprite,dt)
+    if (sprite.playerVisible) then
+        if (sprite.fireRate < 0) then 
+            sprite.fireRate = sprite.maxFireRate
+        elseif (sprite.fireRate == sprite.maxFireRate) then
+            createBulletSprite(sprite)
+            sprite.fireRate = sprite.fireRate - dt
+        else
+            sprite.fireRate = sprite.fireRate - dt
+        end
+    end
 end
 
 function steerAwayFromSprites(sprite,vector)
