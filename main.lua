@@ -61,6 +61,16 @@ function love.draw()
     spriteBatch:setColor( 255, 255, 255, 255)
     love.graphics.draw(spriteBatch)
 
+    if (player.hit) then
+        player.hitDecay = player.hitDecay - 1
+        love.graphics.setColor(255,255,255,55)
+        love.graphics.draw(hitImg,0,0,0,15,12)
+        if (player.hitDecay < 0) then
+            player.hitDecay = 10
+            player.hit = false
+        end
+    end
+
 --    if (mapProp.displayMap) then drawMiniMap() end
     if (displayDebug) then drawDebug() end
 end
@@ -74,16 +84,23 @@ end
 
 function love.load()
     wallsImgs = love.graphics.newImage("images.png")
-    bgImg = love.graphics.newImage("bg.png")
+--    bgImg = love.graphics.newImage("bg.png")
+    hitImg = love.graphics.newImage("hit.png")
     local imagesPerHeight = (wallsImgs:getHeight()/mapProp.tileSize)
     local imagesPerWidth = (wallsImgs:getWidth()/mapProp.tileSize)
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
     setQuads(imagesPerHeight,imagesPerWidth)
 
     makeSpriteMap()
+    
+    soundShoot = love.audio.newSource("shoot.wav", "static")
+    soundHit1 = love.audio.newSource("hit1.wav", "static")
+    music1 = love.audio.newSource("track1.ogg")
+    love.audio.play(music1)
+    music1:setLooping(true)
 
     love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, false, false)
+    love.graphics.setMode(640,480, true, false)
 
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)

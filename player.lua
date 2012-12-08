@@ -13,7 +13,9 @@ player = {
     mouseSpeed = 0.05,
     bulletSpeed = 5.5,
     objType = "player",
-    id = 0
+    id = 0,
+    hit = false,
+    hitDecay = 10
 }
 
 function convertPlayerRotation()
@@ -26,4 +28,8 @@ end
 function setPlayerSpawnPoint()
     player.x = SPAWNPOINT.x
     player.y = SPAWNPOINT.y
+end
+
+function playerHitDraw()
+    player.hit = true
 end

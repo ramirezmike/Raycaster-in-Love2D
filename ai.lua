@@ -85,6 +85,8 @@ function steerTowardPlayer(sprite,vector)
         sprite.playerVisible = true
         vector.x = newVectorX 
         vector.y = newVectorY 
+    else
+        sprite.playerVisible = false 
     end
     if (mag < 3) then
         local pushVectorX = 0

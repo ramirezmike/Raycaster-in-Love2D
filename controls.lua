@@ -25,8 +25,13 @@ function love.keypressed(key, unicode)
     if key == 'right' then
         player.dir = 1
     end
+
+    if key == 'escape' or key == 'q' then
+        love.event.quit()
+    end
+
     if key == 'i' then
-        createBulletSprite(SPRITES[1])
+        loadMapFromDisk("map01.lua")
     end
     if key == 'a' then
         player.strafeSpeed  = -1
@@ -66,7 +71,7 @@ function love.keypressed(key, unicode)
     if key == 'tab' then
         displayDebug = not(displayDebug)
     end
-    if key == 'escape' then
+    if key == '``' then
         love.mouse.setVisible(true)
         love.mouse.setGrab(false)
     end

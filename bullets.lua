@@ -5,6 +5,8 @@ function manageBullets(dt)
         if (v["origin"] > 0) then
             if (enemyBulletHitPlayerCheck(v)) then
                 table.remove(bullets,i)
+                playerHitDraw()
+                print ("hit!")
             end
         end
         if (isBlocking(v, v["x"], v["y"])) then
@@ -19,6 +21,8 @@ function manageBullets(dt)
                         visible = false, 
                         decay = 0.1
                     })
+                love.audio.stop(soundHit1)
+                love.audio.play(soundHit1)
                 table.remove(bullets,i)
         end
     end                                                                            
@@ -92,6 +96,8 @@ function createBulletSprite(object)
     local bulletDx = nVectorX * object.bulletSpeed
     local bulletDy = nVectorY * object.bulletSpeed 
     table.insert(bullets, {x = object.x, y = object.y, dx = bulletDx, dy = bulletDy, visible = false, objType = "bullet",origin = object.id})
+    love.audio.stop(soundShoot)
+    love.audio.play(soundShoot)
 end
 
 function createBullet(object)
@@ -101,4 +107,6 @@ function createBullet(object)
     local bulletDx = object.bulletSpeed * math.cos(angle)                   
     local bulletDy = object.bulletSpeed * math.sin(angle)                   
     table.insert(bullets, {x = startX, y = startY, dx = bulletDx, dy = bulletDy, visible = false, objType = "bullet",origin = object.id})
+    love.audio.stop(soundShoot)
+    love.audio.play(soundShoot)
 end
