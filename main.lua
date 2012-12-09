@@ -8,6 +8,7 @@ require "sprite"
 require "ai"
 require "bullets"
 require "decals"
+require "mapgenerator"
 
 SPRITES = {}
 loadMapFromDisk("map01.lua")
@@ -100,7 +101,7 @@ function love.load()
     music1:setLooping(true)
 
     love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, true, false)
+    love.graphics.setMode(640,480, false, false)
 
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)
