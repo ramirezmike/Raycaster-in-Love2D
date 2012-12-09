@@ -36,12 +36,15 @@ function generateMap()
     print (selectRandomRoom())
     print (numberOfRooms())
 
-    local index = mapGenIndexFromCoordinates(5,5)
-    local x = mapGenPositionXFromArrayIndex(index)
-    local y = mapGenPositionYFromArrayIndex(index)
+--    local index = mapGenIndexFromCoordinates(5,5)
+--    local x = mapGenPositionXFromArrayIndex(index)
+--    local y = mapGenPositionYFromArrayIndex(index)
+--
+--    print (index .. "  " .. x .. "  " .. y)
 
-    print (index .. "  " .. x .. "  " .. y)
-
+    createRooms(55) 
+    printGeneratedMap()
+    print (numberOfConnections(312)) 
 end
 
 function selectRandomRoom()
@@ -59,6 +62,48 @@ function numberOfRooms()
     return num
 end
 
+function numberOfConnections(index)
+    local roomX = mapGenPositionXFromArrayIndex(index)
+    local roomY = mapGenPositionYFromArrayIndex(index)
+    
+    local numberOfConnections = 0
+
+    local potentialRoomX = roomX
+    local potentialRoomY = roomY - 1
+
+    if (potentialRoomY > 0) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            numberOfConnections = numberOfConnections + 1
+        end
+    end
+
+    potentialRoomY = roomY + 1
+    
+    if (potentialRoomY < math.sqrt(MAPGEN_MAPSIZE)) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            numberOfConnections = numberOfConnections + 1
+        end
+    end
+    
+    potentialRoomX = roomX+1
+    potentialRoomY = roomY
+
+    if (potentialRoomX < math.sqrt(MAPGEN_MAPSIZE)) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            numberOfConnections = numberOfConnections + 1
+        end
+    end
+    
+    potentialRoomX = roomX-1
+    if (potentialRoomX > 0 and potentialRoomY > 0) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            numberOfConnections = numberOfConnections + 1
+        end
+    end
+
+    return numberOfConnections 
+end
+
 function isNextToARoom(index)
     local roomX = mapGenPositionXFromArrayIndex(index)
     local roomY = mapGenPositionYFromArrayIndex(index)
@@ -74,7 +119,8 @@ function isNextToARoom(index)
 
     potentialRoomY = roomY + 1
     
-    if (potentialRoomY < MAPGEN_MAPSIZE - (math.sqrt(MAPGEN_MAPSIZE))) then
+    if (potentialRoomY < math.sqrt(MAPGEN_MAPSIZE)) then
+        print (potentialRoomX .. "  " .. potentialRoomY)
         if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
             return true
         end
@@ -90,7 +136,7 @@ function isNextToARoom(index)
     end
     
     potentialRoomX = roomX-1
-    if (potentialRoomX > 0) then
+    if (potentialRoomX > 0 and potentialRoomY > 0) then
         if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
             return true
         end
@@ -99,8 +145,14 @@ function isNextToARoom(index)
     return false
 end
 
-function createRooms()
-    while (numberOfRooms < maxRooms) do
+function createRooms(maxRooms)
+    while (numberOfRooms() < maxRooms) do
+        local index = selectRandomRoom()
+        if (isNextToARoom(index) and MAPGEN_MAP[index] ~= 1) then
+            if (numberOfConnections(index) < 2) then
+                MAPGEN_MAP[index] = 2
+            end
+        end
     end
 end
 
