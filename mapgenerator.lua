@@ -1,7 +1,7 @@
 MAPGEN_MAP = {}
 MAPGEN_MAPSIZE = 0 
 
-function generateMapWithSize(size)
+function createEmptyMapWithSize(size)
     size = size * size
     MAPGEN_MAPSIZE = size
     for i=0,size do
@@ -30,9 +30,78 @@ end
 
 
 function generateMap()
-    generateMapWithSize(25)
+    createEmptyMapWithSize(25)
     setSpawnRoom()
     printGeneratedMap()
+    print (selectRandomRoom())
+    print (numberOfRooms())
+
+    local index = mapGenIndexFromCoordinates(5,5)
+    local x = mapGenPositionXFromArrayIndex(index)
+    local y = mapGenPositionYFromArrayIndex(index)
+
+    print (index .. "  " .. x .. "  " .. y)
+
+end
+
+function selectRandomRoom()
+    local index = math.random(0, MAPGEN_MAPSIZE)
+    return index 
+end
+
+function numberOfRooms()
+    local num = 0
+    for i,v in ipairs(MAPGEN_MAP) do
+        if (MAPGEN_MAP[i] > 0) then
+            num = num + 1
+        end
+    end
+    return num
+end
+
+function isNextToARoom(index)
+    local roomX = mapGenPositionXFromArrayIndex(index)
+    local roomY = mapGenPositionYFromArrayIndex(index)
+    
+    local potentialRoomX = roomX
+    local potentialRoomY = roomY - 1
+
+    if (potentialRoomY > 0) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            return true
+        end
+    end
+
+    potentialRoomY = roomY + 1
+    
+    if (potentialRoomY < MAPGEN_MAPSIZE - (math.sqrt(MAPGEN_MAPSIZE))) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            return true
+        end
+    end
+    
+    potentialRoomX = roomX+1
+    potentialRoomY = roomY
+
+    if (potentialRoomX < math.sqrt(MAPGEN_MAPSIZE)) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            return true
+        end
+    end
+    
+    potentialRoomX = roomX-1
+    if (potentialRoomX > 0) then
+        if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
+            return true
+        end
+    end
+
+    return false
+end
+
+function createRooms()
+    while (numberOfRooms < maxRooms) do
+    end
 end
 
 function mapGenIndexFromCoordinates(x,y) 
@@ -41,13 +110,13 @@ function mapGenIndexFromCoordinates(x,y)
 end
 
 function mapGenPositionXFromArrayIndex(index)
-    local x = (index % mapSize)-1
-    if (x==-1) then x = mapSize-1 end
+    local x = (index % math.sqrt(MAPGEN_MAPSIZE))-1
+    if (x==-1) then x = math.sqrt(MAPGEN_MAPSIZE)-1 end
     return x
 end
 
 function mapGenPositionYFromArrayIndex(index)
-    local y = ((index-1) / mapSize)
+    local y = ((index-1) / math.sqrt(MAPGEN_MAPSIZE))
     y = math.floor(y)
     return y
 end
