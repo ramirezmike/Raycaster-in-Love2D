@@ -31,7 +31,8 @@ function love.keypressed(key, unicode)
     end
 
     if key == 'i' then
-        loadMapFromDisk("map01.lua")
+--        loadMapFromDisk("map01.lua")
+        generateMap()
     end
     if key == 'a' then
         player.strafeSpeed  = -1
