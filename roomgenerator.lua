@@ -17,6 +17,9 @@ function createRoom()
     printGeneratedRoom(room)
     addDoorBottom(room)
     printGeneratedRoom(room)
+    print (" ")
+    addDoorRight(room)
+    printGeneratedRoom(room)
 end
 
 function printGeneratedRoom(room)
@@ -94,5 +97,19 @@ function addDoorBottom(room)
     end
 
     local opening = size - roomSizeRoot - middle + 1
+    room[opening] = 0
+end
+
+
+function addDoorRight(room)
+    local size = #room
+    local roomSizeRoot = math.sqrt(size)    
+
+    local middle = math.ceil(roomSizeRoot / 2)
+    for i=roomSizeRoot*2-1,size-roomSizeRoot,roomSizeRoot do
+        room[i] = 4
+    end
+
+    local opening = size - (roomSizeRoot*(middle-1)) - 1
     room[opening] = 0
 end
