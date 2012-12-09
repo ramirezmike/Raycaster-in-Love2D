@@ -1,7 +1,7 @@
 roomSize = 0
 
 function createRoom()
-    local size = 12
+    local size = 11
     local room = createEmptyRoom(size)
     printGeneratedRoom(room)
     print(#room)
@@ -14,6 +14,8 @@ function createRoom()
     player.y = 4
 
     addDoorTop(room)
+    printGeneratedRoom(room)
+    addDoorBottom(room)
     printGeneratedRoom(room)
 end
 
@@ -74,11 +76,23 @@ function addDoorTop(room)
     local roomSizeRoot = math.sqrt(size)    
 
     local middle = math.ceil(roomSizeRoot / 2)
-    for i=roomSizeRoot,roomSizeRoot*2 do
-        room[i] = 1
+    for i=roomSizeRoot+1,roomSizeRoot*2 do
+        room[i] = 3
     end
 
     local opening = roomSizeRoot + middle
     room[opening] = 0
-    
+end
+
+function addDoorBottom(room)
+    local size = #room
+    local roomSizeRoot = math.sqrt(size)    
+
+    local middle = math.ceil(roomSizeRoot / 2)
+    for i=1+size-(roomSizeRoot*2),size-roomSizeRoot do
+        room[i] = 2
+    end
+
+    local opening = size - roomSizeRoot - middle + 1
+    room[opening] = 0
 end
