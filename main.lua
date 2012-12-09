@@ -9,6 +9,7 @@ require "ai"
 require "bullets"
 require "decals"
 require "mapgenerator"
+require "roomgenerator"
 
 SPRITES = {}
 loadMapFromDisk("map01.lua")

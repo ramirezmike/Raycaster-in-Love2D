@@ -34,6 +34,9 @@ function love.keypressed(key, unicode)
 --        loadMapFromDisk("map01.lua")
         generateMap()
     end
+    if key == 'u' then
+        createRoom()
+    end
     if key == 'a' then
         player.strafeSpeed  = -1
         down = love.keyboard.isDown('d') 
