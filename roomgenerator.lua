@@ -1,9 +1,20 @@
 roomSize = 0
 
 function createRoom()
-    local room = createEmptyRoom(25)
+    local size = 12
+    local room = createEmptyRoom(size)
     printGeneratedRoom(room)
     print(#room)
+
+    mapProp.map = room   
+    mapProp.mapWidth =  (size)
+    mapProp.mapHeight = (size)
+    
+    player.x = 4
+    player.y = 4
+
+    addDoorTop(room)
+    printGeneratedRoom(room)
 end
 
 function printGeneratedRoom(room)
@@ -28,7 +39,8 @@ end
 
 function createEmptyRoom(size)
     local room = {}
-    local roomSizeRoot = math.sqrt(size)    
+    local roomSizeRoot = size    
+    size = size*size
 
     for i=0,size do
         room[i] = 0
@@ -55,4 +67,18 @@ function createEmptyRoom(size)
     end 
     
     return room
+end
+
+function addDoorTop(room)
+    local size = #room
+    local roomSizeRoot = math.sqrt(size)    
+
+    local middle = math.ceil(roomSizeRoot / 2)
+    for i=roomSizeRoot,roomSizeRoot*2 do
+        room[i] = 1
+    end
+
+    local opening = roomSizeRoot + middle
+    room[opening] = 0
+    
 end
