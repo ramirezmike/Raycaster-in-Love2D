@@ -149,14 +149,15 @@ end
 function steerAwayFromWalls(sprite,vector)
     local newVectorX = 0
     local newVectorY = 0
-    local mag = 2
+    local mag = 4
 
     for i,v in ipairs(wallPositions) do
         dx = v["x"] - sprite.x
         dy = v["y"] - sprite.y
-        if (math.sqrt(dx*dx + dy*dy) < 1.4) then
-            newVectorX = (newVectorX - dx) * 4
-            newVectorY = (newVectorY - dy) * 4
+        local wall = math.sqrt(dx*dx + dy*dy)
+        if (wall  < 1.4) then
+            newVectorX = (newVectorX - dx) * (mag/wall)
+            newVectorY = (newVectorY - dy) * (mag/wall) 
         end
     end
     

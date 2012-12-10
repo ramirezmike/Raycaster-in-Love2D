@@ -1,7 +1,7 @@
 roomSize = 0
 
 function createRoom()
-    local size = 10
+    local size = 20
     local room = createEmptyRoom(size)
     printGeneratedRoom(room)
     print(#room)
@@ -11,6 +11,7 @@ function createRoom()
     addDoorBottom(room,true)
     addDoorRight(room,true)
     addDoorLeft(room,true)
+    loadMapFromRoom(room) 
     addObstacles(room)
     clearPathsToDoors(room)
     printGeneratedRoom(room)
@@ -156,83 +157,131 @@ function addDoorLeft(room,roomExists)
 end
 
 function addObstacles(room)
-    local rand = math.random(0,5)
+    local rand = math.random(5,25)
     print ("THIS IS RANDOM: " .. rand)
 
     for i=0,rand do
-        local index = getEmptySpot(room,true)
+        local index = getEmptySpot(room,false)
         if (index) then
             room[index] = 1
         end
     end
 end
 
-function clearLeftTwoSpots(room,index)
+function clearTwoSpots(index)
     local x = positionXFromArrayIndex(index) 
     local y = positionXFromArrayIndex(index) 
-    local width = math.sqrt(#room)
+    local map = mapProp.map
+    local size = math.sqrt(#map)
 
-    if (x-2 > 0) then
+
+    if (x-2 > 0 and x+2 < size and y+2 < size and y-2 > 0) then
+        local newIndex = indexFromCoordinates(x-2,y+2)
+        print (mapProp.map[newIndex])
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x-1,y+2)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+1,y+2)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+2,y+2)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x-2,y+1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x-1,y+1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+1,y+1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+2,y+1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
         local newIndex = indexFromCoordinates(x-2,y)
-        if (room[newIndex] == 0) then
-            newIndex = indexFromCoordinates(x-1,y)
-            if (room[newIndex] == 0) then
-                return true
-            end
+        if (map[newIndex] > 0) then
+            return false
         end
+
+        newIndex = indexFromCoordinates(x-1,y)
+        if (map[newIndex] > 0) then
+            return false 
+        end
+
+        newIndex = indexFromCoordinates(x+1,y)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+2,y)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x-2,y-1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x-1,y-1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+1,y-1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+2,y-1)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x-2,y-2)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x-1,y-2)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+1,y-2)
+        if (map[newIndex] > 0) then
+            return false
+        end
+
+        newIndex = indexFromCoordinates(x+2,y-2)
+        if (map[newIndex] > 0) then
+            return false
+        end
+        print ("THIS RINGS TRUE")
+        return true
     end
     return false
 end
 
-function clearRightTwoSpots(room,index)
-    local x = positionXFromArrayIndex(index) 
-    local y = positionXFromArrayIndex(index) 
-    local width = math.sqrt(#room)
-
-    if (x+2 < width) then
-        local newIndex = indexFromCoordinates(x+2,y)
-        if (room[newIndex] == 0) then
-            newIndex = indexFromCoordinates(x+1,y)
-            if (room[newIndex] == 0) then
-                return true
-            end
-        end
-    end
-    return false
-end
-
-function clearDownTwoSpots(room,index)
-    local x = positionXFromArrayIndex(index) 
-    local y = positionXFromArrayIndex(index) 
-    local height = math.sqrt(#room)
-
-    if (y+2 < height) then
-        local newIndex = indexFromCoordinates(x,y+2)
-        if (room[newIndex] == 0) then
-            newIndex = indexFromCoordinates(x,y+1)
-            if (room[newIndex] == 0) then
-                return true
-            end
-        end
-    end
-    return false
-end
-
-function clearUpTwoSpots(room,index)
-    local x = positionXFromArrayIndex(index) 
-    local y = positionXFromArrayIndex(index) 
-
-    if (y > 2) then
-        local newIndex = indexFromCoordinates(x,y-2)
-        if (room[newIndex] == 0) then
-            newIndex = indexFromCoordinates(x,y-1)
-            if (room[newIndex] == 0) then
-                return true
-            end
-        end
-    end
-    return false
-end
 
 function getEmptySpot(room,clearing)
     local size = #room 
@@ -244,7 +293,7 @@ function getEmptySpot(room,clearing)
         if (rand % roomSizeRoot > 2 and rand / roomSizeRoot < roomSizeRoot-2) then
             if (room[rand] == 0) then 
                 if (clearing) then
-                    if (clearUpTwoSpots(room,rand) and clearDownTwoSpots(room,rand) and clearLeftTwoSpots(room,rand) and clearRightTwoSpots(room, rand)) then
+                    if (clearTwoSpots(rand)) then
                         return rand
                     end
                 else
@@ -254,5 +303,6 @@ function getEmptySpot(room,clearing)
         end
         tries = tries - 1
     end
+    return 0
 end
 
