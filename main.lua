@@ -15,7 +15,6 @@ SPRITES = {}
 loadMapFromDisk("map01.lua")
 setPlayerSpawnPoint()
 
-makeWallPositions()
 
 function gameCycle()
     local dt = love.timer.getDelta()

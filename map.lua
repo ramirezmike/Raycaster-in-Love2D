@@ -10,7 +10,8 @@ mapProp = {
 wallPositions = {}
 
 function makeWallPositions()
-    for i,v in ipairs(map) do
+    wallPositions = {}
+    for i,v in ipairs(mapProp.map) do
         if (v > 0) then
             table.insert(wallPositions,{
                 x = positionXFromArrayIndex(i), 
@@ -37,4 +38,17 @@ function loadMapFromDisk(mapName)
     mapProp.map = chunk()
     mapProp.mapWidth =  (math.sqrt(table.getn(map)))
     mapProp.mapHeight = (math.sqrt(table.getn(map)))
+    makeWallPositions()
+    print ("MAP : " .. tostring(#map))
+    print ("MAP : " .. tostring(mapProp.mapWidth))
+end
+
+function loadMapFromRoom(room)
+    mapProp.map = room
+    local size = math.sqrt(#mapProp.map)
+    mapProp.mapWidth = size 
+    mapProp.mapHeight = size 
+    makeWallPositions()
+    print ("MAP : " .. tostring(#room))
+    print ("MAP : " .. tostring(mapProp.mapHeight))
 end

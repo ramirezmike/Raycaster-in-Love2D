@@ -1,26 +1,26 @@
 roomSize = 0
 
 function createRoom()
-    local size = 15
+    local size = 20
     local room = createEmptyRoom(size)
     printGeneratedRoom(room)
     print(#room)
 
-    mapProp.map = room   
-    mapProp.mapWidth =  (size)
-    mapProp.mapHeight = (size)
-    
-    player.x = 4
-    player.y = 4
 
-    addDoorTop(room)
+    addDoorTop(room,true)
+    addDoorBottom(room,true)
+    addDoorRight(room,true)
+    addDoorLeft(room,true)
+    addObstacles(room)
     printGeneratedRoom(room)
-    addDoorBottom(room)
-    printGeneratedRoom(room)
-    addDoorRight(room)
-    print (" ")
-    addDoorLeft(room)
-    printGeneratedRoom(room)
+
+    loadMapFromRoom(room) 
+    local spawn = getEmptySpot(room)
+    player.x = positionXFromArrayIndex(spawn) 
+    player.y = positionYFromArrayIndex(spawn) 
+    print ("PLAYER SPAWN INDEX = " .. spawn)
+    print ("Map at spawn = " .. tostring(room[spawn]))
+    print ("PLAYER SPAWN: " .. player.x .. "  " .. player.y)
 end
 
 function printGeneratedRoom(room)
@@ -75,7 +75,7 @@ function createEmptyRoom(size)
     return room
 end
 
-function addDoorTop(room)
+function addDoorTop(room,roomExists)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -84,11 +84,13 @@ function addDoorTop(room)
         room[i] = 3
     end
 
-    local opening = roomSizeRoot + middle
-    room[opening] = 0
+    if (roomExists) then
+        local opening = roomSizeRoot + middle
+        room[opening] = 0
+    end
 end
 
-function addDoorBottom(room)
+function addDoorBottom(room,roomExists)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -97,12 +99,14 @@ function addDoorBottom(room)
         room[i] = 2
     end
 
-    local opening = size - roomSizeRoot - middle + 1
-    room[opening] = 0
+    if (roomExists) then
+        local opening = size - roomSizeRoot - middle + 1
+        room[opening] = 0
+    end
 end
 
 
-function addDoorRight(room)
+function addDoorRight(room,roomExists)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -111,11 +115,13 @@ function addDoorRight(room)
         room[i] = 4
     end
 
-    local opening = size - (roomSizeRoot*(middle-1)) - 1
-    room[opening] = 0
+    if (roomExists) then
+        local opening = size - (roomSizeRoot*(middle-1)) - 1
+        room[opening] = 0
+    end
 end
 
-function addDoorLeft(room)
+function addDoorLeft(room,roomExists)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -124,6 +130,33 @@ function addDoorLeft(room)
         room[i] = 5
     end
 
-    local opening = size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 2 
-    room[opening] = 0
+    if (roomExists) then
+        local opening = size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 2 
+        room[opening] = 0
+    end
+end
+
+function addObstacles(room)
+    local rand = math.random(10,15)
+    print ("THIS IS RANDOM: " .. rand)
+
+    for i=0,rand do
+        local index = getEmptySpot(room)
+        room[index] = 1
+    end
+end
+
+function getEmptySpot(room)
+    local size = #room 
+    local roomSizeRoot = math.sqrt(size) 
+    local success = true 
+
+    while (success) do
+        local rand = math.random(roomSizeRoot*2,size-(roomSizeRoot*2)) 
+        if (rand % roomSizeRoot > 2 and rand / roomSizeRoot < roomSizeRoot-2) then
+            if (room[rand] == 0) then 
+                return rand
+            end
+        end
+    end
 end
