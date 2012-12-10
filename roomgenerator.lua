@@ -1,7 +1,7 @@
 roomSize = 0
 
 function createRoom()
-    local size = 20
+    local size = 10
     local room = createEmptyRoom(size)
     printGeneratedRoom(room)
     print(#room)
@@ -12,10 +12,11 @@ function createRoom()
     addDoorRight(room,true)
     addDoorLeft(room,true)
     addObstacles(room)
+    clearPathsToDoors(room)
     printGeneratedRoom(room)
 
     loadMapFromRoom(room) 
-    local spawn = getEmptySpot(room)
+    local spawn = getEmptySpot(room,false)
     player.x = positionXFromArrayIndex(spawn) 
     player.y = positionYFromArrayIndex(spawn) 
     print ("PLAYER SPAWN INDEX = " .. spawn)
@@ -73,6 +74,24 @@ function createEmptyRoom(size)
     end 
     
     return room
+end
+
+function clearPathsToDoors(room)
+    local size = #room
+    local roomSizeRoot = math.sqrt(size)    
+
+    for i=2*roomSizeRoot+3,roomSizeRoot*3-2 do
+        room[i] = 0
+    end
+    for i=3+size-(roomSizeRoot*3),size-roomSizeRoot*2-2 do
+        room[i] = 0
+    end
+    for i=roomSizeRoot*3-2,size-roomSizeRoot*2,roomSizeRoot do
+        room[i] = 0
+    end
+    for i=2*roomSizeRoot+3,size-roomSizeRoot*2,roomSizeRoot do
+        room[i] = 0
+    end
 end
 
 function addDoorTop(room,roomExists)
@@ -137,26 +156,103 @@ function addDoorLeft(room,roomExists)
 end
 
 function addObstacles(room)
-    local rand = math.random(10,15)
+    local rand = math.random(0,5)
     print ("THIS IS RANDOM: " .. rand)
 
     for i=0,rand do
-        local index = getEmptySpot(room)
-        room[index] = 1
-    end
-end
-
-function getEmptySpot(room)
-    local size = #room 
-    local roomSizeRoot = math.sqrt(size) 
-    local success = true 
-
-    while (success) do
-        local rand = math.random(roomSizeRoot*2,size-(roomSizeRoot*2)) 
-        if (rand % roomSizeRoot > 2 and rand / roomSizeRoot < roomSizeRoot-2) then
-            if (room[rand] == 0) then 
-                return rand
-            end
+        local index = getEmptySpot(room,true)
+        if (index) then
+            room[index] = 1
         end
     end
 end
+
+function clearLeftTwoSpots(room,index)
+    local x = positionXFromArrayIndex(index) 
+    local y = positionXFromArrayIndex(index) 
+    local width = math.sqrt(#room)
+
+    if (x-2 > 0) then
+        local newIndex = indexFromCoordinates(x-2,y)
+        if (room[newIndex] == 0) then
+            newIndex = indexFromCoordinates(x-1,y)
+            if (room[newIndex] == 0) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function clearRightTwoSpots(room,index)
+    local x = positionXFromArrayIndex(index) 
+    local y = positionXFromArrayIndex(index) 
+    local width = math.sqrt(#room)
+
+    if (x+2 < width) then
+        local newIndex = indexFromCoordinates(x+2,y)
+        if (room[newIndex] == 0) then
+            newIndex = indexFromCoordinates(x+1,y)
+            if (room[newIndex] == 0) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function clearDownTwoSpots(room,index)
+    local x = positionXFromArrayIndex(index) 
+    local y = positionXFromArrayIndex(index) 
+    local height = math.sqrt(#room)
+
+    if (y+2 < height) then
+        local newIndex = indexFromCoordinates(x,y+2)
+        if (room[newIndex] == 0) then
+            newIndex = indexFromCoordinates(x,y+1)
+            if (room[newIndex] == 0) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function clearUpTwoSpots(room,index)
+    local x = positionXFromArrayIndex(index) 
+    local y = positionXFromArrayIndex(index) 
+
+    if (y > 2) then
+        local newIndex = indexFromCoordinates(x,y-2)
+        if (room[newIndex] == 0) then
+            newIndex = indexFromCoordinates(x,y-1)
+            if (room[newIndex] == 0) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function getEmptySpot(room,clearing)
+    local size = #room 
+    local roomSizeRoot = math.sqrt(size) 
+    local tries = 30 
+
+    while (tries > 0) do
+        local rand = math.random(roomSizeRoot*2,size-(roomSizeRoot*2)) 
+        if (rand % roomSizeRoot > 2 and rand / roomSizeRoot < roomSizeRoot-2) then
+            if (room[rand] == 0) then 
+                if (clearing) then
+                    if (clearUpTwoSpots(room,rand) and clearDownTwoSpots(room,rand) and clearLeftTwoSpots(room,rand) and clearRightTwoSpots(room, rand)) then
+                        return rand
+                    end
+                else
+                    return rand
+                end
+            end
+        end
+        tries = tries - 1
+    end
+end
+
