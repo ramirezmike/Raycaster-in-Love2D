@@ -10,6 +10,7 @@ require "bullets"
 require "decals"
 require "mapgenerator"
 require "roomgenerator"
+require "hud"
 
 SPRITES = {}
 --loadMapFromDisk("map01.lua")

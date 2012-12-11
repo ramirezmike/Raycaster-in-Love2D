@@ -6,7 +6,6 @@ function manageBullets(dt)
             if (enemyBulletHitPlayerCheck(v)) then
                 table.remove(bullets,i)
                 playerHitDraw()
-                print ("hit!")
             end
         end
         if (isBlocking(v, v["x"], v["y"])) then
