@@ -84,7 +84,7 @@ function love.update(dt)
     manageBullets(dt)
     manageDecals(dt)
 
-    if (#SPRITES == 0) then
+    if (areEnemiesDead()) then
         mapGenManagement(dt)
     end
 end

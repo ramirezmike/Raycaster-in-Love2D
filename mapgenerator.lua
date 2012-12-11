@@ -188,6 +188,7 @@ function mapGenManagement(dt)
 end
 
 function switchToRoom(index)
+    SPRITES = {}
     local x = mapGenPositionXFromArrayIndex(index)
     local y = mapGenPositionYFromArrayIndex(index)
 
@@ -200,6 +201,7 @@ function switchToRoom(index)
 end
 
 function makeRoomForMapGenRooms(index)
+        SPRITES = {}
         local rm = createRoom(index)
         local doors = getDoorIndexes(rm)
 

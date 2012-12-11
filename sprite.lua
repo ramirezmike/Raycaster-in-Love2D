@@ -57,3 +57,46 @@ function handleSpriteHit(sprite)
     sprite.hit = true
     sprite.health = sprite.health - 1
 end
+
+function addSpriteToMap(index)
+    local posX = positionXFromArrayIndex(index) 
+    local posY = positionYFromArrayIndex(index) 
+    
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
+            id = spriteIndex,
+            x = posX,
+            y = posY,
+            img = 5,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+            bulletSpeed = 5.5,
+            playerVisible = false,
+            maxFireRate = 1,
+            fireRate = 0,
+            health = 10,
+            hit = false,
+            hitPause = 0.1,
+            moveSpeed = 0.05,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5
+        }
+end
+
+function areEnemiesDead()
+    for i,v in ipairs(SPRITES) do
+        if (v["health"] > 0) then
+            return false
+        end
+    end
+    return true
+end

@@ -1,7 +1,7 @@
 roomSize = 0
 
 function createRoom(roomIndex)
-    local size = 20
+    local size = 15
     local room = createEmptyRoom(size)
     --printGeneratedRoom(room)
 
@@ -13,6 +13,8 @@ function createRoom(roomIndex)
     loadMapFromRoom(room) 
     addObstacles(room)
     clearPathsToDoors(room)
+    loadMapFromRoom(room) 
+    addEnemies(room)
     printGeneratedRoom(room)
 
     loadMapFromRoom(room) 
@@ -172,13 +174,23 @@ function getDoorIndexes(room)
 end
 
 function addObstacles(room)
-    local rand = math.random(5,25)
-    print ("THIS IS RANDOM: " .. rand)
+    local rand = math.random(5,15)
 
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then
             room[index] = 1
+        end
+    end
+end
+
+function addEnemies(room)
+    local rand = math.random(2,5)
+
+    for i=0,rand do
+        local index = getEmptySpot(room,false)
+        if (index) then
+            addSpriteToMap(index)
         end
     end
 end
