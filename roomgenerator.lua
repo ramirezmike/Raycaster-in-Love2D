@@ -1,7 +1,7 @@
 roomSize = 0
 
 function createRoom(roomIndex)
-    local size = 10
+    local size = 20
     local room = createEmptyRoom(size)
     --printGeneratedRoom(room)
 
@@ -173,7 +173,6 @@ end
 
 function addObstacles(room)
     local rand = math.random(5,25)
-    rand = 0
     print ("THIS IS RANDOM: " .. rand)
 
     for i=0,rand do

@@ -75,6 +75,7 @@ function mapGenManagement(dt)
     local currentRoomIndex = getCurrentRoomIndex()
     local currentRoomMapGenIndex = getMapGenRoomsArrayIndexFromIndex(currentRoomIndex)
 
+    -- Top
     if (indexFromCoordinates(player.x,player.y) == MAPGEN_ROOMS[currentRoomIndex].u and
         doesRoomHaveTop(currentRoomIndex)) then
 
@@ -102,6 +103,7 @@ function mapGenManagement(dt)
         printGeneratedMap()
     end
 
+    -- Bottom
     if (indexFromCoordinates(player.x,player.y) == MAPGEN_ROOMS[currentRoomIndex].d and
         doesRoomHaveBottom(currentRoomIndex)) then
 
@@ -123,6 +125,63 @@ function mapGenManagement(dt)
             local newPlayerPositionIndex  = MAPGEN_ROOMS[bottomRoomIndex].u
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)+0.5 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+1 
+        end
+        printGeneratedMap()
+    end
+
+    -- Right
+    if (indexFromCoordinates(player.x,player.y) == MAPGEN_ROOMS[currentRoomIndex].r and
+        doesRoomHaveRight(currentRoomIndex)) then
+
+        local currentRoomX = mapGenPositionXFromArrayIndex(currentRoomIndex) 
+        local currentRoomY = mapGenPositionYFromArrayIndex(currentRoomIndex) 
+        local rightRoomX = currentRoomX + 1
+        local rightRoomY = currentRoomY  
+        local rightRoomIndex = mapGenIndexFromCoordinates(rightRoomX,rightRoomY)
+
+        if (hasRoomIndexBeenMade(rightRoomIndex)) then
+            print ("Room has been made!")
+            switchToRoom(rightRoomIndex)
+            currentRoomIndex = getCurrentRoomIndex()
+            local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].l
+            player.x = positionXFromArrayIndex(newPlayerPositionIndex)+1 
+            player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
+        else
+            print ("Room has not been made!")
+            makeRoomForMapGenRooms(rightRoomIndex)
+            currentRoomIndex = getCurrentRoomIndex()
+            local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].l
+            player.x = positionXFromArrayIndex(newPlayerPositionIndex)+1 
+            player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
+        end
+        printGeneratedMap()
+    end
+
+
+    -- Left 
+    if (indexFromCoordinates(player.x,player.y) == MAPGEN_ROOMS[currentRoomIndex].l and
+        doesRoomHaveLeft(currentRoomIndex)) then
+
+        local currentRoomX = mapGenPositionXFromArrayIndex(currentRoomIndex) 
+        local currentRoomY = mapGenPositionYFromArrayIndex(currentRoomIndex) 
+        local leftRoomX = currentRoomX - 1
+        local leftRoomY = currentRoomY  
+        local leftRoomIndex = mapGenIndexFromCoordinates(leftRoomX,leftRoomY)
+
+        if (hasRoomIndexBeenMade(leftRoomIndex)) then
+            print ("Room has been made!")
+            switchToRoom(leftRoomIndex)
+            currentRoomIndex = getCurrentRoomIndex()
+            local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].r
+            player.x = positionXFromArrayIndex(newPlayerPositionIndex)-1 
+            player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
+        else
+            print ("Room has not been made!")
+            makeRoomForMapGenRooms(leftRoomIndex)
+            currentRoomIndex = getCurrentRoomIndex()
+            local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].r
+            player.x = positionXFromArrayIndex(newPlayerPositionIndex)-1 
+            player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
         end
         printGeneratedMap()
     end
