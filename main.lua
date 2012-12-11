@@ -77,6 +77,7 @@ function love.draw()
 
 --    if (mapProp.displayMap) then drawMiniMap() end
     if (displayDebug) then drawDebug() end
+    drawMiniMap()
 end
 
 function love.update(dt)

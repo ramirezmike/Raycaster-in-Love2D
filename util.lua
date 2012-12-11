@@ -101,32 +101,26 @@ function drawDebug()
 end
 
 function drawMiniMap()
-    miniMapWidth = mapProp.mapWidth * mapProp.miniMapScale
-    miniMapHeight = mapProp.mapHeight * mapProp.miniMapScale
+    local mWidth = math.sqrt(#MAPGEN_MAP)
+    local currentRoom = getCurrentRoomCoordinates()
+    
+    miniMapWidth = mWidth * mapProp.miniMapScale
+    miniMapHeight = mWidth * mapProp.miniMapScale
 
-    mapOffsetX = 0 --500
-    mapOffsetY = 0 --340
+    mapOffsetX = 400 --500
+    mapOffsetY = 300 --340
 
     love.graphics.setColor(255,255,255)
-    love.graphics.rectangle( "fill",
-        player.x * mapProp.miniMapScale - 2 + mapOffsetX,
-        player.y * mapProp.miniMapScale - 2 + mapOffsetY,
-        4, 4)
-    love.graphics.setColor(255,0,0)
-    love.graphics.line(
-        player.x * mapProp.miniMapScale + mapOffsetX,
-        player.y * mapProp.miniMapScale + mapOffsetY,
-        (player.x + math.cos(player.rot) * 4) * mapProp.miniMapScale + mapOffsetX,
-        (player.y + math.sin(player.rot) * 4) * mapProp.miniMapScale + mapOffsetY
-        )
-
     local i=1
-    for y=0,mapProp.mapHeight-1 do
-        for x=0,mapProp.mapWidth-1 do
-            local wall = mapProp.map[i]
+    for y=0,mWidth-1 do
+        for x=0,mWidth-1 do
+            local wall = MAPGEN_MAP[i]
    
             if (wall>0) then
                 love.graphics.setColor(0,0,200)
+                if (x == currentRoom.x and y == currentRoom.y) then
+                    love.graphics.setColor(200,200,0)
+                end
                 love.graphics.rectangle( "fill",
                     x * mapProp.miniMapScale + mapOffsetX,
                     y * mapProp.miniMapScale + mapOffsetY,

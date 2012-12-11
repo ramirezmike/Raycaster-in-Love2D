@@ -45,7 +45,7 @@ function generateMap()
 --
 --    print (index .. "  " .. x .. "  " .. y)
 
-    createRooms(55) 
+    createRooms(15) 
     printGeneratedMap()
 
     local rm = createRoom(spawn)
