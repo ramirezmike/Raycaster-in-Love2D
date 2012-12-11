@@ -12,8 +12,10 @@ require "mapgenerator"
 require "roomgenerator"
 
 SPRITES = {}
-loadMapFromDisk("map01.lua")
-setPlayerSpawnPoint()
+--loadMapFromDisk("map01.lua")
+--setPlayerSpawnPoint()
+
+generateMap()
 
 
 function gameCycle()
@@ -81,6 +83,10 @@ function love.update(dt)
     ai(dt)
     manageBullets(dt)
     manageDecals(dt)
+
+    if (#SPRITES == 0) then
+        mapGenManagement(dt)
+    end
 end
 
 function love.load()

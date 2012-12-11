@@ -1,5 +1,5 @@
 function makeSpriteMap()
-    for i=1,#map do
+    for i=1,#mapProp.map do
         spriteMap[i] = 0
     end
     for i=1,#SPRITES do

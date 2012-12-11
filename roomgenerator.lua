@@ -1,28 +1,22 @@
 roomSize = 0
 
-function createRoom()
-    local size = 20
+function createRoom(roomIndex)
+    local size = 10
     local room = createEmptyRoom(size)
-    printGeneratedRoom(room)
-    print(#room)
+    --printGeneratedRoom(room)
 
+    addDoorTop(room,doesRoomHaveTop(roomIndex))
+    addDoorBottom(room,doesRoomHaveBottom(roomIndex))
+    addDoorLeft(room,doesRoomHaveLeft(roomIndex))
+    addDoorRight(room,doesRoomHaveRight(roomIndex))
 
-    addDoorTop(room,true)
-    addDoorBottom(room,true)
-    addDoorRight(room,true)
-    addDoorLeft(room,true)
     loadMapFromRoom(room) 
     addObstacles(room)
     clearPathsToDoors(room)
     printGeneratedRoom(room)
 
     loadMapFromRoom(room) 
-    local spawn = getEmptySpot(room,false)
-    player.x = positionXFromArrayIndex(spawn) 
-    player.y = positionYFromArrayIndex(spawn) 
-    print ("PLAYER SPAWN INDEX = " .. spawn)
-    print ("Map at spawn = " .. tostring(room[spawn]))
-    print ("PLAYER SPAWN: " .. player.x .. "  " .. player.y)
+    return room
 end
 
 function printGeneratedRoom(room)
@@ -156,8 +150,30 @@ function addDoorLeft(room,roomExists)
     end
 end
 
+function getDoorIndexes(room)
+    local size = #room
+    local roomSizeRoot = math.sqrt(size)    
+
+    local middle = math.ceil(roomSizeRoot / 2)
+    
+    local left = size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 2 
+    local right = size - (roomSizeRoot*(middle-1)) - 1
+    local down = size - roomSizeRoot - middle + 1
+    local up = roomSizeRoot + middle
+
+    doors = {
+        l = left, 
+        r = right,
+        d = down,
+        u = up
+    }
+
+    return doors
+end
+
 function addObstacles(room)
     local rand = math.random(5,25)
+    rand = 0
     print ("THIS IS RANDOM: " .. rand)
 
     for i=0,rand do
