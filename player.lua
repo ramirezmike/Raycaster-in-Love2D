@@ -15,7 +15,8 @@ player = {
     objType = "player",
     id = 0,
     hit = false,
-    hitDecay = 10
+    hitDecay = 10,
+    health = 8
 }
 
 function convertPlayerRotation()

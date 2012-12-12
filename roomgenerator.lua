@@ -17,7 +17,7 @@ function createRoom(roomIndex)
     clearPathsToDoors(room)
     loadMapFromRoom(room) 
 
---    addEnemies(room)
+    addEnemies(room)
     printGeneratedRoom(room)
 
     loadMapFromRoom(room) 

@@ -6,6 +6,7 @@ function manageBullets(dt)
             if (enemyBulletHitPlayerCheck(v)) then
                 table.remove(bullets,i)
                 playerHitDraw()
+                player.health = player.health - 1
             end
         end
         if (isBlocking(v, v["x"], v["y"])) then
