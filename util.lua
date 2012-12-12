@@ -39,14 +39,11 @@ function isBlocking(object, newX, newY)
             local dx = sprite.x - x
             local dy = sprite.y - y
             local dist = sqrt(dx*dx + dy*dy)
-            if (object.objType == "bullet" and SPRITES[object.origin] ~= sprite) then
+            if (object.objType == "bullet" and object.origin == 0) then
                 if (dist < 0.3) then
                     handleSpriteHit(sprite)
                     return true
                 end
-            end
-            if (dist < 1 and sprite ~= object and object.objType ~= "bullet") then
-                return true
             end
         end
     end
@@ -90,11 +87,12 @@ function setQuads(imagesPerHeight,imagesPerWidth)
 end 
 
 function drawDebug()
+    love.graphics.setColor(0,0,0)
     love.graphics.print("Current FPS: "..tostring(love.timer.getFPS()), 10, 10)
     love.graphics.print("player.X   : "..tostring(player.x), 10, 25)
     love.graphics.print("player.Y   : "..tostring(player.y), 10, 40)
-    love.graphics.print("player.R   : "..getDirectionInString(), 10, 55)
-    love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
+--    love.graphics.print("player.R   : "..getDirectionInString(), 10, 55)
+--    love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
 --    love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
 --    love.graphics.print("sprite.X   : "..tostring(SPRITES[1].x), 10, 100)
 --    love.graphics.print("sprite.Y   : "..tostring(SPRITES[1].y), 10, 115)

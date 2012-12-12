@@ -14,10 +14,27 @@ function ai(dt)
             }
              
             handleFire(sprite,dt)
-            steerTowardPlayer(sprite,vector)
-            steerAwayFromSprites(sprite,vector)
-            steerAwayFromWalls(sprite,vector)
+            local vectorA = steerTowardPlayer(sprite)
+            local vectorB = backAwayFromPlayer(sprite)
+            local vectorC = steerAwayFromWalls(sprite)
+            local vectorD = {x = 0, y = 0}
+            local vectorE = steerAwayFromSprites(sprite)
 
+            if (sprite.rotate and vectorC.x == 0 and vectorC.y == 0) then
+                sprite.rotateDelay = sprite.rotateDelay - dt
+                if (sprite.rotateDelay < 0) then
+                    sprite.rotationDirection = math.random(-1,1)
+                    sprite.rotateDelay = sprite.rotateDelayMax
+                end
+                vectorD = rotateAroundPlayer(sprite)
+            else
+                sprite.rotateDelay = sprite.rotateDelayMax
+                sprite.rotationDirection = 0
+            end
+
+
+            vector.x = vectorA.x + vectorB.x + vectorC.x + vectorD.x + vectorE.x
+            vector.y = vectorA.y + vectorB.y + vectorC.y + vectorD.y + vectorE.y
             limitVelocity(sprite,vector)
 
 
@@ -50,7 +67,6 @@ function ai(dt)
             if (sprite.hit) then
                 aiHandleHit(sprite, dt)
             end
-            --move(SPRITES[i], dt)
         end
     end
 
@@ -76,42 +92,58 @@ function limitVelocity(sprite, vector)
     end
 end
 
-function steerTowardPlayer(sprite,vector)
-    newVectorX = (player.x - sprite.x)
-    newVectorY = (player.y - sprite.y)
+function backAwayFromPlayer(sprite)
+    local newVectorX = (player.x - sprite.x)
+    local newVectorY = (player.y - sprite.y)
+    local vectorB = { x = 0, y = 0}
 
     local mag = math.sqrt(newVectorX*newVectorX + newVectorY*newVectorY)
-    if (mag < 10) then  -- this will be based on sprite's acceptable distance from player and if "chase" is true
-        sprite.playerVisible = true
-        vector.x = newVectorX 
-        vector.y = newVectorY 
-    else
-        sprite.playerVisible = false 
-    end
-    if (mag < 3) then
+
+    if (mag < 2) then
         local pushVectorX = 0
         local pushVectorY = 0
-        pushVectorX = pushVectorX - (vector.x)
-        pushVectorY = pushVectorY - (vector.y)
+        pushVectorX = pushVectorX - (newVectorX)
+        pushVectorY = pushVectorY - (newVectorY)
 
-        vector.x = vector.x + pushVectorX
-        vector.y = vector.y + pushVectorY
+        vectorB.x = pushVectorX*2
+        vectorB.y = pushVectorY*2
     end
+    return vectorB
 end
 
-function steerWithinBoundry(sprite)
-    local xMin = 1
-    local yMin = 1
-    local xMax = mapProp.mapWidth - 1 
-    local yMax = mapProp.mapHeight - 1 
+function steerTowardPlayer(sprite)
+    local newVectorX = (player.x - sprite.x)
+    local newVectorY = (player.y - sprite.y)
+    local vectorA = { x = 0, y = 0}
 
-    local vector = 0
-    
-    if (sprite.x < xMin) then
-        
-    elseif (sprite.x > xMax) then
+    local mag = math.sqrt(newVectorX*newVectorX + newVectorY*newVectorY)
+    if (mag < sprite.visiblityRange) then  -- this will be based on sprite's acceptable distance from player and if "chase" is true
+        sprite.playerVisible = true
+        vectorA.x = newVectorX 
+        vectorA.y = newVectorY 
     end
+    return vectorA
+end
 
+function rotateAroundPlayer(sprite)
+    local newVectorX = (player.x - sprite.x)
+    local newVectorY = (player.y - sprite.y)
+    local vectorD = {x = 0, y = 0}
+
+    local cos = math.cos
+    local sin = math.sin
+    local angle = sprite.rotationAngle * sprite.rotationDirection
+
+    local mag = math.sqrt(newVectorX*newVectorX + newVectorY*newVectorY)
+    
+    if (mag < 4) then
+        local x = ((sprite.x - player.x) * cos(angle)) - ((player.y - sprite.y) * sin(angle))
+        local y = ((player.y - sprite.y) * cos(angle)) - ((sprite.x - player.x) * sin(angle))
+
+        vectorD.x = x
+        vectorD.y = y
+    end
+    return vectorD
 end
 
 function handleFire(sprite,dt)
@@ -127,9 +159,10 @@ function handleFire(sprite,dt)
     end
 end
 
-function steerAwayFromSprites(sprite,vector)
+function steerAwayFromSprites(sprite)
     local newVectorX = 0
     local newVectorY = 0
+    local vectorE = {x = 0, y = 0}
 
     for i,v in ipairs(SPRITES) do
         if (v ~= sprite) then
@@ -142,13 +175,16 @@ function steerAwayFromSprites(sprite,vector)
         end
     end
     
-    vector.x = vector.x + newVectorX
-    vector.y = vector.y + newVectorY
+    vectorE.x = newVectorX
+    vectorE.y = newVectorY
+
+    return vectorE
 end
 
-function steerAwayFromWalls(sprite,vector)
+function steerAwayFromWalls(sprite)
     local newVectorX = 0
     local newVectorY = 0
+    local vectorC = {x = 0, y = 0}
     local mag = 4
 
     for i,v in ipairs(wallPositions) do
@@ -161,6 +197,7 @@ function steerAwayFromWalls(sprite,vector)
         end
     end
     
-    vector.x = vector.x + newVectorX
-    vector.y = vector.y + newVectorY
+    vectorC.x = newVectorX
+    vectorC.y = newVectorY
+    return vectorC
 end

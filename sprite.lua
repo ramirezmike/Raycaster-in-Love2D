@@ -73,13 +73,24 @@ function addSpriteToMap(index)
             speed = 0,
             dir = 0,
             rot = 0,
-            bulletSpeed = 5.5,
+
+            bulletSpeed = 4.5,
             playerVisible = false,
-            maxFireRate = 1,
-            fireRate = 0,
+            visiblityRange = 5,
+
+            rotate = true,
+            rotationDirection = 0,
+            rotationAngle = 20,
+            rotateDelay = 3,
+            rotateDelayMax = 3,
+
+            maxFireRate = 3,
+            fireRate = 2.9,
+
             health = 1,
             hit = false,
             hitPause = 0.1,
+
             moveSpeed = 0.05,
             rotSpeed = 3,
             totalStates = 12,
