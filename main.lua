@@ -31,9 +31,13 @@ end
 
 
 function love.draw()
-    love.graphics.setColor(50,50,50)
+    love.graphics.setColor(100,100,100)
     love.graphics.rectangle( "fill",
      0,screenHeight/2,screenWidth,screenHeight/2
+    )
+    love.graphics.setColor(200,200,200)
+    love.graphics.rectangle( "fill",
+     0,0,screenWidth,screenHeight/2
     )
 
     spriteBatch:clear()
@@ -56,7 +60,9 @@ function love.draw()
             spriteBatch:setColor( 255, 0, 0, 255)
         end
 --        spriteBatch:setColor( 255/strip.dist, 255/strip.dist, 255/strip.dist, 255)
-        spriteBatch:addq(strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
+        if (strip.quad) then
+            spriteBatch:addq(strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
+        end
         spriteBatch:setColor()
 --        love.graphics.setColor(255,255,255,255*light)
 --        love.graphics.drawq(wallsImgs,strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
@@ -77,6 +83,7 @@ function love.draw()
 
 --    if (mapProp.displayMap) then drawMiniMap() end
     if (displayDebug) then drawDebug() end
+    drawHud()
     drawMiniMap()
 end
 
@@ -101,12 +108,13 @@ function love.load()
     setQuads(imagesPerHeight,imagesPerWidth)
 
     makeSpriteMap()
+    loadHud()
     
     soundShoot = love.audio.newSource("shoot.wav", "static")
     soundHit1 = love.audio.newSource("hit1.wav", "static")
-    music1 = love.audio.newSource("track1.ogg")
-    love.audio.play(music1)
-    music1:setLooping(true)
+--    music1 = love.audio.newSource("track1.ogg")
+--    love.audio.play(music1)
+--    music1:setLooping(true)
 
     love.graphics.setColorMode("modulate")
     love.graphics.setMode(640,480, false, false)

@@ -14,3 +14,12 @@ function getDirectionInString()
     end
     return compass
 end
+
+function drawHud()
+    love.graphics.setColor(255,255,255,255)
+    love.graphics.draw(hudImg,0,375,0)   
+end
+
+function loadHud()
+    hudImg = love.graphics.newImage("hud.png")
+end

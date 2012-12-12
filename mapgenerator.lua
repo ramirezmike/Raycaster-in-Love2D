@@ -1,5 +1,6 @@
 MAPGEN_MAP = {}
 MAPGEN_ROOMS = {}
+SPECIAL_ROOMS = {}
 MAPGEN_MAPSIZE = 0 
 
 function createEmptyMapWithSize(size)
@@ -45,10 +46,10 @@ function generateMap()
 --
 --    print (index .. "  " .. x .. "  " .. y)
 
-    createRooms(15) 
+    createRooms(25) 
     printGeneratedMap()
 
-    local rm = createRoom(spawn)
+    local rm = createSpawnRoom(spawn)
     local doors = getDoorIndexes(rm)
     local spawnX = mapGenPositionXFromArrayIndex(spawn)
     local spawnY = mapGenPositionYFromArrayIndex(spawn)
@@ -69,6 +70,9 @@ function generateMap()
     player.x = 5
     player.y = 5
     printGeneratedMap()
+
+    local specialIndex = getSpecialRoom()
+    makeBossRoomForMapGenRooms(specialIndex)
 end
 
 function mapGenManagement(dt)
@@ -200,8 +204,29 @@ function switchToRoom(index)
     player.mapGenY = MAPGEN_ROOMS[index].y
 end
 
+function makeBossRoomForMapGenRooms(index)
+        SPRITES = {}
+
+        local rm = createBossRoom(index)
+        local doors = getDoorIndexes(rm)
+
+        MAPGEN_ROOMS[index]={
+            room = rm,
+            x = mapGenPositionXFromArrayIndex(index),
+            y = mapGenPositionYFromArrayIndex(index),
+            l = doors.l,
+            r = doors.r,
+            d = doors.d,
+            u = doors.u
+        }
+
+        print ("BOSS ROOM MADE")
+        print (index)
+end
+
 function makeRoomForMapGenRooms(index)
         SPRITES = {}
+
         local rm = createRoom(index)
         local doors = getDoorIndexes(rm)
 
@@ -313,6 +338,17 @@ function numberOfConnections(index)
     return numberOfConnections 
 end
 
+function getSpecialRoom()
+    for i,v in ipairs(MAPGEN_MAP) do
+        if (numberOfConnections(i) == 1 and SPECIAL_ROOMS[i] == nil and MAPGEN_MAP[i] > 1) then
+            SPECIAL_ROOMS[i] = i
+            print ("SPECIAL SPECIALFJ")
+            return i
+        end
+    end
+end
+
+
 function isNextToARoom(index)
     local roomX = mapGenPositionXFromArrayIndex(index)
     local roomY = mapGenPositionYFromArrayIndex(index)
@@ -329,7 +365,6 @@ function isNextToARoom(index)
     potentialRoomY = roomY + 1
     
     if (potentialRoomY < math.sqrt(MAPGEN_MAPSIZE)) then
-        print (potentialRoomX .. "  " .. potentialRoomY)
         if (MAPGEN_MAP[mapGenIndexFromCoordinates(potentialRoomX,potentialRoomY)] > 0) then
             return true
         end
@@ -355,6 +390,7 @@ function isNextToARoom(index)
 end
 
 function createRooms(maxRooms)
+    math.randomseed( os.time() )
     while (numberOfRooms() < maxRooms) do
         local index = selectRandomRoom()
         if (isNextToARoom(index) and MAPGEN_MAP[index] ~= 1) then
@@ -438,5 +474,3 @@ function doesRoomHaveRight(index)
 
     return (MAPGEN_MAP[rightRoom] > 0)
 end
-
-

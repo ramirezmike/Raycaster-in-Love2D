@@ -107,8 +107,8 @@ function drawMiniMap()
     miniMapWidth = mWidth * mapProp.miniMapScale
     miniMapHeight = mWidth * mapProp.miniMapScale
 
-    mapOffsetX = 400 --500
-    mapOffsetY = 300 --340
+    mapOffsetX = 0 --500
+    mapOffsetY = 370 --340
 
     love.graphics.setColor(255,255,255)
     local i=1
@@ -116,7 +116,7 @@ function drawMiniMap()
         for x=0,mWidth-1 do
             local wall = MAPGEN_MAP[i]
    
-            if (wall>0) then
+            if (wall>0 and MAPGEN_ROOMS[i] ~= nil) then
                 love.graphics.setColor(0,0,200)
                 if (x == currentRoom.x and y == currentRoom.y) then
                     love.graphics.setColor(200,200,0)

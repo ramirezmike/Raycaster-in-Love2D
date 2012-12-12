@@ -11,12 +11,45 @@ function createRoom(roomIndex)
     addDoorRight(room,doesRoomHaveRight(roomIndex))
 
     loadMapFromRoom(room) 
-    addObstacles(room)
+
+--    addObstacles(room)
+
     clearPathsToDoors(room)
     loadMapFromRoom(room) 
-    addEnemies(room)
+
+--    addEnemies(room)
     printGeneratedRoom(room)
 
+    loadMapFromRoom(room) 
+    return room
+end
+
+function createBossRoom(roomIndex)
+    local size = 95
+    local room = createEmptyRoom(size)
+    --printGeneratedRoom(room)
+
+    addDoorTop(room,doesRoomHaveTop(roomIndex))
+    addDoorBottom(room,doesRoomHaveBottom(roomIndex))
+    addDoorLeft(room,doesRoomHaveLeft(roomIndex))
+    addDoorRight(room,doesRoomHaveRight(roomIndex))
+--
+    addObstacles(room)
+
+    return room
+end
+
+function createSpawnRoom(roomIndex)
+    local size = 10
+    local room = createEmptyRoom(size)
+    --printGeneratedRoom(room)
+
+    addDoorTop(room,doesRoomHaveTop(roomIndex))
+    addDoorBottom(room,doesRoomHaveBottom(roomIndex))
+    addDoorLeft(room,doesRoomHaveLeft(roomIndex))
+    addDoorRight(room,doesRoomHaveRight(roomIndex))
+
+    printGeneratedRoom(room)
     loadMapFromRoom(room) 
     return room
 end
@@ -190,7 +223,7 @@ function addEnemies(room)
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then
---            addSpriteToMap(index)
+            addSpriteToMap(index)
         end
     end
 end
@@ -204,7 +237,6 @@ function clearTwoSpots(index)
 
     if (x-2 > 0 and x+2 < size and y+2 < size and y-2 > 0) then
         local newIndex = indexFromCoordinates(x-2,y+2)
-        print (mapProp.map[newIndex])
         if (map[newIndex] > 0) then
             return false
         end
@@ -303,7 +335,6 @@ function clearTwoSpots(index)
         if (map[newIndex] > 0) then
             return false
         end
-        print ("THIS RINGS TRUE")
         return true
     end
     return false

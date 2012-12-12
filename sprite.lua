@@ -77,7 +77,7 @@ function addSpriteToMap(index)
             playerVisible = false,
             maxFireRate = 1,
             fireRate = 0,
-            health = 10,
+            health = 1,
             hit = false,
             hitPause = 0.1,
             moveSpeed = 0.05,
