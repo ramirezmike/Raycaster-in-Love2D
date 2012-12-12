@@ -18,7 +18,6 @@ SPRITES = {}
 
 generateMap()
 
-
 function gameCycle()
     local dt = love.timer.getDelta()
     move(dt)
@@ -61,7 +60,8 @@ function love.draw()
         end
 --        spriteBatch:setColor( 255/strip.dist, 255/strip.dist, 255/strip.dist, 255)
         if (strip.quad) then
-            spriteBatch:addq(strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
+        --        spriteBatch:addq(strip.quad,strip.x+10,strip.y+20,0,strip.sx,strip.sy)
+                spriteBatch:addq(strip.quad,strip.x,strip.y,0,strip.sx,strip.sy)
         end
         spriteBatch:setColor()
 --        love.graphics.setColor(255,255,255,255*light)

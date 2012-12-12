@@ -219,9 +219,6 @@ function makeBossRoomForMapGenRooms(index)
             d = doors.d,
             u = doors.u
         }
-
-        print ("BOSS ROOM MADE")
-        print (index)
 end
 
 function makeRoomForMapGenRooms(index)

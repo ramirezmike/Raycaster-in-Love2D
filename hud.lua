@@ -18,8 +18,11 @@ end
 function drawHud()
     love.graphics.setColor(255,255,255,255)
     love.graphics.draw(hudImg,0,375,0)   
+    love.graphics.setFont(mainFont)
+    love.graphics.print(getDirectionInString(), 100, 415)
 end
 
 function loadHud()
     hudImg = love.graphics.newImage("hud.png")
+    mainFont = love.graphics.newFont(20)
 end
