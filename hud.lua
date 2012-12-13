@@ -25,14 +25,12 @@ end
 
 function drawHearts()
     love.graphics.setColor(255,0,0,255)
-    for i=0, player.health do
-       -- love.graphics.draw(heartImg,220+(i*25),455,0)   
+    for i=0, player.health,0.5 do
         love.graphics.rectangle("fill",218+(i*25),455,25,22)
     end
 end
 
 function loadHud()
     hudImg = love.graphics.newImage("hud.png")
-    heartImg = love.graphics.newImage("heart.png")
     mainFont = love.graphics.newFont(35)
 end

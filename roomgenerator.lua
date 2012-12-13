@@ -5,16 +5,17 @@ function createRoom(roomIndex)
     local room = createEmptyRoom(size)
     --printGeneratedRoom(room)
 
+
+    loadMapFromRoom(room) 
+    addObstacles(room)
+
+    clearPathsToDoors(room)
+    loadMapFromRoom(room) 
+
     addDoorTop(room,doesRoomHaveTop(roomIndex))
     addDoorBottom(room,doesRoomHaveBottom(roomIndex))
     addDoorLeft(room,doesRoomHaveLeft(roomIndex))
     addDoorRight(room,doesRoomHaveRight(roomIndex))
-
-    loadMapFromRoom(room) 
-
---    addObstacles(room)
-
-    clearPathsToDoors(room)
     loadMapFromRoom(room) 
 
     addEnemies(room)
@@ -130,7 +131,7 @@ function addDoorTop(room,roomExists)
 
     local middle = math.ceil(roomSizeRoot / 2)
     for i=roomSizeRoot+1,roomSizeRoot*2 do
-        room[i] = 3
+        room[i] = 2
     end
 
     if (roomExists) then
@@ -161,7 +162,7 @@ function addDoorRight(room,roomExists)
 
     local middle = math.ceil(roomSizeRoot / 2)
     for i=roomSizeRoot*2-1,size-roomSizeRoot,roomSizeRoot do
-        room[i] = 4
+        room[i] = 3
     end
 
     if (roomExists) then
@@ -176,7 +177,7 @@ function addDoorLeft(room,roomExists)
 
     local middle = math.ceil(roomSizeRoot / 2)
     for i=roomSizeRoot+2,size-roomSizeRoot,roomSizeRoot do
-        room[i] = 5
+        room[i] = 3
     end
 
     if (roomExists) then
@@ -212,7 +213,7 @@ function addObstacles(room)
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then
-            room[index] = 1
+            room[index] = 4
         end
     end
 end
