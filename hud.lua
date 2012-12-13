@@ -16,16 +16,18 @@ function getDirectionInString()
 end
 
 function drawHud()
+    drawHearts()
     love.graphics.setColor(255,255,255,255)
     love.graphics.draw(hudImg,0,375,0)   
-    drawHearts()
     love.graphics.setFont(mainFont)
     love.graphics.print(getDirectionInString(), 142, 432)
 end
 
 function drawHearts()
+    love.graphics.setColor(255,0,0,255)
     for i=0, player.health do
-        love.graphics.draw(heartImg,220+(i*25),455,0)   
+       -- love.graphics.draw(heartImg,220+(i*25),455,0)   
+        love.graphics.rectangle("fill",218+(i*25),455,25,22)
     end
 end
 
