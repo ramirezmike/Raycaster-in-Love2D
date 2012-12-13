@@ -88,9 +88,7 @@ end
 
 function drawDebug()
     love.graphics.setColor(0,0,0)
-    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS()), 10, 10)
-    love.graphics.print("player.X   : "..tostring(player.x), 10, 25)
-    love.graphics.print("player.Y   : "..tostring(player.y), 10, 40)
+    love.graphics.print("FPS: "..tostring(love.timer.getFPS()), 10, 10)
 --    love.graphics.print("player.R   : "..getDirectionInString(), 10, 55)
 --    love.graphics.print("selWallX   : "..tostring(positionXFromArrayIndex(selectedWall)), 10, 70)
 --    love.graphics.print("selWallY   : "..tostring(math.floor(positionYFromArrayIndex(selectedWall) + 0.5)), 10, 85)
@@ -114,7 +112,7 @@ function drawMiniMap()
         for x=0,mWidth-1 do
             local wall = MAPGEN_MAP[i]
    
-            if (wall>0 and MAPGEN_ROOMS[i] ~= nil) then
+            if (wall>0) then
                 love.graphics.setColor(0,0,200)
                 if (x == currentRoom.x and y == currentRoom.y) then
                     love.graphics.setColor(200,200,0)

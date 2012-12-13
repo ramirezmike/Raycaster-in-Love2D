@@ -2,7 +2,7 @@ function ai(dt)
     for i = 1, #SPRITES do     
         local sprite = SPRITES[i]
         if (sprite.health <= 0) then
-            sprite.state = 10
+            sprite.state = -1
             sprite.block = false
         else
             sprite.frameTimer = sprite.frameTimer + dt*sprite.walkAnimationSpeed

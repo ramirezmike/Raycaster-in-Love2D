@@ -82,6 +82,7 @@ function love.draw()
     end
 
 --    if (mapProp.displayMap) then drawMiniMap() end
+    love.graphics.draw(p,screenWidth/2,-200)
     if (displayDebug) then drawDebug() end
     drawHud()
     drawMiniMap()
@@ -96,6 +97,7 @@ function love.update(dt)
     if (areEnemiesDead()) then
         mapGenManagement(dt)
     end
+    p:update(dt)
 end
 
 function love.load()
@@ -122,4 +124,27 @@ function love.load()
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)
     love.mouse.setGrab(true)
+
+    snow = love.graphics.newImage("snow.png")
+    setupParticles()
+end
+
+function setupParticles()
+  p = love.graphics.newParticleSystem(snow, 10)
+  p:setEmissionRate          (2)
+  p:setLifetime              (-1) 
+  p:setParticleLife          (10) 
+  p:setPosition              (50, 50) 
+  p:setDirection             (0) 
+  p:setSpread                (2) 
+  p:setSpeed                 (-60, 60) 
+  p:setSpin                  (2) 
+  p:setGravity               (10)
+  p:setRadialAcceleration    (0)
+  p:setTangentialAcceleration(0)
+  p:setSizeVariation(1,30)
+  p:setRotation(0) 
+  p:setSpinVariation(1) 
+  p:stop()
+  p:start()
 end
