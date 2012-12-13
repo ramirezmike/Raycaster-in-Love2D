@@ -30,6 +30,10 @@ function love.keypressed(key, unicode)
         love.event.quit()
     end
 
+    if key == ' ' then
+        mapGenManagement()
+    end
+
     if key == 'i' then
 --        loadMapFromDisk("map01.lua")
         generateMap()

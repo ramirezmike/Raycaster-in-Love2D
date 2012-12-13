@@ -94,9 +94,6 @@ function love.update(dt)
     manageBullets(dt)
     manageDecals(dt)
 
-    if (areEnemiesDead()) then
-        mapGenManagement(dt)
-    end
     p:update(dt)
 end
 

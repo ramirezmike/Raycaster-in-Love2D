@@ -75,7 +75,10 @@ function generateMap()
     makeBossRoomForMapGenRooms(specialIndex)
 end
 
-function mapGenManagement(dt)
+function mapGenManagement()
+    if not (areEnemiesDead()) then
+        return
+    end
     local currentRoomIndex = getCurrentRoomIndex()
     local currentRoomMapGenIndex = getMapGenRoomsArrayIndexFromIndex(currentRoomIndex)
 

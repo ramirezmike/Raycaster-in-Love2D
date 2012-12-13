@@ -113,7 +113,10 @@ function drawMiniMap()
             local wall = MAPGEN_MAP[i]
    
             if (wall>0) then
-                love.graphics.setColor(0,0,200)
+                love.graphics.setColor(0,0,90)
+                if (MAPGEN_ROOMS[mapGenIndexFromCoordinates(x,y)] and SPECIAL_ROOMS[mapGenIndexFromCoordinates(x,y)] == nil) then
+                    love.graphics.setColor(0,0,200)
+                end
                 if (x == currentRoom.x and y == currentRoom.y) then
                     love.graphics.setColor(200,200,0)
                 end
