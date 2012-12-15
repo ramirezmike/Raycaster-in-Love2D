@@ -11,7 +11,7 @@ function createRoom(roomIndex)
 
     clearPathsToDoors(room)
     loadMapFromRoom(room) 
-
+    
     addDoorTop(room,doesRoomHaveTop(roomIndex),roomIndex)
     addDoorBottom(room,doesRoomHaveBottom(roomIndex),roomIndex)
     addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)

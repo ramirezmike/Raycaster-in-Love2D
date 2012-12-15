@@ -49,6 +49,9 @@ function generateMap()
     createRooms(2) 
     printGeneratedMap()
 
+    local specialIndex = getSpecialRoom()
+    makeBossRoomForMapGenRooms(specialIndex)
+
     local rm = createSpawnRoom(spawn)
     local doors = getDoorIndexes(rm)
     local spawnX = mapGenPositionXFromArrayIndex(spawn)
@@ -71,8 +74,6 @@ function generateMap()
     player.y = 5
     printGeneratedMap()
 
-    local specialIndex = getSpecialRoom()
-    makeBossRoomForMapGenRooms(specialIndex)
 end
 
 function mapGenManagement()
@@ -350,10 +351,9 @@ function getSpecialRoom()
 end
 
 function isBossRoom(index)
---    if (SPECIAL_ROOMS[index] == nil) then 
---        return false
---    end
-    print ("CHECKED THIS")
+    if (SPECIAL_ROOMS[index] == nil) then 
+        return false
+    end
     return true
 end
 
