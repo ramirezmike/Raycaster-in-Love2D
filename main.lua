@@ -82,7 +82,7 @@ function love.draw()
     end
 
 --    if (mapProp.displayMap) then drawMiniMap() end
-    love.graphics.draw(p,screenWidth/2,-200)
+--    love.graphics.draw(p,screenWidth/2,-200)
     if (displayDebug) then drawDebug() end
     drawHud()
     drawMiniMap()
@@ -94,7 +94,8 @@ function love.update(dt)
     manageBullets(dt)
     manageDecals(dt)
 
-    p:update(dt)
+--    p:update(dt)
+    deleteDeadSprites()
 end
 
 function love.load()
@@ -123,7 +124,7 @@ function love.load()
     love.mouse.setGrab(true)
 
     snow = love.graphics.newImage("snow.png")
-    setupParticles()
+--    setupParticles()
 end
 
 function setupParticles()

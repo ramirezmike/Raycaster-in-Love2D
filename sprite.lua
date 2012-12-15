@@ -1,3 +1,5 @@
+SPRITES_TO_DELETE = {}
+
 function makeSpriteMap()
     for i=1,#mapProp.map do
         spriteMap[i] = 0
@@ -104,10 +106,59 @@ function addSpriteToMap(index)
 end
 
 function areEnemiesDead()
-    for i,v in ipairs(SPRITES) do
-        if (v["health"] > 0) then
-            return false
+    return (#SPRITES_TO_DELETE == 0) 
+end
+
+function deleteDeadSprites()
+    if (#SPRITES_TO_DELETE > 0) then
+        for i,v in ipairs(SPRITES_TO_DELETE) do
+            table.remove(SPRITES,SPRITES_TO_DELETE[i])
         end
+        SPRITES_TO_DELETE = {}
     end
-    return true
+    if (#SPRITES == 0) then
+        unlockAllDoors()
+    end
+end
+
+function addElf()
+    local elf = {
+            id = spriteIndex,
+            x = posX,
+            y = posY,
+            img = 0,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+
+            bulletSpeed = 4.5,
+            playerVisible = false,
+            visiblityRange = 5,
+
+            rotate = true,
+            rotationDirection = 0,
+            rotationAngle = 20,
+            rotateDelay = 3,
+            rotateDelayMax = 3,
+
+            maxFireRate = 3,
+            fireRate = 2.9,
+
+            health = 1,
+            hit = false,
+            hitPause = 0.1,
+
+            moveSpeed = 0.05,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5
+        }
+    return elf
 end

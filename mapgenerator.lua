@@ -46,7 +46,7 @@ function generateMap()
 --
 --    print (index .. "  " .. x .. "  " .. y)
 
-    createRooms(25) 
+    createRooms(2) 
     printGeneratedMap()
 
     local rm = createSpawnRoom(spawn)
@@ -79,6 +79,7 @@ function mapGenManagement()
     if not (areEnemiesDead()) then
         return
     end
+
     local currentRoomIndex = getCurrentRoomIndex()
     local currentRoomMapGenIndex = getMapGenRoomsArrayIndexFromIndex(currentRoomIndex)
 
@@ -206,6 +207,7 @@ function switchToRoom(index)
     player.mapGenX = MAPGEN_ROOMS[index].x
     player.mapGenY = MAPGEN_ROOMS[index].y
 end
+
 
 function makeBossRoomForMapGenRooms(index)
         SPRITES = {}
@@ -342,10 +344,17 @@ function getSpecialRoom()
     for i,v in ipairs(MAPGEN_MAP) do
         if (numberOfConnections(i) == 1 and SPECIAL_ROOMS[i] == nil and MAPGEN_MAP[i] > 1) then
             SPECIAL_ROOMS[i] = i
-            print ("SPECIAL SPECIALFJ")
             return i
         end
     end
+end
+
+function isBossRoom(index)
+--    if (SPECIAL_ROOMS[index] == nil) then 
+--        return false
+--    end
+    print ("CHECKED THIS")
+    return true
 end
 
 

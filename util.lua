@@ -42,6 +42,9 @@ function isBlocking(object, newX, newY)
             if (object.objType == "bullet" and object.origin == 0) then
                 if (dist < 0.3) then
                     handleSpriteHit(sprite)
+                    if (sprite.health < 1) then
+                        table.insert(SPRITES_TO_DELETE, i)
+                    end
                     return true
                 end
             end

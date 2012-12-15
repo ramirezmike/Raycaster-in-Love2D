@@ -12,10 +12,10 @@ function createRoom(roomIndex)
     clearPathsToDoors(room)
     loadMapFromRoom(room) 
 
-    addDoorTop(room,doesRoomHaveTop(roomIndex))
-    addDoorBottom(room,doesRoomHaveBottom(roomIndex))
-    addDoorLeft(room,doesRoomHaveLeft(roomIndex))
-    addDoorRight(room,doesRoomHaveRight(roomIndex))
+    addDoorTop(room,doesRoomHaveTop(roomIndex),roomIndex)
+    addDoorBottom(room,doesRoomHaveBottom(roomIndex),roomIndex)
+    addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)
+    addDoorRight(room,doesRoomHaveRight(roomIndex),roomIndex)
     loadMapFromRoom(room) 
 
     addEnemies(room)
@@ -30,25 +30,26 @@ function createBossRoom(roomIndex)
     local room = createEmptyRoom(size)
     --printGeneratedRoom(room)
 
-    addDoorTop(room,doesRoomHaveTop(roomIndex))
-    addDoorBottom(room,doesRoomHaveBottom(roomIndex))
-    addDoorLeft(room,doesRoomHaveLeft(roomIndex))
-    addDoorRight(room,doesRoomHaveRight(roomIndex))
+    addDoorTop(room,doesRoomHaveTop(roomIndex),roomIndex)
+    addDoorBottom(room,doesRoomHaveBottom(roomIndex),roomIndex)
+    addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)
+    addDoorRight(room,doesRoomHaveRight(roomIndex),roomIndex)
 --
     addObstacles(room)
 
     return room
 end
 
+
 function createSpawnRoom(roomIndex)
     local size = 10
     local room = createEmptyRoom(size)
     --printGeneratedRoom(room)
 
-    addDoorTop(room,doesRoomHaveTop(roomIndex))
-    addDoorBottom(room,doesRoomHaveBottom(roomIndex))
-    addDoorLeft(room,doesRoomHaveLeft(roomIndex))
-    addDoorRight(room,doesRoomHaveRight(roomIndex))
+    addDoorTop(room,doesRoomHaveTop(roomIndex),roomIndex)
+    addDoorBottom(room,doesRoomHaveBottom(roomIndex),roomIndex)
+    addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)
+    addDoorRight(room,doesRoomHaveRight(roomIndex),roomIndex)
 
     printGeneratedRoom(room)
     loadMapFromRoom(room) 
@@ -84,10 +85,12 @@ function createEmptyRoom(size)
         room[i] = 0
     end
 
+    -- North
     for i=1,roomSizeRoot do
         room[i] = 1 
     end 
 
+    -- Sides
     for i=1,roomSizeRoot-1 do 
         i = i * roomSizeRoot+1
         room[i] = 1 
@@ -100,6 +103,7 @@ function createEmptyRoom(size)
     end 
 
 
+    -- Bottom
     for i=(size+1)-roomSizeRoot,(size) do
         room[i] = 1 
     end 
@@ -125,7 +129,15 @@ function clearPathsToDoors(room)
     end
 end
 
-function addDoorTop(room,roomExists)
+function unlockAllDoors()
+    for i = 0, #mapProp.map do
+        if mapProp.map[i] == 1 then
+            mapProp.map[i] = 5
+        end
+    end
+end
+
+function addDoorTop(room,roomExists,index)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -135,12 +147,20 @@ function addDoorTop(room,roomExists)
     end
 
     if (roomExists) then
+        local x = mapGenPositionXFromArrayIndex(index)
+        local y = mapGenPositionYFromArrayIndex(index) 
+        local indexTop = mapGenIndexFromCoordinates(x,y - 1)
+
+        if (isBossRoom(indexTop)) then
+            room[middle] = 6
+        end 
+
         local opening = roomSizeRoot + middle
         room[opening] = 0
     end
 end
 
-function addDoorBottom(room,roomExists)
+function addDoorBottom(room,roomExists,index)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -150,13 +170,21 @@ function addDoorBottom(room,roomExists)
     end
 
     if (roomExists) then
+        local x = mapGenPositionXFromArrayIndex(index)
+        local y = mapGenPositionYFromArrayIndex(index) 
+        local indexBottom = mapGenIndexFromCoordinates(x,y + 1)
+
+        if (isBossRoom(indexBottom)) then
+            room[size-middle+1] = 6
+        end 
+
         local opening = size - roomSizeRoot - middle + 1
         room[opening] = 0
     end
 end
 
 
-function addDoorRight(room,roomExists)
+function addDoorRight(room,roomExists,index)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -166,12 +194,20 @@ function addDoorRight(room,roomExists)
     end
 
     if (roomExists) then
+        local x = mapGenPositionXFromArrayIndex(index)
+        local y = mapGenPositionYFromArrayIndex(index) 
+        local indexRight = mapGenIndexFromCoordinates(x+1,y)
+
+        if (isBossRoom(indexRight)) then
+            room[size - (roomSizeRoot*(middle-1))] = 6
+        end 
+
         local opening = size - (roomSizeRoot*(middle-1)) - 1
         room[opening] = 0
     end
 end
 
-function addDoorLeft(room,roomExists)
+function addDoorLeft(room,roomExists,index)
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
@@ -181,6 +217,14 @@ function addDoorLeft(room,roomExists)
     end
 
     if (roomExists) then
+        local x = mapGenPositionXFromArrayIndex(index)
+        local y = mapGenPositionYFromArrayIndex(index) 
+        local indexLeft = mapGenIndexFromCoordinates(x-1,y)
+
+        if (isBossRoom(indexLeft)) then
+            room[size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 1] = 6
+        end 
+
         local opening = size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 2 
         room[opening] = 0
     end
