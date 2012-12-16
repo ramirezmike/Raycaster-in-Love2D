@@ -1,7 +1,18 @@
+BULLETS_TO_DELETE = {}
+
 function manageBullets(dt)                                                         
+    deleteUneededBullets() 
+
     for i,v in ipairs(bullets) do                                                  
-        v["x"] = v["x"] + (v["dx"] * dt)                                           
-        v["y"] = v["y"] + (v["dy"] * dt)                                           
+        if (v["isRandom"]) then
+            v["x"] = v["x"] + (v["dx"] * dt)                                           
+            v["y"] = v["y"] + (v["dy"] * dt)                                           
+            handleVertical(v,dt,i)
+        else
+            v["x"] = v["x"] + (v["dx"] * dt)                                           
+            v["y"] = v["y"] + (v["dy"] * dt)                                           
+        end
+
         if (v["origin"] > 0) then
             if (enemyBulletHitPlayerCheck(v)) then
                 table.remove(bullets,i)
@@ -16,8 +27,9 @@ function manageBullets(dt)
                         y = v["y"] - ((v["dy"]*dt) * 3), 
                         wallX = v["bulletWallPositionX"],
                         wallY = v["bulletWallPositionY"],
+                        verticalPosition = v["verticalPosition"],
                         sprite = 4, 
-                        state = 2, 
+                        state = v["bulletType"]+1, 
                         visible = false, 
                         decay = 0.1
                     })
@@ -61,11 +73,11 @@ function renderBullets()
             {                                                                      
                 z = z,                                                             
                 x = left,
-                y = top,                                                           
+                y = top + v["verticalPosition"],                                                           
                 dist = dist,                                                       
                 sx = spriteSize / mTileSize,                                
                 sy = spriteSize / 64,                                              
-                quad = SPRITEQUAD[4][1]                        
+                quad = SPRITEQUAD[4][v["bulletType"]]                        
             }
 
             v["visible"] = false
@@ -87,6 +99,31 @@ function enemyBulletHitPlayerCheck(v)
     return false
 end
 
+function createRandomBullet(object)
+    local radiusPoint = math.random(math.pi*2)
+    local vector = {
+        x = math.cos(radiusPoint),
+        y = math.sin(radiusPoint)
+    }
+    local bulletDx = vector.x * object.bulletSpeed
+    local bulletDy = vector.y * object.bulletSpeed 
+    table.insert(bullets, {
+            bulletType = 3, 
+            x = object.x,
+            y = object.y, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false, 
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0,
+            isRandom = true,
+            peakHit = false
+    })
+    love.audio.stop(soundShoot)
+    love.audio.play(soundShoot)
+end
+
 function createBulletSprite(object)
     local tarX = player.x - object.x
     local tarY = player.y - object.y
@@ -95,7 +132,17 @@ function createBulletSprite(object)
     local nVectorY = tarY / mag    
     local bulletDx = nVectorX * object.bulletSpeed
     local bulletDy = nVectorY * object.bulletSpeed 
-    table.insert(bullets, {x = object.x, y = object.y, dx = bulletDx, dy = bulletDy, visible = false, objType = "bullet",origin = object.id})
+    table.insert(bullets, {
+            bulletType = 1,
+            x = object.x, 
+            y = object.y, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false, 
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0
+    })
     love.audio.stop(soundShoot)
     love.audio.play(soundShoot)
 end
@@ -106,7 +153,57 @@ function createBullet(object)
     local angle = object.rot                                               
     local bulletDx = object.bulletSpeed * math.cos(angle)                   
     local bulletDy = object.bulletSpeed * math.sin(angle)                   
-    table.insert(bullets, {x = startX, y = startY, dx = bulletDx, dy = bulletDy, visible = false, objType = "bullet",origin = object.id})
+    table.insert(bullets, {
+            bulletType = 1,
+            x = startX, 
+            y = startY, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false,            
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0      
+    })
     love.audio.stop(soundShoot)
     love.audio.play(soundShoot)
 end
+
+function handleVertical(object,dt, bulletIndex)
+    local peak = -100
+    if not (object["peakHit"]) then
+        object["verticalPosition"] = object["verticalPosition"] - 300*dt
+        if (object["verticalPosition"] < peak) then
+            object["peakHit"] = true
+        end
+    else
+        object["verticalPosition"] = object["verticalPosition"] + 200*dt
+    end
+    if (object["verticalPosition"] > 0) then
+        table.insert(DECALS, 
+            {
+                x = object["x"] - ((object["dx"]*dt) * 3), 
+                y = object["y"] - ((object["dy"]*dt) * 3), 
+                wallX = object["bulletWallPositionX"],
+                wallY = object["bulletWallPositionY"],
+                verticalPosition = object["verticalPosition"],
+                sprite = 4, 
+                state = 4, 
+                visible = false, 
+                decay = 0.1
+            })
+        love.audio.stop(soundHit1)
+        love.audio.play(soundHit1)
+        table.insert(BULLETS_TO_DELETE,bulletIndex)
+        object["bulletType"] = 4
+    end
+end
+
+function deleteUneededBullets() 
+    if (#BULLETS_TO_DELETE > 0) then
+        for i,v in ipairs(BULLETS_TO_DELETE) do
+            table.remove(bullets,BULLETS_TO_DELETE[i])
+        end
+        BULLETS_TO_DELETE = {}
+    end
+end
+

@@ -28,7 +28,7 @@ function renderDecals()
             
                 z = z,
                 x = left,
-                y = top,
+                y = top + v["verticalPosition"],
                 dist = dist,
                 sx = spriteSize / mTileSize,
                 sy = spriteSize / 64,

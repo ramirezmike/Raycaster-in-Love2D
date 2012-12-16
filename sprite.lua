@@ -145,22 +145,13 @@ function addElf(x,y)
             dir = 0,
             rot = 0,
 
-            towardPlayer = false,
-
-            wander = true,
-            theta = 0,
 
             bulletSpeed = 4.5,
             playerVisible = false,
             visiblityRange = 5,
 
-            rotate = false,
-            rotationDirection = 0,
-            rotationAngle = 20,
-            rotateDelay = 3,
-            rotateDelayMax = 3,
 
-            maxFireRate = 3,
+            maxFireRate = 1.5,
             fireRate = 2.9,
 
             health = 1,

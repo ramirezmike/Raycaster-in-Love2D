@@ -24,7 +24,7 @@ function elfAI(sprite, dt)
                 y = 0 
             }
              
-            handleFire(sprite,dt)
+            fireRandomDirection(sprite,dt)
             local vectorC = steerAwayFromWalls(sprite)
             local vectorE = steerAwayFromSprites(sprite)
 --            local vectorF = wander(sprite, vectorC)
@@ -197,6 +197,17 @@ function handleFire(sprite,dt)
     end
 end
 
+function fireRandomDirection(sprite,dt)
+    if (sprite.fireRate < 0) then 
+        sprite.fireRate = sprite.maxFireRate
+    elseif (sprite.fireRate == sprite.maxFireRate) then
+        sprite.fireRate = sprite.fireRate - dt
+        createRandomBullet(sprite)
+    else
+        sprite.fireRate = sprite.fireRate - dt
+    end
+end
+
 function steerAwayFromSprites(sprite)
     local newVectorX = 0
     local newVectorY = 0
@@ -257,8 +268,6 @@ function randomMovement(sprite,dt)
     if (sprite.randomMovementIndex == indexFromCoordinates(sprite.x,sprite.y) or
         sprite.randomMovementTime < 0) then
         sprite.randomMovementIndex = getEmptySpot(MAPGEN_ROOMS[getCurrentRoomIndex()].room, false)
-        print (positionXFromArrayIndex(sprite.randomMovementIndex) .. "  " .. positionYFromArrayIndex(sprite.randomMovementIndex))
-        print (sprite.x .. " " .. sprite.y)
         sprite.randomMovementTime = sprite.randomMovementMaxTime
     end
 
