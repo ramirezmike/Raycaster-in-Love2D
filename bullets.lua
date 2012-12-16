@@ -179,18 +179,6 @@ function handleVertical(object,dt, bulletIndex)
         object["verticalPosition"] = object["verticalPosition"] + 200*dt
     end
     if (object["verticalPosition"] > 0) then
-        table.insert(DECALS, 
-            {
-                x = object["x"] - ((object["dx"]*dt) * 3), 
-                y = object["y"] - ((object["dy"]*dt) * 3), 
-                wallX = object["bulletWallPositionX"],
-                wallY = object["bulletWallPositionY"],
-                verticalPosition = object["verticalPosition"],
-                sprite = 4, 
-                state = 4, 
-                visible = false, 
-                decay = 0.1
-            })
         love.audio.stop(soundHit1)
         love.audio.play(soundHit1)
         table.insert(BULLETS_TO_DELETE,bulletIndex)

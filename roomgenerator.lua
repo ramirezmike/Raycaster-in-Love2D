@@ -265,7 +265,6 @@ end
 function addEnemies(room)
     local rand = math.random(2,5)
 
-    rand = 0
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then

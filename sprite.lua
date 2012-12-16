@@ -71,7 +71,7 @@ function addSpriteToMap(index)
         [2] = function (x) addElf(posX,posY) end
     }
 
-    action[2]()
+    action[rand]()
 end
 
 function areEnemiesDead()
@@ -114,9 +114,9 @@ function addSnowman(x,y)
             rotateDelayMax = 3,
 
             maxFireRate = 3,
-            fireRate = 2.9,
+            fireRate = math.random(2.9,7),
 
-            health = 1,
+            health = 4,
             hit = false,
             hitPause = 0.1,
 
@@ -152,9 +152,9 @@ function addElf(x,y)
 
 
             maxFireRate = 1.5,
-            fireRate = 2.9,
+            fireRate = math.random(7),
 
-            health = 1,
+            health = 3,
             hit = false,
             hitPause = 0.1,
 
