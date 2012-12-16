@@ -1,5 +1,4 @@
-function ai(dt)
-    for i = 1, #SPRITES do     
+function ai(dt) for i = 1, #SPRITES do     
         local sprite = SPRITES[i]
         if (sprite.health <= 0) then
             sprite.state = -1
@@ -7,7 +6,60 @@ function ai(dt)
         else
             sprite.frameTimer = sprite.frameTimer + dt*sprite.walkAnimationSpeed
             sprite.strafeSpeed = 0
+            
+            local action = {
+                [5] = function (x) snowmanAI(sprite,dt) end,
+                [0] = function (x) elfAI(sprite,dt) end
+            }
 
+            action[sprite.img]()
+        end
+    end
+
+end
+
+function elfAI(sprite, dt)
+            vector = {
+                x = 0,
+                y = 0 
+            }
+             
+            handleFire(sprite,dt)
+            local vectorC = steerAwayFromWalls(sprite)
+            local vectorE = steerAwayFromSprites(sprite)
+--            local vectorF = wander(sprite, vectorC)
+
+            local vectorF = randomMovement(sprite,dt)
+
+            vector.x = vectorC.x + vectorE.x + vectorF.x
+            vector.y = vectorC.y + vectorE.y + vectorF.y
+            limitVelocity(sprite,vector)
+
+
+            local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
+            
+
+            sprite.x = sprite.x + (vector.x  * dt )
+            sprite.y = sprite.y + (vector.y  * dt )
+
+
+            if (dist > 0) then
+                sprite.speed = 40
+                local numWalkSprites = 4
+                if math.floor(sprite.frameTimer) > numWalkSprites then
+                    sprite.frameTimer = 1 
+                end
+                sprite.state = math.floor(sprite.frameTimer) 
+            else
+                sprite.state = 0
+                sprite.speed = 0
+            end
+            if (sprite.hit) then
+                aiHandleHit(sprite, dt)
+            end
+end
+
+function snowmanAI(sprite, dt)
             vector = {
                 x = 0,
                 y = 0 
@@ -37,21 +89,10 @@ function ai(dt)
             vector.y = vectorA.y + vectorB.y + vectorC.y + vectorD.y + vectorE.y
             limitVelocity(sprite,vector)
 
-
---            local p1 = polarOffset(sprite.x,sprite.y,0.5,angle+0.7)                  
---            angle = angle + steerAwayFromWalls(p1)
---            local p2 = polarOffset(sprite.x,sprite.y,0.5,angle-0.7)                  
---            angle = angle + steerAwayFromWalls(p2)
-
             local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
             
-            local angle = math.atan(vector.y/vector.x)
-
             sprite.x = sprite.x + (vector.x  * dt )
             sprite.y = sprite.y + (vector.y  * dt )
-
-
-            --sprite.rot = angle
 
             if (dist > 0) then
                 sprite.speed = 40
@@ -67,9 +108,6 @@ function ai(dt)
             if (sprite.hit) then
                 aiHandleHit(sprite, dt)
             end
-        end
-    end
-
 end
 
 function aiHandleHit(sprite, dt)
@@ -201,3 +239,98 @@ function steerAwayFromWalls(sprite)
     vectorC.y = newVectorY
     return vectorC
 end
+
+function setupRandomMovement(sprite)
+    sprite.randSetup = true
+    sprite.randomMovementIndex = 0
+    sprite.randomMovementTime = 0
+    sprite.randomMovementMaxTime = 5
+end
+
+function randomMovement(sprite,dt)
+    if (sprite.randSetup == nil) then
+        setupRandomMovement(sprite)
+    end
+
+    sprite.randomMovementTime = sprite.randomMovementTime - dt
+
+    if (sprite.randomMovementIndex == indexFromCoordinates(sprite.x,sprite.y) or
+        sprite.randomMovementTime < 0) then
+        sprite.randomMovementIndex = getEmptySpot(MAPGEN_ROOMS[getCurrentRoomIndex()].room, false)
+        print (positionXFromArrayIndex(sprite.randomMovementIndex) .. "  " .. positionYFromArrayIndex(sprite.randomMovementIndex))
+        print (sprite.x .. " " .. sprite.y)
+        sprite.randomMovementTime = sprite.randomMovementMaxTime
+    end
+
+    local newVector = {
+        x = positionXFromArrayIndex(sprite.randomMovementIndex) - sprite.x,
+        y = positionYFromArrayIndex(sprite.randomMovementIndex) - sprite.y 
+    }
+    
+    return newVector
+end
+
+function wander(sprite,wallVector)
+    local wRadius = 15
+    local wDist = 2
+    local change = 0.25 
+    sprite.theta = sprite.theta + math.random(-change,change) 
+
+    local circleLoc = {
+        x = wallVector.x - sprite.x,        
+        y = wallVector.y - sprite.y 
+    }
+
+    circleLoc = normalizeVector(circleLoc)
+    circleLoc.x = circleLoc.x * wDist
+    circleLoc.y = circleLoc.y * wDist
+    circleLoc.x = circleLoc.x + sprite.x
+    circleLoc.y = circleLoc.y + sprite.y
+
+
+                  table.insert(DECALS, 
+                    {   
+                        x = circleLoc.x, 
+                        y = circleLoc.y,
+                        wallX = math.floor(circleLoc.x),
+                        wallY = math.floor(circleLoc.y),
+                        sprite = 4,  
+                        state = 2,  
+                        visible = false, 
+                        decay = 0.1 
+                    })  
+ 
+
+    local offSet = {
+        x = wRadius * math.cos(sprite.theta),
+        y = wRadius * math.sin(sprite.theta)
+    }
+
+    local targetVector = {
+        x = (circleLoc.x + offSet.x) ,
+        y = (circleLoc.y + offSet.y) 
+    }
+
+    local desiredLoc = {
+        x = targetVector.x - sprite.x,
+        y = targetVector.y - sprite.y
+    }
+
+    if (inWall(circleLoc)) then
+        desiredLoc = rotateAroundOrigin(circleLoc.x,circleLoc.y, sprite.x, sprite.y, 90)
+    end
+    return desiredLoc 
+end
+
+function inWall(vector)
+    for i,v in ipairs(wallPositions) do
+        local dx = v["x"] - vector.x
+        local dy = v["y"] - vector.y
+        local wall = math.sqrt(dx*dx + dy*dy)
+        if (wall < 1) then
+            return true
+        end
+    end
+    return false
+end
+    

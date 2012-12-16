@@ -46,7 +46,7 @@ function generateMap()
 --
 --    print (index .. "  " .. x .. "  " .. y)
 
-    createRooms(2) 
+    createRooms(4) 
     printGeneratedMap()
 
     local specialIndex = getSpecialRoom()

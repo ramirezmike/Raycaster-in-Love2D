@@ -64,11 +64,38 @@ function addSpriteToMap(index)
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
     
+    local rand = math.random(1,2)
+
+    local action = {
+        [1] = function (x) addSnowman(posX,posY) end,
+        [2] = function (x) addElf(posX,posY) end
+    }
+
+    action[2]()
+end
+
+function areEnemiesDead()
+    return (#SPRITES_TO_DELETE == 0) 
+end
+
+function deleteDeadSprites()
+    if (#SPRITES_TO_DELETE > 0) then
+        for i,v in ipairs(SPRITES_TO_DELETE) do
+            table.remove(SPRITES,SPRITES_TO_DELETE[i])
+        end
+        SPRITES_TO_DELETE = {}
+    end
+    if (#SPRITES == 0) then
+        unlockAllDoors()
+    end
+end
+
+function addSnowman(x,y)
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
             id = spriteIndex,
-            x = posX,
-            y = posY,
+            x = x,
+            y = y,
             img = 5,
             visible = false,
             block = true,
@@ -105,27 +132,12 @@ function addSpriteToMap(index)
         }
 end
 
-function areEnemiesDead()
-    return (#SPRITES_TO_DELETE == 0) 
-end
-
-function deleteDeadSprites()
-    if (#SPRITES_TO_DELETE > 0) then
-        for i,v in ipairs(SPRITES_TO_DELETE) do
-            table.remove(SPRITES,SPRITES_TO_DELETE[i])
-        end
-        SPRITES_TO_DELETE = {}
-    end
-    if (#SPRITES == 0) then
-        unlockAllDoors()
-    end
-end
-
-function addElf()
-    local elf = {
+function addElf(x,y)
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
             id = spriteIndex,
-            x = posX,
-            y = posY,
+            x = x,
+            y = y,
             img = 0,
             visible = false,
             block = true,
@@ -133,11 +145,16 @@ function addElf()
             dir = 0,
             rot = 0,
 
+            towardPlayer = false,
+
+            wander = true,
+            theta = 0,
+
             bulletSpeed = 4.5,
             playerVisible = false,
             visiblityRange = 5,
 
-            rotate = true,
+            rotate = false,
             rotationDirection = 0,
             rotationAngle = 20,
             rotateDelay = 3,
@@ -160,5 +177,4 @@ function addElf()
             frameTimer = 0,
             walkAnimationSpeed = 5
         }
-    return elf
 end

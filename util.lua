@@ -19,6 +19,15 @@ function positionYFromArrayIndex(index)
     return y
 end
 
+function normalizeVector(vector)
+    local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
+    local v = {
+        x = vector.x/dist,
+        y = vector.y/dist,
+    }
+    return v
+end
+
 function isBlocking(object, newX, newY)
     if (object.objType == "sprite") then
         return false
