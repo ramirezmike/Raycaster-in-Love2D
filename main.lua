@@ -11,25 +11,98 @@ require "decals"
 require "mapgenerator"
 require "roomgenerator"
 require "hud"
-
-SPRITES = {}
---loadMapFromDisk("map01.lua")
---setPlayerSpawnPoint()
-
-generateMap()
-
-function gameCycle()
-    local dt = love.timer.getDelta()
-    move(dt)
-
-    local cycleDelay = gameCycleDelay
-    if (dt > cycleDelay) then
-        cycleDelay = math.max(1, cycleDelay - (dt - cycleDelay))
-    end
-end
+require "menu"
 
 
 function love.draw()
+    if (mainMenuDisplaying) then
+        drawMenu()
+    elseif (gamePaused) then
+        drawPauseMenu()
+    else
+        drawGame()
+    end
+end
+
+function love.update(dt)
+    if (gameRunning and not (gamePaused)) then
+        move(player, dt)
+        ai(dt)
+        manageBullets(dt)
+        manageDecals(dt)
+
+        deleteDeadSprites()
+    end
+    if (mainMenuDisplaying) then
+        menuButtonHover()
+        p:update(dt)
+        q:update(dt)
+--        particleTimer(dt) 
+    end
+    if (gamePaused) then
+        menuButtonHover()
+    end
+end
+
+function love.load()
+
+    mainMenuDisplaying = true 
+    gameRunning = false 
+    
+    loadMainMenu()
+
+    love.graphics.setColorMode("modulate")
+    love.graphics.setMode(640,480, false, false)
+
+    love.mouse.setVisible(true)
+--    love.mouse.setPosition(screenWidth/2,screenHeight/2)
+--    love.mouse.setGrab(true)
+
+    snowImg = love.graphics.newImage("snow.png")
+    cashImg = love.graphics.newImage("cash.png")
+    setupParticles()
+end
+
+function setupParticles(image, life)
+  p = love.graphics.newParticleSystem(snowImg, 10000)
+  p:setEmissionRate          (50)
+  p:setLifetime              (-1) 
+  p:setParticleLife          (30) 
+  p:setPosition              (50, 50) 
+  p:setDirection             (0) 
+  p:setSpread                (0) 
+  p:setSpeed                 (-60, 60) 
+  p:setSpin                  (2) 
+  p:setGravity               (10)
+  p:setRadialAcceleration    (1)
+  p:setTangentialAcceleration(2)
+  p:setSizes                 (1,2,0.5,0.2,0.05,0.01)
+  p:setSizeVariation         (1,130)
+  p:setRotation              (0) 
+  p:setSpinVariation(1) 
+  p:stop()
+  p:start()
+  q = love.graphics.newParticleSystem(cashImg, 10000)
+  q:setEmissionRate          (50)
+  q:setLifetime              (-1) 
+  q:setParticleLife          (60) 
+  q:setPosition              (50, 50) 
+  q:setDirection             (0) 
+  q:setSpread                (0) 
+  q:setSpeed                 (-60, 60) 
+  q:setSpin                  (2) 
+  q:setGravity               (10)
+  q:setRadialAcceleration    (1)
+  q:setTangentialAcceleration(2)
+  q:setSizes                 (1,2,0.5,0.2,0.05,0.01)
+  q:setSizeVariation         (1,130)
+  q:setRotation              (0) 
+  q:setSpinVariation(1) 
+  q:stop()
+  q:start()
+end
+
+function drawGame()
     love.graphics.setColor(100,100,100)
     love.graphics.rectangle( "fill",
      0,screenHeight/2,screenWidth,screenHeight/2
@@ -82,23 +155,18 @@ function love.draw()
     end
 
 --    if (mapProp.displayMap) then drawMiniMap() end
---    love.graphics.draw(p,screenWidth/2,-200)
     if (displayDebug) then drawDebug() end
     drawHud()
     drawMiniMap()
 end
 
-function love.update(dt)
-    move(player, dt)
-    ai(dt)
-    manageBullets(dt)
-    manageDecals(dt)
-
---    p:update(dt)
-    deleteDeadSprites()
-end
-
-function love.load()
+function startGame()
+    SPRITES = {}
+    gamePaused = false
+    loadPauseMenu()
+    --loadMapFromDisk("map01.lua")
+    --setPlayerSpawnPoint()
+   
     wallsImgs = love.graphics.newImage("images.png")
 --    bgImg = love.graphics.newImage("bg.png")
     hitImg = love.graphics.newImage("hit.png")
@@ -116,33 +184,16 @@ function love.load()
 --    love.audio.play(music1)
 --    music1:setLooping(true)
 
-    love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, false, false)
+
+
+
+    generateMap()
+    
+    mainMenuDisplaying = false
+    gameRunning = true
 
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)
     love.mouse.setGrab(true)
-
-    snow = love.graphics.newImage("snow.png")
---    setupParticles()
 end
 
-function setupParticles()
-  p = love.graphics.newParticleSystem(snow, 10)
-  p:setEmissionRate          (2)
-  p:setLifetime              (-1) 
-  p:setParticleLife          (10) 
-  p:setPosition              (50, 50) 
-  p:setDirection             (0) 
-  p:setSpread                (2) 
-  p:setSpeed                 (-60, 60) 
-  p:setSpin                  (2) 
-  p:setGravity               (10)
-  p:setRadialAcceleration    (0)
-  p:setTangentialAcceleration(0)
-  p:setSizeVariation(1,30)
-  p:setRotation(0) 
-  p:setSpinVariation(1) 
-  p:stop()
-  p:start()
-end

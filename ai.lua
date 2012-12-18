@@ -60,6 +60,9 @@ function elfAI(sprite, dt)
 end
 
 function snowmanAI(sprite, dt)
+            if not (sprite.visible) then
+                return
+            end
             vector = {
                 x = 0,
                 y = 0 
