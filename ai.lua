@@ -9,7 +9,8 @@ function ai(dt) for i = 1, #SPRITES do
             
             local action = {
                 [5] = function (x) snowmanAI(sprite,dt) end,
-                [0] = function (x) elfAI(sprite,dt) end
+                [0] = function (x) elfAI(sprite,dt) end,
+                [1] = function (x) nutCrackerAI(sprite,dt) end
             }
 
             action[sprite.img]()
@@ -59,10 +60,59 @@ function elfAI(sprite, dt)
             end
 end
 
-function snowmanAI(sprite, dt)
-            if not (sprite.visible) then
-                return
+function nutCrackerAI(sprite, dt)
+            if (sprite.detected) then
+                sprite.detected = false
+                if (sprite.hit) then
+                    aiHandleHit(sprite, dt)
+                end
+                return 
             end
+
+            vector = {
+                x = 0,
+                y = 0 
+            }
+             
+
+            local vectorA = steerTowardPlayer(sprite)
+            local vectorB = backAwayFromPlayer(sprite)
+            local vectorC = steerAwayFromWalls(sprite)
+            local vectorD = {x = 0, y = 0}
+            local vectorE = steerAwayFromSprites(sprite)
+
+            if (sprite.rotate and vectorC.x == 0 and vectorC.y == 0) then
+                sprite.rotateDelay = sprite.rotateDelay - dt
+                if (sprite.rotateDelay < 0) then
+                    sprite.rotationDirection = math.random(-1,1)
+                    sprite.rotateDelay = sprite.rotateDelayMax
+                end
+                vectorD = rotateAroundPlayer(sprite)
+            else
+                sprite.rotateDelay = sprite.rotateDelayMax
+                sprite.rotationDirection = 0
+            end
+
+
+            vector.x = vectorA.x + vectorB.x + vectorC.x + vectorD.x + vectorE.x
+            vector.y = vectorA.y + vectorB.x + vectorC.y + vectorD.y + vectorE.y
+            limitVelocity(sprite,vector)
+
+            local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
+            
+            sprite.x = sprite.x + (vector.x  * dt )
+            sprite.y = sprite.y + (vector.y  * dt )
+
+            if (dist > 0) then
+                if (sprite.state == 0) then 
+                    sprite.state = 1 
+                else
+                    sprite.state = 0
+                end
+            end
+end
+
+function snowmanAI(sprite, dt)
             vector = {
                 x = 0,
                 y = 0 
@@ -118,8 +168,6 @@ function aiHandleHit(sprite, dt)
     if (sprite.hitPause <= 0) then
         sprite.hit = false
         sprite.hitPause = 0.2
-    else
-        sprite.state = 5
     end
 end
 

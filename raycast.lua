@@ -82,6 +82,7 @@ function castSingleRay(rayAngle, stripIdx )
             local sprite = SPRITES[i]
             if (sprite.wallPositionX == wallX and sprite.wallPositionY == wallY) then
                 sprite.visible = true
+                sprite.detected = true
             end
         end
 
@@ -147,6 +148,7 @@ function castSingleRay(rayAngle, stripIdx )
             local sprite = SPRITES[i]
             if (sprite.wallPositionX == wallX and sprite.wallPositionY == wallY) then
                 sprite.visible = true
+                sprite.detected = true
             end
         end
 

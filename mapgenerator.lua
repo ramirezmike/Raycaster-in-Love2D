@@ -77,6 +77,8 @@ function generateMap()
 end
 
 function mapGenManagement()
+    print (#SPRITES)
+    print (#SPRITES_TO_DELETE)
     if not (areEnemiesDead()) then
         return
     end

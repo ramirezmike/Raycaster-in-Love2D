@@ -56,6 +56,9 @@ function renderSprites()
 end
 
 function handleSpriteHit(sprite)
+    if (sprite.img == 1 and sprite.state == 0) then
+        return
+    end
     sprite.hit = true
     sprite.health = sprite.health - 1
 end
@@ -64,18 +67,20 @@ function addSpriteToMap(index)
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
     
-    local rand = math.random(1,2)
+    local rand = math.random(1,3)
+    rand = 3
 
     local action = {
         [1] = function (x) addSnowman(posX,posY) end,
-        [2] = function (x) addElf(posX,posY) end
+        [2] = function (x) addElf(posX,posY) end,
+        [3] = function (x) addNutCracker(posX,posY) end
     }
 
     action[rand]()
 end
 
 function areEnemiesDead()
-    return (#SPRITES_TO_DELETE == 0) 
+    return (#SPRITES == 0) 
 end
 
 function deleteDeadSprites()
@@ -139,6 +144,44 @@ function addElf(x,y)
             x = x,
             y = y,
             img = 0,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+
+
+            bulletSpeed = 4.5,
+            playerVisible = false,
+            visiblityRange = 5,
+
+
+            maxFireRate = 1.5,
+            fireRate = math.random(7),
+
+            health = 3,
+            hit = false,
+            hitPause = 0.1,
+
+            moveSpeed = 0.05,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5
+        }
+end
+
+function addNutCracker(x,y)
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
+            id = spriteIndex,
+            x = x,
+            y = y,
+            img = 1,
             visible = false,
             block = true,
             speed = 0,
