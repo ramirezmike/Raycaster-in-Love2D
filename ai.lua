@@ -110,6 +110,13 @@ function nutCrackerAI(sprite, dt)
                     sprite.state = 0
                 end
             end
+
+            local distXFromPlayer = player.x - sprite.x
+            local distYFromPlayer = player.y - sprite.y
+            local distFromPlayer = math.sqrt(distXFromPlayer*distXFromPlayer + distYFromPlayer*distYFromPlayer)
+            if (distFromPlayer < 1.4) then
+                handleBiteAttack(sprite,dt)
+            end
 end
 
 function snowmanAI(sprite, dt)
@@ -254,6 +261,19 @@ function fireRandomDirection(sprite,dt)
     elseif (sprite.fireRate == sprite.maxFireRate) then
         sprite.fireRate = sprite.fireRate - dt
         createRandomBullet(sprite)
+    else
+        sprite.fireRate = sprite.fireRate - dt
+    end
+end
+
+function handleBiteAttack(sprite,dt)
+    if (sprite.fireRate < 0) then 
+        sprite.fireRate = sprite.maxFireRate
+    elseif (sprite.fireRate == sprite.maxFireRate) then
+        sprite.fireRate = sprite.fireRate - dt
+        if (sprite.state == 1) then
+            player.health = player.health - 1
+        end
     else
         sprite.fireRate = sprite.fireRate - dt
     end

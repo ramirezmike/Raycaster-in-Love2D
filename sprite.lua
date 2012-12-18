@@ -191,7 +191,7 @@ function addNutCracker(x,y)
 
             bulletSpeed = 4.5,
             playerVisible = false,
-            visiblityRange = 5,
+            visiblityRange = 15,
 
 
             maxFireRate = 1.5,
