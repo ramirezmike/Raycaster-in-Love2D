@@ -63,18 +63,26 @@ function handleSpriteHit(sprite)
     sprite.health = sprite.health - 1
 end
 
+function addBossToMap(index,boss)
+    local posX = positionXFromArrayIndex(index) 
+    local posY = positionYFromArrayIndex(index) 
+    
+    local action = {
+        [1] = function (x) addFrosty(posX,posY) end
+    }
+    action[boss]()
+end
+
 function addSpriteToMap(index)
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
     
     local rand = math.random(1,3)
-    rand = 4
 
     local action = {
         [1] = function (x) addSnowman(posX,posY) end,
         [2] = function (x) addElf(posX,posY) end,
         [3] = function (x) addNutCracker(posX,posY) end,
-        [4] = function (x) addFrosty(posX,posY) end
     }
 
     action[rand]()

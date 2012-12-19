@@ -26,16 +26,13 @@ function createRoom(roomIndex)
 end
 
 function createBossRoom(roomIndex)
-    local size = 95
+    local size = 20
     local room = createEmptyRoom(size)
-    --printGeneratedRoom(room)
 
     addDoorTop(room,doesRoomHaveTop(roomIndex),roomIndex)
     addDoorBottom(room,doesRoomHaveBottom(roomIndex),roomIndex)
     addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)
     addDoorRight(room,doesRoomHaveRight(roomIndex),roomIndex)
---
-    addObstacles(room)
 
     return room
 end
@@ -272,6 +269,11 @@ function addEnemies(room)
             addSpriteToMap(index)
         end
     end
+end
+
+function addBoss(room,boss)
+    local index = getEmptySpot(room,false)
+    addBossToMap(index,boss)
 end
 
 function clearTwoSpots(index)

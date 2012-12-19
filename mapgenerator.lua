@@ -207,6 +207,10 @@ function switchToRoom(index)
 
     local room = MAPGEN_ROOMS[index].room
     loadMapFromRoom(room) 
+    if (isBossRoom(index)) then
+        print("Is boss Room!")
+        addBoss(room,1)
+    end
     player.mapGenX = MAPGEN_ROOMS[index].x
     player.mapGenY = MAPGEN_ROOMS[index].y
 end
