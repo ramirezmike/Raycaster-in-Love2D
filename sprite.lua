@@ -68,12 +68,13 @@ function addSpriteToMap(index)
     local posY = positionYFromArrayIndex(index) 
     
     local rand = math.random(1,3)
-    rand = 3
+    rand = 4
 
     local action = {
         [1] = function (x) addSnowman(posX,posY) end,
         [2] = function (x) addElf(posX,posY) end,
-        [3] = function (x) addNutCracker(posX,posY) end
+        [3] = function (x) addNutCracker(posX,posY) end,
+        [4] = function (x) addFrosty(posX,posY) end
     }
 
     action[rand]()
@@ -137,6 +138,50 @@ function addSnowman(x,y)
         }
 end
 
+function addFrosty(x,y)
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
+            id = spriteIndex,
+            x = x,
+            y = y,
+            img = 3,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+
+            bulletSpeed = 6.5,
+            bulletImg = 1,
+            bulletSplash = 2,
+            playerVisible = false,
+            visiblityRange = 5,
+
+            rotate = false,
+            rotationDirection = 0,
+            rotationAngle = 20,
+            rotateDelay = 3,
+            rotateDelayMax = 3,
+
+            maxFireRate = 0.5,
+            fireRate = math.random(2.9,7),
+
+            health = 4,
+            hit = false,
+            hitPause = 0.1,
+
+            moveSpeed = 0.09,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5
+        }
+end
+
 function addElf(x,y)
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
@@ -151,6 +196,7 @@ function addElf(x,y)
             rot = 0,
 
 
+            bulletImg = 3,
             bulletSpeed = 4.5,
             playerVisible = false,
             visiblityRange = 5,

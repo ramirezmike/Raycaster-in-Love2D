@@ -4,7 +4,7 @@ function manageBullets(dt)
     deleteUneededBullets() 
 
     for i,v in ipairs(bullets) do                                                  
-        if (v["isRandom"]) then
+        if (v["isVertical"]) then
             v["x"] = v["x"] + (v["dx"] * dt)                                           
             v["y"] = v["y"] + (v["dy"] * dt)                                           
             handleVertical(v,dt,i)
@@ -99,8 +99,9 @@ function enemyBulletHitPlayerCheck(v)
     return false
 end
 
-function createRandomBullet(object)
-    local radiusPoint = math.random(math.pi*2)
+function createRandomBullet(object, vertical)
+    local radiusPoint = math.random(math.pi*2) + math.random()
+    print(radiusPoint)
     local vector = {
         x = math.cos(radiusPoint),
         y = math.sin(radiusPoint)
@@ -108,7 +109,7 @@ function createRandomBullet(object)
     local bulletDx = vector.x * object.bulletSpeed
     local bulletDy = vector.y * object.bulletSpeed 
     table.insert(bullets, {
-            bulletType = 3, 
+            bulletType = object.bulletImg, 
             x = object.x,
             y = object.y, 
             dx = bulletDx, 
@@ -117,7 +118,7 @@ function createRandomBullet(object)
             objType = "bullet",
             origin = object.id,
             verticalPosition = 0,
-            isRandom = true,
+            isVertical = vertical,
             peakHit = false
     })
     love.audio.stop(eAttack)

@@ -10,7 +10,8 @@ function ai(dt) for i = 1, #SPRITES do
             local action = {
                 [5] = function (x) snowmanAI(sprite,dt) end,
                 [0] = function (x) elfAI(sprite,dt) end,
-                [1] = function (x) nutCrackerAI(sprite,dt) end
+                [1] = function (x) nutCrackerAI(sprite,dt) end,
+                [3] = function (x) frostyAI(sprite,dt) end
             }
 
             action[sprite.img]()
@@ -19,13 +20,53 @@ function ai(dt) for i = 1, #SPRITES do
 
 end
 
+function frostyAI(sprite, dt)
+            vector = {
+                x = 0,
+                y = 0 
+            }
+             
+            fireRandomDirection(sprite,dt,false)
+            fireRandomDirection(sprite,dt,false)
+            fireRandomDirection(sprite,dt,false)
+            fireRandomDirection(sprite,dt,false)
+            local vectorC = steerAwayFromWalls(sprite)
+            local vectorE = steerAwayFromSprites(sprite)
+            local vectorF = randomMovement(sprite,dt)
+
+            vector.x = vectorC.x + vectorE.x + vectorF.x
+            vector.y = vectorC.y + vectorE.y + vectorF.y
+
+            limitVelocity(sprite,vector)
+
+            local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
+
+            sprite.x = sprite.x + (vector.x  * dt )
+            sprite.y = sprite.y + (vector.y  * dt )
+
+            if (dist > 0) then
+                sprite.speed = 40
+                local numWalkSprites = 4
+                if math.floor(sprite.frameTimer) > numWalkSprites then
+                    sprite.frameTimer = 1 
+                end
+                sprite.state = math.floor(sprite.frameTimer) 
+            else
+                sprite.state = 0
+                sprite.speed = 0
+            end
+            if (sprite.hit) then
+                aiHandleHit(sprite, dt)
+            end
+end
+
 function elfAI(sprite, dt)
             vector = {
                 x = 0,
                 y = 0 
             }
              
-            fireRandomDirection(sprite,dt)
+            fireRandomDirection(sprite,dt,true)
             local vectorC = steerAwayFromWalls(sprite)
             local vectorE = steerAwayFromSprites(sprite)
 --            local vectorF = wander(sprite, vectorC)
@@ -256,12 +297,12 @@ function handleFire(sprite,dt)
     end
 end
 
-function fireRandomDirection(sprite,dt)
+function fireRandomDirection(sprite,dt,vertical)
     if (sprite.fireRate < 0) then 
         sprite.fireRate = sprite.maxFireRate
     elseif (sprite.fireRate == sprite.maxFireRate) then
         sprite.fireRate = sprite.fireRate - dt
-        createRandomBullet(sprite)
+        createRandomBullet(sprite,vertical)
     else
         sprite.fireRate = sprite.fireRate - dt
     end
