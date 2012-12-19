@@ -1,6 +1,6 @@
 function drawMenu()
     love.graphics.setFont(menuFont)
-    love.graphics.draw(p,screenWidth/2,-100)
+    love.graphics.draw(p,screenWidth/2,-90)
     love.graphics.draw(q,screenWidth/2,-500)
     love.graphics.setColor(50,50,50,200)
     love.graphics.rectangle("fill", 100,screenHeight/2,screenWidth - 200,screenHeight/2)

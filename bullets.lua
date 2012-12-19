@@ -120,8 +120,8 @@ function createRandomBullet(object)
             isRandom = true,
             peakHit = false
     })
-    love.audio.stop(soundShoot)
-    love.audio.play(soundShoot)
+    love.audio.stop(eAttack)
+    love.audio.play(eAttack)
 end
 
 function createBulletSprite(object)

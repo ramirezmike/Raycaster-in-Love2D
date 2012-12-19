@@ -71,7 +71,7 @@ function setupParticles(image, life)
   p:setPosition              (50, 50) 
   p:setDirection             (0) 
   p:setSpread                (0) 
-  p:setSpeed                 (-60, 60) 
+  p:setSpeed                 (-120, 120) 
   p:setSpin                  (2) 
   p:setGravity               (10)
   p:setRadialAcceleration    (1)
@@ -180,6 +180,11 @@ function startGame()
     
     soundShoot = love.audio.newSource("shoot.wav", "static")
     soundHit1 = love.audio.newSource("hit1.wav", "static")
+    ncAttack = love.audio.newSource("bite.wav", "static")
+    ncWalk = love.audio.newSource("ncWalk.wav", "static")
+    eAttack = love.audio.newSource("eToss.wav", "static")
+
+
 --    music1 = love.audio.newSource("track1.ogg")
 --    love.audio.play(music1)
 --    music1:setLooping(true)
@@ -196,4 +201,3 @@ function startGame()
     love.mouse.setPosition(screenWidth/2,screenHeight/2)
     love.mouse.setGrab(true)
 end
-

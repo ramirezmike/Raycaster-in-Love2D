@@ -76,7 +76,6 @@ function nutCrackerAI(sprite, dt)
              
 
             local vectorA = steerTowardPlayer(sprite)
-            local vectorB = backAwayFromPlayer(sprite)
             local vectorC = steerAwayFromWalls(sprite)
             local vectorD = {x = 0, y = 0}
             local vectorE = steerAwayFromSprites(sprite)
@@ -94,8 +93,8 @@ function nutCrackerAI(sprite, dt)
             end
 
 
-            vector.x = vectorA.x + vectorB.x + vectorC.x + vectorD.x + vectorE.x
-            vector.y = vectorA.y + vectorB.x + vectorC.y + vectorD.y + vectorE.y
+            vector.x = vectorA.x + vectorC.x + vectorD.x + vectorE.x
+            vector.y = vectorA.y + vectorC.y + vectorD.y + vectorE.y
             limitVelocity(sprite,vector)
 
             local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
@@ -109,6 +108,8 @@ function nutCrackerAI(sprite, dt)
                 else
                     sprite.state = 0
                 end
+                love.audio.stop(ncWalk)
+                love.audio.play(ncWalk)
             end
 
             local distXFromPlayer = player.x - sprite.x
@@ -273,6 +274,8 @@ function handleBiteAttack(sprite,dt)
         sprite.fireRate = sprite.fireRate - dt
         if (sprite.state == 1) then
             player.health = player.health - 1
+            love.audio.stop(ncAttack)
+            love.audio.play(ncAttack)
         end
     else
         sprite.fireRate = sprite.fireRate - dt
