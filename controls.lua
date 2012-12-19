@@ -8,11 +8,19 @@ function love.mousepressed(x, y, button)
     --            if not (mapProp.map[selectedWall] == 5) then
          --           pushWall(selectedWall)
      --           end
-                createBullet(player) 
+                player.firing = true
             end
         end
         if (mainMenuDisplaying or gamePaused) then
             menuButtonClick(x,y)
+        end
+    end
+end
+
+function love.mousereleased(x, y, button)
+    if button == "l" then
+        if (gameRunning and not(gamePaused)) then
+            player.firing = false
         end
     end
 end

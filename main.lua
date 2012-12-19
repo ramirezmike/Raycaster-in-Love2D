@@ -27,6 +27,7 @@ end
 function love.update(dt)
     if (gameRunning and not (gamePaused)) then
         move(player, dt)
+        firePlayerWeapon(dt)
         ai(dt)
         manageBullets(dt)
         manageDecals(dt)

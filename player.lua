@@ -16,7 +16,11 @@ player = {
     id = 0,
     hit = false,
     hitDecay = 10,
-    health = 8
+    health = 8,
+
+    maxFireRate = 0.5, 
+    fireRate = 0,
+    firing = false
 }
 
 function convertPlayerRotation()
@@ -33,4 +37,15 @@ end
 
 function playerHitDraw()
     player.hit = true
+end
+
+function firePlayerWeapon(dt)
+    if (player.firing) then
+        if (player.fireRate < 0) then
+            createBullet(player)
+            player.fireRate = player.maxFireRate
+        else
+            player.fireRate = player.fireRate - dt 
+        end
+    end
 end
