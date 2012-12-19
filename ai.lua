@@ -27,9 +27,6 @@ function frostyAI(sprite, dt)
             }
              
             fireRandomDirection(sprite,dt,false)
-            fireRandomDirection(sprite,dt,false)
-            fireRandomDirection(sprite,dt,false)
-            fireRandomDirection(sprite,dt,false)
             local vectorC = steerAwayFromWalls(sprite)
             local vectorE = steerAwayFromSprites(sprite)
             local vectorF = randomMovement(sprite,dt)
@@ -302,7 +299,9 @@ function fireRandomDirection(sprite,dt,vertical)
         sprite.fireRate = sprite.maxFireRate
     elseif (sprite.fireRate == sprite.maxFireRate) then
         sprite.fireRate = sprite.fireRate - dt
-        createRandomBullet(sprite,vertical)
+        for i = 1, sprite.maxBullets do
+            createRandomBullet(sprite,vertical)
+        end
     else
         sprite.fireRate = sprite.fireRate - dt
     end

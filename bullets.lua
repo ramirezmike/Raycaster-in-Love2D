@@ -101,7 +101,6 @@ end
 
 function createRandomBullet(object, vertical)
     local radiusPoint = math.random(math.pi*2) + math.random()
-    print(radiusPoint)
     local vector = {
         x = math.cos(radiusPoint),
         y = math.sin(radiusPoint)

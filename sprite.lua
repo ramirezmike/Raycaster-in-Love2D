@@ -163,7 +163,8 @@ function addFrosty(x,y)
             rotateDelay = 3,
             rotateDelayMax = 3,
 
-            maxFireRate = 0.5,
+            maxFireRate = 1.5,
+            maxBullets = 8,
             fireRate = math.random(2.9,7),
 
             health = 4,
@@ -203,6 +204,7 @@ function addElf(x,y)
 
 
             maxFireRate = 1.5,
+            maxBullets = 1,
             fireRate = math.random(7),
 
             health = 3,
