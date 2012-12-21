@@ -92,6 +92,12 @@ function castSingleRay(rayAngle, stripIdx )
             end
         end
 
+        for i,v in ipairs(ITEMS) do
+            if (v["itemWallPositionX"] == wallX and v["itemWallPositionY"] == wallY) then
+                v["visible"] = true
+            end
+        end
+
         for i,v in ipairs(DECALS) do
             if (v["wallX"] == wallX and v["wallY"] == wallY) then
                 v["visible"] = true
@@ -154,6 +160,12 @@ function castSingleRay(rayAngle, stripIdx )
 
         for i,v in ipairs(bullets) do
             if (v["bulletWallPositionX"] == wallX and v["bulletWallPositionY"] == wallY) then
+                v["visible"] = true
+            end
+        end
+
+        for i,v in ipairs(ITEMS) do
+            if (v["itemWallPositionX"] == wallX and v["itemWallPositionY"] == wallY) then
                 v["visible"] = true
             end
         end

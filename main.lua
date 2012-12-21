@@ -12,6 +12,7 @@ require "mapgenerator"
 require "roomgenerator"
 require "hud"
 require "menu"
+require "items"
 
 
 function love.draw()
@@ -74,7 +75,7 @@ function setupParticles(image, life)
   p:setSpread                (0) 
   p:setSpeed                 (-120, 120) 
   p:setSpin                  (2) 
-  p:setGravity               (10)
+  p:setGravity               (60)
   p:setRadialAcceleration    (1)
   p:setTangentialAcceleration(2)
   p:setSizes                 (1,2,0.5,0.2,0.05,0.01)
@@ -119,6 +120,7 @@ function drawGame()
     renderSprites()
     renderDecals()
     renderBullets()
+    renderItems()
     sort(drawCalls)    
 
  --   drawBackground()
@@ -169,12 +171,15 @@ function startGame()
     --setPlayerSpawnPoint()
    
     wallsImgs = love.graphics.newImage("images.png")
+    itemsImgs = love.graphics.newImage("items.png")
 --    bgImg = love.graphics.newImage("bg.png")
     hitImg = love.graphics.newImage("hit.png")
     local imagesPerHeight = (wallsImgs:getHeight()/mapProp.tileSize)
     local imagesPerWidth = (wallsImgs:getWidth()/mapProp.tileSize)
+    local itemsPerHeight = (itemsImgs:getHeight()/mapProp.tileSize)
+    local itemsPerWidth = (itemsImgs:getWidth()/mapProp.tileSize)
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
-    setQuads(imagesPerHeight,imagesPerWidth)
+    setQuads(imagesPerHeight,imagesPerWidth,itemsPerHeight,itemsPerWidth)
 
     makeSpriteMap()
     loadHud()

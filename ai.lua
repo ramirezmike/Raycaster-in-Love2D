@@ -1,20 +1,20 @@
-function ai(dt) for i = 1, #SPRITES do     
-        local sprite = SPRITES[i]
-        if (sprite.health <= 0) then
-            sprite.state = -1
-            sprite.block = false
-        else
-            sprite.frameTimer = sprite.frameTimer + dt*sprite.walkAnimationSpeed
-            sprite.strafeSpeed = 0
-            
-            local action = {
-                [5] = function (x) snowmanAI(sprite,dt) end,
-                [0] = function (x) elfAI(sprite,dt) end,
-                [1] = function (x) nutCrackerAI(sprite,dt) end,
-                [3] = function (x) frostyAI(sprite,dt) end
-            }
+function ai(dt) 
+        for i = 1, #SPRITES do     
+            local sprite = SPRITES[i]
+            if (sprite.health <= 0) then
+                sprite.state = -1
+            else
+                sprite.frameTimer = sprite.frameTimer + dt*sprite.walkAnimationSpeed
+                sprite.strafeSpeed = 0
+                
+                local action = {
+                    [5] = function (x) snowmanAI(sprite,dt) end,
+                    [0] = function (x) elfAI(sprite,dt) end,
+                    [1] = function (x) nutCrackerAI(sprite,dt) end,
+                    [3] = function (x) frostyAI(sprite,dt) end
+                }
 
-            action[sprite.img]()
+                action[sprite.img]()
         end
     end
 

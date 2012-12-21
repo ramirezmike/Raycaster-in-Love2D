@@ -55,8 +55,8 @@ function love.keypressed(key, unicode)
         end
 
         if key == 'i' then
-    --        loadMapFromDisk("map01.lua")
-            generateMap()
+--            generateMap()
+            dropItem(player)
         end
 
         if key == 'u' then

@@ -42,6 +42,24 @@ function isBlocking(object, newX, newY)
         return true
     end
 
+    if (object.objType == "player") then
+        for i=1,#ITEMS do
+            local item = ITEMS[i]
+                local dx = item.x - x
+                local dy = item.y - y
+                local dist = sqrt(dx*dx + dy*dy)
+    
+                if (dist < 0.3) then
+                    local success = item.pickupFunction()
+                    if (success) then
+                        table.insert(ITEMS_TO_DELETE, i)
+                    end
+                end
+            
+        end
+    end
+    deleteUsedItems()
+
     for i=1,#SPRITES do
         local sprite = SPRITES[i]
         if (sprite.block == true) then
@@ -53,6 +71,7 @@ function isBlocking(object, newX, newY)
                     handleSpriteHit(sprite)
                     if (sprite.health < 1) then
                         table.insert(SPRITES_TO_DELETE, i)
+                        dropItem(sprite)
                     end
                     return true
                 end
@@ -79,7 +98,7 @@ function changeTexture()
     end 
 end
 
-function setQuads(imagesPerHeight,imagesPerWidth)
+function setQuads(imagesPerHeight,imagesPerWidth, itemsPerHeight, itemsPerWidth)
     for i=0,imagesPerHeight-1 do
         QUADS[i]= {}
         for s=0, mapProp.tileSize-1 do
@@ -96,6 +115,7 @@ function setQuads(imagesPerHeight,imagesPerWidth)
     end
     BGQUAD[1] = love.graphics.newQuad(0,0,1,480,1,480)
 --    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
+
 end 
 
 function drawDebug()

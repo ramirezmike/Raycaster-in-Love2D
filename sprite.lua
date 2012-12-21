@@ -1,5 +1,3 @@
-SPRITES_TO_DELETE = {}
-
 function makeSpriteMap()
     for i=1,#mapProp.map do
         spriteMap[i] = 0
