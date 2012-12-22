@@ -1,5 +1,10 @@
 function dropItem(object)
-    createItem(object,itemHeart())    
+    local rand = math.random(2)
+    if (rand == 1) then
+        createItem(object,itemDoubleHeart())    
+    else
+        createItem(object,itemHeart())    
+    end
 end
 
 function renderItems()
@@ -39,7 +44,7 @@ function renderItems()
                 dist = dist,                                                           
                 sx = spriteSize / mTileSize,                                    
                 sy = spriteSize / 64,                                                  
-                quad = SPRITEQUAD[2][0]                            
+                quad = SPRITEQUAD[v["itemType"]][v["itemNumber"]]                            
             }   
 
             v["visible"] = false
@@ -47,11 +52,20 @@ function renderItems()
     end                                                                                                                                                                              
 end
 
+function saveItemsInCurrentRoom()
+    local current = getCurrentRoomIndex()
+    MAPGEN_ROOMS[current].items = ITEMS
+    ITEMS = {}
+end
+
+function loadItemsInRoom(index)
+    ITEMS = MAPGEN_ROOMS[index].items
+end
+
 function createItem(object,item)
-    print (item)
     table.insert(ITEMS, {
             itemType = item.iType, 
-            itemNumber = 0,
+            itemNumber = item.iNum,
             x = object.x,
             y = object.y, 
             visible = false, 
@@ -65,10 +79,45 @@ end
 
 function itemHeart()
     local item = {
-        iType = 0,
+        iType = 2,
+        iNum = 0,
         func = function (x) return heartPickup() end
     }
     return item
+end
+
+function heartPickup()
+    if (player.health < 8) then
+        player.health = player.health + 1
+        if (player.health > 8) then
+            player.health = 8        
+        end
+        return true
+    else
+        return false
+    end
+end
+
+function itemDoubleHeart()
+    print ("Double!")
+    local item = {
+        iType = 2,
+        iNum = 1,
+        func = function (x) return doubleHeartPickup() end
+    }
+    return item
+end
+
+function doubleHeartPickup()
+    if (player.health < 8) then
+        player.health = player.health + 2
+        if (player.health > 8) then
+            player.health = 8        
+        end
+        return true
+    else
+        return false
+    end
 end
 
 function deleteUsedItems()
@@ -80,11 +129,3 @@ function deleteUsedItems()
     end 
 end
 
-function heartPickup()
-    if (player.health < 8) then
-        player.health = player.health + 0.5
-        return true
-    else
-        return false
-    end
-end

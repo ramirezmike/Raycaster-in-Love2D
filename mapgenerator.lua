@@ -105,6 +105,7 @@ function mapGenManagement()
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)-1 
         else
             print ("Room has not been made!")
+            saveItemsInCurrentRoom()
             makeRoomForMapGenRooms(topRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
             local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].d
@@ -131,6 +132,7 @@ function mapGenManagement()
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)+0.5 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+1 
         else
+            saveItemsInCurrentRoom()
             makeRoomForMapGenRooms(bottomRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
             local newPlayerPositionIndex  = MAPGEN_ROOMS[bottomRoomIndex].u
@@ -159,6 +161,7 @@ function mapGenManagement()
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
         else
             print ("Room has not been made!")
+            saveItemsInCurrentRoom()
             makeRoomForMapGenRooms(rightRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
             local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].l
@@ -188,6 +191,7 @@ function mapGenManagement()
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
         else
             print ("Room has not been made!")
+            saveItemsInCurrentRoom()
             makeRoomForMapGenRooms(leftRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
             local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].r
@@ -200,6 +204,7 @@ end
 
 function switchToRoom(index)
     SPRITES = {}
+    saveItemsInCurrentRoom()
     local x = mapGenPositionXFromArrayIndex(index)
     local y = mapGenPositionYFromArrayIndex(index)
 
@@ -211,6 +216,7 @@ function switchToRoom(index)
         print("Is boss Room!")
         addBoss(room,1)
     end
+    loadItemsInRoom(index)
     player.mapGenX = MAPGEN_ROOMS[index].x
     player.mapGenY = MAPGEN_ROOMS[index].y
 end
