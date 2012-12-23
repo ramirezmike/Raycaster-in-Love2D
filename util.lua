@@ -68,7 +68,7 @@ function isBlocking(object, newX, newY)
             local dist = sqrt(dx*dx + dy*dy)
             if (object.objType == "bullet" and object.origin == 0) then
                 if (dist < 0.3) then
-                    handleSpriteHit(sprite)
+                    handleSpriteHit(sprite,object.dmg)
                     if (sprite.health < 1) then
                         table.insert(SPRITES_TO_DELETE, i)
                         dropItem(sprite)

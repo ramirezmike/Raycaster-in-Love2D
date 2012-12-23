@@ -11,7 +11,6 @@ player = {
 --  mouseSpeed = (math.pi / 180 * 2)/12
     rotSpeed = 2,
     mouseSpeed = 0.05,
-    bulletSpeed = 5.5,
     objType = "player",
     id = 0,
     hit = false,
@@ -19,6 +18,9 @@ player = {
     health = 5,
     
     primary = 1,
+    bulletSpeed = 5.5,
+    bulletImg = 1,
+    fireDmg = 1,
 
     maxFireRate = 0.5, 
     fireRate = 0,

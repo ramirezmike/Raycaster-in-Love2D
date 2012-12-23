@@ -1,9 +1,12 @@
 function dropItem(object)
-    local rand = math.random(2)
+    local rand = math.random(5)
     if (rand == 1) then
-        createItem(object,itemDoubleHeart())    
-    else
-        createItem(object,itemHeart())    
+        rand = math.random(5)
+        if (rand == 1) then
+            createItem(object,itemDoubleHeart())    
+        else
+            createItem(object,itemHeart())    
+        end
     end
 end
 

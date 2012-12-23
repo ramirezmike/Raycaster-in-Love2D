@@ -17,7 +17,7 @@ function manageBullets(dt)
             if (enemyBulletHitPlayerCheck(v)) then
                 table.remove(bullets,i)
                 playerHitDraw()
-                player.health = player.health - 0.5
+                player.health = player.health - v["dmg"] 
             end
         end
         if (isBlocking(v, v["x"], v["y"])) then
@@ -114,6 +114,7 @@ function createRandomBullet(object, vertical)
             dx = bulletDx, 
             dy = bulletDy, 
             visible = false, 
+            dmg = object.fireDmg,
             objType = "bullet",
             origin = object.id,
             verticalPosition = 0,
@@ -139,6 +140,7 @@ function createBulletSprite(object)
             dx = bulletDx, 
             dy = bulletDy, 
             visible = false, 
+            dmg = object.fireDmg,
             objType = "bullet",
             origin = object.id,
             verticalPosition = 0
@@ -154,12 +156,13 @@ function createBullet(object)
     local bulletDx = object.bulletSpeed * math.cos(angle)                   
     local bulletDy = object.bulletSpeed * math.sin(angle)                   
     table.insert(bullets, {
-            bulletType = 1,
+            bulletType = object.bulletImg,
             x = startX, 
             y = startY, 
             dx = bulletDx, 
             dy = bulletDy, 
             visible = false,            
+            dmg = object.fireDmg,
             objType = "bullet",
             origin = object.id,
             verticalPosition = 0      

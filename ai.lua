@@ -313,7 +313,7 @@ function handleBiteAttack(sprite,dt)
     elseif (sprite.fireRate == sprite.maxFireRate) then
         sprite.fireRate = sprite.fireRate - dt
         if (sprite.state == 1) then
-            player.health = player.health - 1
+            player.health = player.health - sprite.fireDmg 
             love.audio.stop(ncAttack)
             love.audio.play(ncAttack)
         end

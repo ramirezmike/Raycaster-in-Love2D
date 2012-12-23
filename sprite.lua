@@ -53,12 +53,12 @@ function renderSprites()
     end
 end
 
-function handleSpriteHit(sprite)
+function handleSpriteHit(sprite, dmg)
     if (sprite.img == 1 and sprite.state == 0) then
         return
     end
     sprite.hit = true
-    sprite.health = sprite.health - 1
+    sprite.health = sprite.health - dmg 
 end
 
 function addBossToMap(index,boss)
@@ -115,6 +115,8 @@ function addSnowman(x,y)
             dir = 0,
             rot = 0,
 
+            bulletImg = 1,
+            fireDmg = 0.5,
             bulletSpeed = 4.5,
             playerVisible = false,
             visiblityRange = 5,
@@ -159,6 +161,7 @@ function addFrosty(x,y)
 
             bulletSpeed = 6.5,
             bulletImg = 1,
+            fireDmg = 1,
             bulletSplash = 2,
             playerVisible = false,
             visiblityRange = 5,
@@ -204,6 +207,7 @@ function addElf(x,y)
 
 
             bulletImg = 3,
+            fireDmg = 1,
             bulletSpeed = 4.5,
             playerVisible = false,
             visiblityRange = 5,
@@ -248,6 +252,7 @@ function addNutCracker(x,y)
             visiblityRange = 15,
 
 
+            fireDmg = 1,
             maxFireRate = 1.5,
             fireRate = math.random(7),
 
