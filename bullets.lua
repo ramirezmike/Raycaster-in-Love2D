@@ -149,7 +149,7 @@ function createBulletSprite(object)
     love.audio.play(soundShoot)
 end
 
-function createBullet(object)
+function createBullet(object,tripleShot)
     local startX = object.x                                                                                                                                                  
     local startY = object.y                                                
     local angle = object.rot                                               
@@ -169,6 +169,39 @@ function createBullet(object)
     })
     love.audio.stop(soundShoot)
     love.audio.play(soundShoot)
+
+    if (tripleShot) then
+        angle = angle + 0.3
+        bulletDx = object.bulletSpeed * math.cos(angle)                   
+        bulletDy = object.bulletSpeed * math.sin(angle)                   
+        table.insert(bullets, {
+                bulletType = object.bulletImg,
+                x = startX, 
+                y = startY, 
+                dx = bulletDx, 
+                dy = bulletDy, 
+                visible = false,            
+                dmg = object.fireDmg,
+                objType = "bullet",
+                origin = object.id,
+                verticalPosition = 0      
+        })
+        angle = angle - 0.6 
+        bulletDx = object.bulletSpeed * math.cos(angle)                   
+        bulletDy = object.bulletSpeed * math.sin(angle)                   
+        table.insert(bullets, {
+                bulletType = object.bulletImg,
+                x = startX, 
+                y = startY, 
+                dx = bulletDx, 
+                dy = bulletDy, 
+                visible = false,            
+                dmg = object.fireDmg,
+                objType = "bullet",
+                origin = object.id,
+                verticalPosition = 0      
+        })
+    end
 end
 
 function handleVertical(object,dt, bulletIndex)

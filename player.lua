@@ -24,7 +24,9 @@ player = {
 
     maxFireRate = 0.5, 
     fireRate = 0,
-    firing = false
+    firing = false,
+
+    tripleShot = false
 }
 
 function convertPlayerRotation()
@@ -46,7 +48,7 @@ end
 function firePlayerWeapon(dt)
     if (player.firing) then
         if (player.fireRate < 0) then
-            createBullet(player)
+            createBullet(player,player.tripleShot)
             player.fireRate = player.maxFireRate
         else
             player.fireRate = player.fireRate - dt 

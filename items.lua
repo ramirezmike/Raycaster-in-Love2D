@@ -11,7 +11,7 @@ function dropItem(object)
 end
 
 function testItemDrop(object)
-    createItem(object,itemSnowMachine())
+    createItem(object,itemTripleShot())
 end
 
 function renderItems()
@@ -141,13 +141,11 @@ function boxOfDecorations()
     player.fireDmg = player.fireDmg + 1
     player.bulletImg = 5
     player.primary = 5
-    print ("DMG: " .. player.fireDmg)
     return true 
 end
 
 
 function itemCandyCanes()
-    print ("Candy Canes!")
     local item = {
         iType = 2,
         iNum = 3,
@@ -164,14 +162,11 @@ function candyCanes()
     player.bulletSpeed = player.bulletSpeed + 1
     player.bulletImg = 7
     player.primary = 7
-    print ("BulletSpeed: " .. player.bulletSpeed)
-    print ("FireRate: " .. player.maxFireRate)
     return true 
 end
 
 
 function itemSnowMachine()
-    print ("Snow Machine!")
     local item = {
         iType = 2,
         iNum = 4,
@@ -187,8 +182,22 @@ function snowMachine()
     end
     player.bulletImg = 1
     player.primary = 1
-    print ("FireRate: " .. player.maxFireRate)
-    return false 
+    return true 
+end
+
+
+function itemTripleShot()
+    local item = {
+        iType = 2,
+        iNum = 5,
+        func = function (x) return tripleShot() end
+    }
+    return item
+end
+
+function tripleShot()
+    player.tripleShot= true
+    return true 
 end
 
 function deleteUsedItems()
