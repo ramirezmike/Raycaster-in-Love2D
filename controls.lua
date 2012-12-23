@@ -56,7 +56,7 @@ function love.keypressed(key, unicode)
 
         if key == 'i' then
 --            generateMap()
-            dropItem(player)
+            testItemDrop(player)
         end
 
         if key == 'u' then

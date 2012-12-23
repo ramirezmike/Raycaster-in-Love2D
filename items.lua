@@ -10,6 +10,10 @@ function dropItem(object)
     end
 end
 
+function testItemDrop(object)
+    createItem(object,itemBoxOfDecorations())
+end
+
 function renderItems()
     local sqrt = math.sqrt
     local atan2 = math.atan2
@@ -122,6 +126,25 @@ function doubleHeartPickup()
         return false
     end
 end
+
+function itemBoxOfDecorations()
+    print ("Decorations!")
+    local item = {
+        iType = 2,
+        iNum = 2,
+        func = function (x) return boxOfDecorations() end
+    }
+    return item
+end
+
+function boxOfDecorations()
+    player.fireDmg = player.fireDmg + 1
+    player.bulletImg = 5
+    player.primary = 5
+    print ("DMG: " .. player.fireDmg)
+    return true 
+end
+
 
 function deleteUsedItems()
     if (#ITEMS_TO_DELETE > 0) then
