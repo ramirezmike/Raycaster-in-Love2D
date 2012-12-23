@@ -17,6 +17,8 @@ player = {
     hit = false,
     hitDecay = 10,
     health = 5,
+    
+    primary = 1,
 
     maxFireRate = 0.5, 
     fireRate = 0,

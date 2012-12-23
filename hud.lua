@@ -21,6 +21,8 @@ function drawHud()
     love.graphics.draw(hudImg,0,375,0)   
     love.graphics.setFont(mainFont)
     love.graphics.print(getDirectionInString(), 142, 432)
+    drawPrimary()
+    drawSecondary()
 end
 
 function drawHearts()
@@ -28,6 +30,21 @@ function drawHearts()
     for i=0, player.health,0.5 do
         love.graphics.rectangle("fill",218+(i*25),455,25,22)
     end
+end
+
+function drawPrimary()
+    local weapon = player.primary
+    local quad = SPRITEQUAD[4][weapon]
+    love.graphics.drawq(wallsImgs,quad,440,390,0,2,2)
+end
+    
+function drawSecondary()
+    if (player.secondary == nil) then
+        return
+    end
+    local weapon = player.secondary
+    local quad = SPRITEQUAD[4][weapon]
+    love.graphics.drawq(wallsImgs,quad,530,390,0,2,2)
 end
 
 function loadHud()
