@@ -11,7 +11,7 @@ function dropItem(object)
 end
 
 function testItemDrop(object)
-    createItem(object,itemCandyCanes())
+    createItem(object,itemSnowMachine())
 end
 
 function renderItems()
@@ -167,6 +167,28 @@ function candyCanes()
     print ("BulletSpeed: " .. player.bulletSpeed)
     print ("FireRate: " .. player.maxFireRate)
     return true 
+end
+
+
+function itemSnowMachine()
+    print ("Snow Machine!")
+    local item = {
+        iType = 2,
+        iNum = 4,
+        func = function (x) return snowMachine() end
+    }
+    return item
+end
+
+function snowMachine()
+    player.maxFireRate = player.maxFireRate - 0.2 
+    if (player.maxFireRate <= 0) then
+        player.maxFireRate = 0.1
+    end
+    player.bulletImg = 1
+    player.primary = 1
+    print ("FireRate: " .. player.maxFireRate)
+    return false 
 end
 
 function deleteUsedItems()
