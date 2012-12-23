@@ -11,7 +11,7 @@ function dropItem(object)
 end
 
 function testItemDrop(object)
-    createItem(object,itemBoxOfDecorations())
+    createItem(object,itemCandyCanes())
 end
 
 function renderItems()
@@ -145,6 +145,29 @@ function boxOfDecorations()
     return true 
 end
 
+
+function itemCandyCanes()
+    print ("Candy Canes!")
+    local item = {
+        iType = 2,
+        iNum = 3,
+        func = function (x) return candyCanes() end
+    }
+    return item
+end
+
+function candyCanes()
+    player.maxFireRate = player.maxFireRate - 0.1 
+    if (player.maxFireRate <= 0) then
+        player.maxFireRate = 0.1
+    end
+    player.bulletSpeed = player.bulletSpeed + 1
+    player.bulletImg = 7
+    player.primary = 7
+    print ("BulletSpeed: " .. player.bulletSpeed)
+    print ("FireRate: " .. player.maxFireRate)
+    return true 
+end
 
 function deleteUsedItems()
     if (#ITEMS_TO_DELETE > 0) then
