@@ -118,6 +118,7 @@ function nutCrackerAI(sprite, dt)
                 sprite.detected = false
                 if (sprite.hit) then
                     aiHandleHit(sprite, dt)
+                    sprite.state = 0
                 end
                 return 
             end
