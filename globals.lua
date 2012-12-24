@@ -21,8 +21,20 @@ levelOne = {
     uDoor     = 5,
     boss      = 6
 }
+    
+levelTwo= {
+    regMapSize = 25,
+    rooms = 4,
+    door      = 7,
+    wall1     = 8,
+    wall2     = 8,
+    obstacle  = 8,
+    uDoor     = 8,
+    boss      = 8
+}
 
 table.insert(LEVELS,levelOne)
+table.insert(LEVELS,levelTwo)
 
 
 

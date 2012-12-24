@@ -56,11 +56,12 @@ function love.keypressed(key, unicode)
 
         if key == 'i' then
 --            generateMap()
-            testItemDrop(player)
+--            testItemDrop(player)
+            changeLevel()
         end
 
         if key == 'u' then
-            deleteDeadSprites()
+            testItemDrop(player)
         end
         if key == 'a' then
             player.strafeSpeed  = -1

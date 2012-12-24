@@ -1,5 +1,5 @@
 player = {
-    level = 1,    
+    level = 0,    
     x = 2,
     y = 2,
     dir = 0,

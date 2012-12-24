@@ -198,7 +198,7 @@ function startGame()
 
 
 
-    generateMap()
+    changeLevel()
     
     mainMenuDisplaying = false
     gameRunning = true

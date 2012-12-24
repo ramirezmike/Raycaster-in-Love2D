@@ -1,7 +1,3 @@
-MAPGEN_MAP = {}
-MAPGEN_ROOMS = {}
-SPECIAL_ROOMS = {}
-MAPGEN_MAPSIZE = 0 
 
 function createEmptyMapWithSize(size)
     size = size * size
@@ -38,10 +34,17 @@ end
 
 function changeLevel()
     local level = player.level + 1
+    player.level = level
+    generateMap(level)
 end
 
-function generateMap()
-    local level = LEVELS[1] 
+function generateMap(lvl)
+    local level = LEVELS[lvl] 
+    MAPGEN_MAP = {}
+    MAPGEN_ROOMS = {}
+    SPECIAL_ROOMS = {}
+    ITEMS = {}
+    MAPGEN_MAPSIZE = 0 
     createEmptyMapWithSize(level["regMapSize"])
     local spawn = setSpawnRoom()
 
@@ -217,11 +220,11 @@ function switchToRoom(index)
 
     local room = MAPGEN_ROOMS[index].room
     loadMapFromRoom(room) 
-    loadItemsInRoom(index)
     if (isBossRoom(index)) then
         print("Is boss Room!")
         addBoss(room,1)
     end
+    loadItemsInRoom(index)
     player.mapGenX = MAPGEN_ROOMS[index].x
     player.mapGenY = MAPGEN_ROOMS[index].y
 end
