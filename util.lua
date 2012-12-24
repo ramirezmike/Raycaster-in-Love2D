@@ -69,6 +69,13 @@ function isBlocking(object, newX, newY)
             if (object.objType == "bullet" and object.origin == 0) then
                 if (dist < 0.3) then
                     handleSpriteHit(sprite,object.dmg)
+
+                    if (player.roasted) then
+                        sprite.roasted = true
+                        sprite.roastedCount = player.roastMax
+                        sprite.numberOfRoasts = player.roastNumber
+                    end
+
                     if (sprite.health < 1) then
                         table.insert(SPRITES_TO_DELETE, i)
                         dropItem(sprite)

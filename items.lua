@@ -11,7 +11,7 @@ function dropItem(object)
 end
 
 function testItemDrop(object)
-    createItem(object,itemTripleShot())
+    createItem(object,itemRoastedNuts())
 end
 
 function renderItems()
@@ -197,6 +197,22 @@ end
 
 function tripleShot()
     player.tripleShot= true
+    return true 
+end
+
+function itemRoastedNuts()
+    local item = {
+        iType = 2,
+        iNum = 6,
+        func = function (x) return roastedNuts() end
+    }
+    return item
+end
+
+function roastedNuts()
+    player.bulletImg = 9
+    player.primary = 9
+    player.roasted = true 
     return true 
 end
 

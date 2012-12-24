@@ -26,7 +26,10 @@ player = {
     fireRate = 0,
     firing = false,
 
-    tripleShot = false
+    tripleShot = false,
+
+    roastMax = 2,
+    roastNumber = 4
 }
 
 function convertPlayerRotation()

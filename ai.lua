@@ -6,6 +6,21 @@ function ai(dt)
             else
                 sprite.frameTimer = sprite.frameTimer + dt*sprite.walkAnimationSpeed
                 sprite.strafeSpeed = 0
+        
+                if (sprite.roasted) then
+                    if (sprite.numberOfRoasts == 0) then
+                        sprite.roasted = false
+                        return
+                    end
+
+                    if (sprite.roastedCount < 0) then
+                        sprite.numberOfRoasts = sprite.numberOfRoasts - 1
+                        sprite.roastedCount = player.roastMax
+                        handleSpriteHit(sprite,0.5)
+                    end
+                    sprite.roastedCount = sprite.roastedCount - dt 
+                    print ("ROASTING!" .. " " .. sprite.roastedCount)
+                end
                 
                 local action = {
                     [5] = function (x) snowmanAI(sprite,dt) end,
