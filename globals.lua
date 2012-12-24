@@ -9,6 +9,24 @@ DECALS = {}
 SPRITES_TO_DELETE = {}
 ITEMS_TO_DELETE = {}
 
+LEVELS = {}
+
+levelOne = {
+    regMapSize = 25,
+    rooms = 4,
+    door      = 1,
+    wall1     = 2,
+    wall2     = 3,
+    obstacle  = 4,
+    uDoor     = 5,
+    boss      = 6
+}
+
+table.insert(LEVELS,levelOne)
+
+
+
+
 spriteBatch = 0
 selectedWall = 0
 windowWidth = love.graphics.getWidth() 

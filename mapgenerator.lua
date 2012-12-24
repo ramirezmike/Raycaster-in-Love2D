@@ -36,8 +36,13 @@ function printGeneratedMap()
 end
 
 
+function changeLevel()
+    local level = player.level + 1
+end
+
 function generateMap()
-    createEmptyMapWithSize(25)
+    local level = LEVELS[1] 
+    createEmptyMapWithSize(level["regMapSize"])
     local spawn = setSpawnRoom()
 
 --    local index = mapGenIndexFromCoordinates(5,5)
@@ -46,7 +51,7 @@ function generateMap()
 --
 --    print (index .. "  " .. x .. "  " .. y)
 
-    createRooms(4) 
+    createRooms(level["rooms"]) 
     printGeneratedMap()
 
     local specialIndex = getSpecialRoom()
@@ -212,11 +217,11 @@ function switchToRoom(index)
 
     local room = MAPGEN_ROOMS[index].room
     loadMapFromRoom(room) 
+    loadItemsInRoom(index)
     if (isBossRoom(index)) then
         print("Is boss Room!")
         addBoss(room,1)
     end
-    loadItemsInRoom(index)
     player.mapGenX = MAPGEN_ROOMS[index].x
     player.mapGenY = MAPGEN_ROOMS[index].y
 end

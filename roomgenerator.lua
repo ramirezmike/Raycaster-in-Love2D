@@ -74,6 +74,7 @@ function roomGenIndexFromCoordinates(room,x,y)
 end
 
 function createEmptyRoom(size)
+    local level = LEVELS[player.level]
     local room = {}
     local roomSizeRoot = size    
     size = size*size
@@ -84,25 +85,25 @@ function createEmptyRoom(size)
 
     -- North
     for i=1,roomSizeRoot do
-        room[i] = 1 
+        room[i] = level.door
     end 
 
     -- Sides
     for i=1,roomSizeRoot-1 do 
         i = i * roomSizeRoot+1
-        room[i] = 1 
+        room[i] = level.door
         for j = 2,roomSizeRoot-1 do
             i = i + 1 
             room[i] = 0 
         end 
         i = i + 1 
-        room[i] = 1 
+        room[i] = level.door
     end 
 
 
     -- Bottom
     for i=(size+1)-roomSizeRoot,(size) do
-        room[i] = 1 
+        room[i] = level.door
     end 
     
     return room
@@ -127,20 +128,22 @@ function clearPathsToDoors(room)
 end
 
 function unlockAllDoors()
+    local level = LEVELS[player.level]
     for i = 0, #mapProp.map do
-        if mapProp.map[i] == 1 then
-            mapProp.map[i] = 5
+        if mapProp.map[i] == level.door then
+            mapProp.map[i] = level.uDoor 
         end
     end
 end
 
 function addDoorTop(room,roomExists,index)
+    local level = LEVELS[player.level]
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
     local middle = math.ceil(roomSizeRoot / 2)
     for i=roomSizeRoot+1,roomSizeRoot*2 do
-        room[i] = 2
+        room[i] = level.wall1 
     end
 
     if (roomExists) then
@@ -149,7 +152,7 @@ function addDoorTop(room,roomExists,index)
         local indexTop = mapGenIndexFromCoordinates(x,y - 1)
 
         if (isBossRoom(indexTop)) then
-            room[middle] = 6
+            room[middle] = level.boss 
         end 
 
         local opening = roomSizeRoot + middle
@@ -158,12 +161,13 @@ function addDoorTop(room,roomExists,index)
 end
 
 function addDoorBottom(room,roomExists,index)
+    local level = LEVELS[player.level]
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
     local middle = math.ceil(roomSizeRoot / 2)
     for i=1+size-(roomSizeRoot*2),size-roomSizeRoot do
-        room[i] = 2
+        room[i] = level.wall1 
     end
 
     if (roomExists) then
@@ -172,7 +176,7 @@ function addDoorBottom(room,roomExists,index)
         local indexBottom = mapGenIndexFromCoordinates(x,y + 1)
 
         if (isBossRoom(indexBottom)) then
-            room[size-middle+1] = 6
+            room[size-middle+1] = level.boss 
         end 
 
         local opening = size - roomSizeRoot - middle + 1
@@ -182,12 +186,13 @@ end
 
 
 function addDoorRight(room,roomExists,index)
+    local level = LEVELS[player.level]
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
     local middle = math.ceil(roomSizeRoot / 2)
     for i=roomSizeRoot*2-1,size-roomSizeRoot,roomSizeRoot do
-        room[i] = 3
+        room[i] = level.wall2 
     end
 
     if (roomExists) then
@@ -196,7 +201,7 @@ function addDoorRight(room,roomExists,index)
         local indexRight = mapGenIndexFromCoordinates(x+1,y)
 
         if (isBossRoom(indexRight)) then
-            room[size - (roomSizeRoot*(middle-1))] = 6
+            room[size - (roomSizeRoot*(middle-1))] = level.boss 
         end 
 
         local opening = size - (roomSizeRoot*(middle-1)) - 1
@@ -205,12 +210,13 @@ function addDoorRight(room,roomExists,index)
 end
 
 function addDoorLeft(room,roomExists,index)
+    local level = LEVELS[player.level]
     local size = #room
     local roomSizeRoot = math.sqrt(size)    
 
     local middle = math.ceil(roomSizeRoot / 2)
     for i=roomSizeRoot+2,size-roomSizeRoot,roomSizeRoot do
-        room[i] = 3
+        room[i] = level.wall2 
     end
 
     if (roomExists) then
@@ -219,7 +225,7 @@ function addDoorLeft(room,roomExists,index)
         local indexLeft = mapGenIndexFromCoordinates(x-1,y)
 
         if (isBossRoom(indexLeft)) then
-            room[size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 1] = 6
+            room[size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 1] = level.boss 
         end 
 
         local opening = size - (roomSizeRoot*(middle-1)) - roomSizeRoot + 2 
@@ -254,7 +260,7 @@ function addObstacles(room)
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then
-            room[index] = 4
+            room[index] = level.obstacle 
         end
     end
 end

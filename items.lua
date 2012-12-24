@@ -66,7 +66,9 @@ function saveItemsInCurrentRoom()
 end
 
 function loadItemsInRoom(index)
-    ITEMS = MAPGEN_ROOMS[index].items
+    if (MAPGEN_ROOMS[index].items) then
+        ITEMS = MAPGEN_ROOMS[index].items
+    end
 end
 
 function createItem(object,item)
@@ -213,7 +215,7 @@ function roastedNuts()
     player.bulletImg = 9
     player.primary = 9
     player.roasted = true 
-    return true 
+    return false 
 end
 
 function deleteUsedItems()
