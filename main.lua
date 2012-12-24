@@ -105,11 +105,12 @@ function setupParticles(image, life)
 end
 
 function drawGame()
-    love.graphics.setColor(100,100,100)
+    local level = LEVELS[player.level]
+    level.floor()
     love.graphics.rectangle( "fill",
      0,screenHeight/2,screenWidth,screenHeight/2
     )
-    love.graphics.setColor(200,200,200)
+    level.ceiling()
     love.graphics.rectangle( "fill",
      0,0,screenWidth,screenHeight/2
     )

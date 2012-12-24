@@ -12,6 +12,8 @@ ITEMS_TO_DELETE = {}
 LEVELS = {}
 
 levelOne = {
+    floor = function (x) love.graphics.setColor(100,100,100) end,
+    ceiling = function (x) love.graphics.setColor(200,200,200) end,
     regMapSize = 25,
     rooms = 4,
     door      = 1,
@@ -23,6 +25,8 @@ levelOne = {
 }
     
 levelTwo= {
+    floor = function (x) love.graphics.setColor(20,20,20) end,
+    ceiling = function (x) love.graphics.setColor(2,2,2) end,
     regMapSize = 25,
     rooms = 4,
     door      = 7,
