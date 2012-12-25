@@ -25,7 +25,7 @@ function manageBullets(dt)
                 local bulletCol = v["bulletType"] + 1
                 if v["fromTwelve"] then
                     bulletRow = 0 
-                    bulletCol = 14
+                    bulletCol = 13
                 end
                 table.insert(DECALS, 
                     {
@@ -233,7 +233,7 @@ function createTwelveBullet(object,rand)
             dx = bulletDx, 
             dy = bulletDy, 
             visible = false,            
-            dmg = object.fireDmg,
+            dmg = object.fireDmg * 2,
             objType = "bullet",
             origin = object.id,
             verticalPosition = 0,      

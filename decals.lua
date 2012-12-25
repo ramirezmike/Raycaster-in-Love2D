@@ -32,7 +32,7 @@ function renderDecals()
                 dist = dist,
                 sx = spriteSize / mTileSize,
                 sy = spriteSize / 64,
-                quad = SPRITEQUAD[4][state]
+                quad = SPRITEQUAD[v["sprite"]][state]
             }
             v["visible"] = false
         end

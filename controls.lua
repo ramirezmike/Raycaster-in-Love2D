@@ -51,7 +51,7 @@ function love.keypressed(key, unicode)
             love.mouse.setGrab(false)
         end
     end
-    if not (gamePaused) then
+    if not (gamePaused) and not (mainMenuDisplaying) then
         if key == 'w' or key == 'up' then
             player.speed = 1
         end
