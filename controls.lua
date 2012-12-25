@@ -1,4 +1,9 @@
 function love.mousepressed(x, y, button)
+    if (sceneChange) then
+        sceneChange = false
+        gamePaused = false
+        gameRunning = true
+    end
     if button == "l" then
         if (gameRunning and not(gamePaused)) then
             if not (love.mouse.isGrabbed()) then

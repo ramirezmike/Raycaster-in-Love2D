@@ -222,12 +222,6 @@ function drawBackground()
     end
 end
 
-function makeTextDisplay()
-    local text = "THIS IS TEXT" 
-    textFont = love.graphics.newFont()
-    love.graphics.setFont(textFont)
-    love.graphics.print(text, 350,315)
-end
 
 function drawSceneChange()
     local level = LEVELS[player.level]
@@ -235,7 +229,7 @@ function drawSceneChange()
     textFont = love.graphics.newFont()
     love.graphics.setColor(255,255,255)
     love.graphics.setFont(textFont)
-    love.graphics.print(text, 350,315)
+    love.graphics.print(text, 400,415)
 end
 
 function fadeToBlackSetup()
