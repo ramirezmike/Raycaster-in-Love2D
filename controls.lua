@@ -21,9 +21,10 @@ function love.mousepressed(x, y, button)
         end
     end
     if button == "r" then
-        print ("DERP")
         if (gameRunning and not(gamePaused)) then
-            player.secondFiring = true 
+            if (player.secondary ~= 14) then
+                player.secondFiring = true 
+            end
         end
     end
 end
@@ -72,8 +73,9 @@ function love.keypressed(key, unicode)
 
         if key == 'i' then
 --            generateMap()
-            testItemDrop(player)
+--            testItemDrop(player)
 --            changeLevel()
+            createSpecialItem(player)
         end
 
         if key == 'u' then

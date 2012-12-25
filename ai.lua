@@ -26,7 +26,8 @@ function ai(dt)
                     [5] = function (x) snowmanAI(sprite,dt) end,
                     [0] = function (x) elfAI(sprite,dt) end,
                     [1] = function (x) nutCrackerAI(sprite,dt) end,
-                    [3] = function (x) frostyAI(sprite,dt) end
+                    [3] = function (x) frostyAI(sprite,dt) end,
+                    [6] = function (x) jackAI(sprite,dt) end
                 }
 
                 action[sprite.img]()
@@ -71,6 +72,49 @@ function frostyAI(sprite, dt)
                 aiHandleHit(sprite, dt)
             end
 end
+
+
+function jackAI(sprite, dt)
+            vector = {
+                x = 0,
+                y = 0 
+            }
+             
+            pointV = {
+                x = 10.5,
+                y = 10.5 
+            }
+
+            fireRandomJack(sprite,dt,false)
+
+            vectorA = steerTowardPoint(sprite,pointV)
+    
+            vector.x = vectorA.x
+            vector.y = vectorA.y
+
+            --limitVelocity(sprite,vector)
+
+            local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
+
+            sprite.x = sprite.x + (vector.x  * dt )
+            sprite.y = sprite.y + (vector.y  * dt )
+
+            if (dist > 0) then
+                sprite.speed = 40
+                local numWalkSprites = 4
+                if math.floor(sprite.frameTimer) > numWalkSprites then
+                    sprite.frameTimer = 1 
+                end
+                sprite.state = math.floor(sprite.frameTimer) 
+            else
+                sprite.state = 0
+                sprite.speed = 0
+            end
+            if (sprite.hit) then
+                aiHandleHit(sprite, dt)
+            end
+end
+
 
 function elfAI(sprite, dt)
             vector = {
@@ -323,6 +367,20 @@ function fireRandomDirection(sprite,dt,vertical)
     end
 end
 
+
+function fireRandomJack(sprite,dt)
+    if (sprite.fireRate < 0) then 
+        sprite.fireRate = sprite.maxFireRate
+    elseif (sprite.fireRate == sprite.maxFireRate) then
+        sprite.fireRate = sprite.fireRate - dt
+        for i = 1, sprite.maxBullets do
+            createJackBullet(sprite)
+        end
+    else
+        sprite.fireRate = sprite.fireRate - dt
+    end
+end
+
 function handleBiteAttack(sprite,dt)
     if (sprite.fireRate < 0) then 
         sprite.fireRate = sprite.maxFireRate
@@ -386,6 +444,17 @@ function setupRandomMovement(sprite)
     sprite.randomMovementIndex = 0
     sprite.randomMovementTime = 0
     sprite.randomMovementMaxTime = 5
+end
+
+function steerTowardPoint(sprite,point)
+    local newVectorX = (point.x - sprite.x)
+    local newVectorY = (point.y - sprite.y)
+    local vectorA = { x = 0, y = 0}
+
+    local mag = math.sqrt(newVectorX*newVectorX + newVectorY*newVectorY)
+    vectorA.x = newVectorX 
+    vectorA.y = newVectorY 
+    return vectorA
 end
 
 function randomMovement(sprite,dt)

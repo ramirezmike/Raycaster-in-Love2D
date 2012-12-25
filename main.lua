@@ -143,6 +143,9 @@ function drawGame()
 --        if (light < 0) then light = 0 end
 --        spriteBatch:setColor(255,255,255,255*light) 
 --        print ("Quad: " .. tostring(strip.quad) .. "StripX: " .. tostring(strip.x) .. "StripY: " .. tostring(strip.y) .. "StripSX: " .. tostring(strip.sx) .. "StripSY: " .. tostring(strip.sy))
+        if (strip.isSpecial) then
+            spriteBatch:setColor( 50, 50, 50, 255)
+        end
         if (strip.hit) then
             spriteBatch:setColor( 255, 0, 0, 255)
         end

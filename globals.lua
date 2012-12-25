@@ -27,7 +27,7 @@ levelOne = {
     maxEnemy  = 2
 }
     
-levelTwo= {
+levelTwo = {
     introText = "Jack's Nut Cracker Storage",
     floor = function (x) love.graphics.setColor(20,20,20) end,
     ceiling = function (x) love.graphics.setColor(2,2,2) end,
@@ -43,8 +43,24 @@ levelTwo= {
     maxEnemy  = 3
 }
 
+levelThree = {
+    introText = "St. Nick's Office",
+    floor = function (x) love.graphics.setColor(20,20,20) end,
+    ceiling = function (x) love.graphics.setColor(2,2,2) end,
+    regMapSize = 25,
+    rooms = 4,
+    door      = 7,
+    wall1     = 8,
+    wall2     = 9,
+    obstacle  = 10,
+    uDoor     = 11,
+    boss      = 12,
+    minEnemy  = 1,
+    maxEnemy  = 3
+}
 table.insert(LEVELS,levelOne)
 table.insert(LEVELS,levelTwo)
+table.insert(LEVELS,levelThree)
 
 
 

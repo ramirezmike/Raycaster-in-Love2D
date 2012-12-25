@@ -37,6 +37,8 @@ function renderSprites()
             local blockDist = dbx*dbx + dby*dby
             local z = -floor(dist*10000)
             --love.graphics.drawq(harrisImg,SPRITEQUAD[0],left,top,0,spriteSize/mapProp.tileSize,spriteSize/mapProp.tileSize)
+            local special = false
+            if (sprite.isSpecial) then special = true end
             drawCalls[#drawCalls+1] = 
             { 
                 z = z,
@@ -46,7 +48,8 @@ function renderSprites()
                 sx = spriteSize / mapProp.tileSize,
                 sy = spriteSize / 64,
                 quad = SPRITEQUAD[sprite.img][sprite.state],
-                hit = isHit
+                hit = isHit,
+                isSpecial = special
             }
             sprite.visible = false 
        end
@@ -66,7 +69,8 @@ function addBossToMap(index,boss)
     local posY = positionYFromArrayIndex(index) 
     
     local action = {
-        [1] = function (x) addFrosty(posX,posY) end
+        [1] = function (x) addFrosty(posX,posY) end,
+        [2] = function (x) addJack(posX,posY) end,
     }
     action[boss]()
 end
@@ -104,6 +108,15 @@ function deleteDeadSprites()
 end
 
 function addSnowman(x,y)
+    local rand = math.random(1,10)
+    local special = false
+
+    if (rand == 5) then 
+       special = true 
+    end
+
+    special = true
+
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
             id = spriteIndex,
@@ -143,7 +156,9 @@ function addSnowman(x,y)
             wallPositionY = 0,
             objType = "sprite",
             frameTimer = 0,
-            walkAnimationSpeed = 5
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
         }
 end
 
@@ -176,6 +191,53 @@ function addFrosty(x,y)
 
             maxFireRate = 1.5,
             maxBullets = 8,
+            fireRate = math.random(2.9,7),
+
+            health = 4,
+            hit = false,
+            hitPause = 0.1,
+
+            moveSpeed = 0.09,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5
+        }
+end
+
+function addJack(x,y)
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
+            boss = true,
+            id = spriteIndex,
+            x = x,
+            y = y,
+            img = 6,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+
+            bulletSpeed = 6.5,
+            bulletImg = 11,
+            fireDmg = 1,
+            bulletSplash = 2,
+            playerVisible = false,
+            visiblityRange = 5,
+
+            rotate = false,
+            rotationDirection = 0,
+            rotationAngle = 20,
+            rotateDelay = 3,
+            rotateDelayMax = 3,
+
+            maxFireRate = 5.5,
+            maxBullets = 1,
             fireRate = math.random(2.9,7),
 
             health = 4,

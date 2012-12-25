@@ -34,6 +34,10 @@ function createBossRoom(roomIndex)
     addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)
     addDoorRight(room,doesRoomHaveRight(roomIndex),roomIndex)
 
+    if (player.level == 1) then
+        addObstacles(room,true)
+    end
+
     return room
 end
 
@@ -254,7 +258,12 @@ function getDoorIndexes(room)
     return doors
 end
 
-function addObstacles(room)
+function addObstacles(room,jack)
+    local level = LEVELS[player.level]
+    if (jack) then
+        room[211] = level.obstacle
+        return
+    end
     local rand = math.random(5,15)
 
     for i=0,rand do

@@ -1,4 +1,9 @@
 function dropItem(object)
+    if (object.isSpecial) then
+        createSpecialItem(object)
+        return
+    end
+
     local rand = math.random(5)
     if (rand == 1) then
         rand = math.random(5)
@@ -84,6 +89,29 @@ function createItem(object,item)
             peakHit = false,
             pickupFunction = function (x) return item.func() end
     })
+end
+
+function createSpecialItem(object)
+    local itemsList = {}
+    local rudolph = { func = function (x) return itemRudolphNose() end }
+    local box = { func = function (x) return itemBoxOfDecorations() end }
+    local candy = { func = function (x) return itemCandyCanes() end }
+    local snowMachine= { func = function (x) return itemSnowMachine() end }
+    local tripShot = { func = function (x) return itemTripleShot() end }
+    local rNuts = { func = function (x) return itemRoastedNuts() end }
+    local twelveDays = { func = function (x) return itemTwelveDays() end }
+
+    table.insert(itemsList, rudolph)
+    table.insert(itemsList, box)
+    table.insert(itemsList, candy)
+    table.insert(itemsList, snowMachine)
+    table.insert(itemsList, tripShot)
+    table.insert(itemsList, rNuts)
+    table.insert(itemsList, twelveDays)
+
+    local rand = math.random(#itemsList)
+    local itemCreated = itemsList[rand].func()
+    createItem(object,itemCreated)
 end
 
 function itemHeart()

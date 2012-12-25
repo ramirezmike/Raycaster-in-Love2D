@@ -27,6 +27,13 @@ function manageBullets(dt)
                     bulletRow = 0 
                     bulletCol = 13
                 end
+
+                if (v["isJack"]) then
+                    local sprite = SPRITES[#SPRITES]                        
+                    sprite.x = v["x"]
+                    sprite.y = v["y"]
+                end
+
                 table.insert(DECALS, 
                     {
                         x = v["x"] - ((v["dx"]*dt) * 3), 
@@ -128,6 +135,70 @@ function createRandomBullet(object, vertical)
             isVertical = vertical,
             peakHit = false
     })
+    love.audio.stop(eAttack)
+    love.audio.play(eAttack)
+end
+
+
+function createJackBullet(object)
+    local rand = math.random(1,4)
+
+    local vectorA = {
+        x = math.cos(3*math.pi / 2),
+        y = math.sin(3*math.pi / 2),
+        sX = object.x,
+        sY = object.y - .5
+    }
+    local vectorB = {
+        x = math.cos(math.pi/2),
+        y = math.sin(math.pi/2),
+        sX = object.x,
+        sY = object.y + .5
+    }
+    local vectorC = {
+        x = math.cos(2*math.pi),
+        y = math.sin(2*math.pi),
+        sX = object.x + .5,
+        sY = object.y
+    }
+    local vectorD = {
+        x = math.cos(math.pi),
+        y = math.sin(math.pi),
+        sX = object.x - .5,
+        sY = object.y
+    }
+
+    local vectors = {}
+    table.insert(vectors, vectorA)
+    table.insert(vectors, vectorB)
+    table.insert(vectors, vectorC)
+    table.insert(vectors, vectorD)
+
+    for i,v in ipairs(vectors) do
+        local iJack = false
+        if (i == rand) then
+            iJack = true
+        end
+
+        local bulletDx = v["x"] * object.bulletSpeed
+        local bulletDy = v["y"] * object.bulletSpeed 
+        table.insert(bullets, {
+                bulletRow = 4,
+                bulletType = object.bulletImg, 
+                x = v["sX"],
+                y = v["sY"], 
+                dx = bulletDx, 
+                dy = bulletDy, 
+                visible = false, 
+                dmg = object.fireDmg,
+                objType = "bullet",
+                origin = object.id,
+                verticalPosition = 0,
+                isVertical = false,
+                isJack = iJack,
+                peakHit = false
+        })
+    end
     love.audio.stop(eAttack)
     love.audio.play(eAttack)
 end
