@@ -12,6 +12,7 @@ ITEMS_TO_DELETE = {}
 LEVELS = {}
 
 levelOne = {
+    introText = "Frosty's Legal Department",
     floor = function (x) love.graphics.setColor(100,100,100) end,
     ceiling = function (x) love.graphics.setColor(200,200,200) end,
     regMapSize = 25,
@@ -25,6 +26,7 @@ levelOne = {
 }
     
 levelTwo= {
+    introText = "Jack's Nut Cracker Storage",
     floor = function (x) love.graphics.setColor(20,20,20) end,
     ceiling = function (x) love.graphics.setColor(2,2,2) end,
     regMapSize = 25,

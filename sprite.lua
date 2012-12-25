@@ -149,6 +149,7 @@ end
 function addFrosty(x,y)
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
+            boss = true,
             id = spriteIndex,
             x = x,
             y = y,

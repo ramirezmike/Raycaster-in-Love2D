@@ -473,3 +473,9 @@ function inWall(vector)
     return false
 end
     
+function bossEndLevelCheck(sprite)
+    if (sprite.health < 1) then
+--        changeLevel()
+        fadeToBlackSetup()
+    end
+end

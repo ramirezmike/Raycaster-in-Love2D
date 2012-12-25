@@ -26,6 +26,11 @@ function love.mousereleased(x, y, button)
 end
 
 function love.keypressed(key, unicode)
+    if (sceneChange) then
+        sceneChange = false
+        gamePaused = false
+        gameRunning = true
+    end
     if key == 'escape' then
         if not (mainMenuDisplaying) then
             gamePaused = not(gamePaused)
@@ -57,7 +62,8 @@ function love.keypressed(key, unicode)
         if key == 'i' then
 --            generateMap()
 --            testItemDrop(player)
-            changeLevel()
+--            changeLevel()
+            fadeToBlackSetup()
         end
 
         if key == 'u' then

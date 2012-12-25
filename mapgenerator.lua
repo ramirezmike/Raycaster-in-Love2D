@@ -1,4 +1,3 @@
-
 function createEmptyMapWithSize(size)
     size = size * size
     MAPGEN_MAPSIZE = size
@@ -33,8 +32,10 @@ end
 
 
 function changeLevel()
+--    fadeToBlackSetup()
     local level = player.level + 1
     player.level = level
+    sceneChange = true 
     generateMap(level)
 end
 

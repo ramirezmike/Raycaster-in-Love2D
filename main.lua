@@ -20,8 +20,14 @@ function love.draw()
         drawMenu()
     elseif (gamePaused) then
         drawPauseMenu()
-    else
+    elseif (sceneChange and fadeAmount > 255) then
+        drawSceneChange()
+    elseif (gameRunning) then
         drawGame()
+    end
+
+    if (fading) then
+        fadeToBlack()
     end
 end
 
@@ -44,12 +50,17 @@ function love.update(dt)
     if (gamePaused) then
         menuButtonHover()
     end
+
+    if (sceneChange) then
+        
+    end
 end
 
 function love.load()
 
     mainMenuDisplaying = true 
     gameRunning = false 
+    sceneChange = false
     
     loadMainMenu()
 
@@ -162,11 +173,12 @@ function drawGame()
     if (displayDebug) then drawDebug() end
     drawHud()
     drawMiniMap()
+
 end
 
 function startGame()
     SPRITES = {}
-    gamePaused = false
+ --   gamePaused = false
     loadPauseMenu()
     --loadMapFromDisk("map01.lua")
     --setPlayerSpawnPoint()
@@ -198,11 +210,11 @@ function startGame()
 
 
 
-
-    changeLevel()
+    fadeToBlackSetup()
+--    changeLevel()
     
     mainMenuDisplaying = false
-    gameRunning = true
+--    gameRunning = true
 
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)

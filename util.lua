@@ -77,6 +77,10 @@ function isBlocking(object, newX, newY)
                     end
 
                     if (sprite.health < 1) then
+                        if (sprite.boss) then
+                            bossEndLevelCheck(sprite)
+                            return true
+                        end
                         table.insert(SPRITES_TO_DELETE, i)
                         dropItem(sprite)
                     end
@@ -215,5 +219,39 @@ end
 function drawBackground()
     for i = 1, screenWidth do
        love.graphics.drawq(bgImg,BGQUAD[1],i,0,0,1,1)
+    end
+end
+
+function makeTextDisplay()
+    local text = "THIS IS TEXT" 
+    textFont = love.graphics.newFont()
+    love.graphics.setFont(textFont)
+    love.graphics.print(text, 350,315)
+end
+
+function drawSceneChange()
+    local level = LEVELS[player.level]
+    local text = level.introText 
+    textFont = love.graphics.newFont()
+    love.graphics.setColor(255,255,255)
+    love.graphics.setFont(textFont)
+    love.graphics.print(text, 350,315)
+end
+
+function fadeToBlackSetup()
+    fadeAmount = 0 
+    fadeColor = function (x) love.graphics.setColor(0,0,0,fadeAmount) end 
+    fade= function (x) love.graphics.rectangle("fill",0,0,screenWidth,screenHeight) end 
+    fading = true
+end
+
+function fadeToBlack()
+    fadeAmount = fadeAmount + 2
+    fadeColor()
+    fade()
+    
+    if fadeAmount > 255 then
+        fading = false
+        changeLevel()
     end
 end
