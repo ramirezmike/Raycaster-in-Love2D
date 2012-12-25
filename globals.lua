@@ -22,7 +22,9 @@ levelOne = {
     wall2     = 3,
     obstacle  = 4,
     uDoor     = 5,
-    boss      = 6
+    boss      = 6,
+    minEnemy  = 1,
+    maxEnemy  = 2
 }
     
 levelTwo= {
@@ -33,10 +35,12 @@ levelTwo= {
     rooms = 4,
     door      = 7,
     wall1     = 8,
-    wall2     = 8,
-    obstacle  = 8,
-    uDoor     = 8,
-    boss      = 8
+    wall2     = 9,
+    obstacle  = 10,
+    uDoor     = 11,
+    boss      = 12,
+    minEnemy  = 3,
+    maxEnemy  = 3
 }
 
 table.insert(LEVELS,levelOne)

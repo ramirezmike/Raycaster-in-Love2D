@@ -74,8 +74,9 @@ end
 function addSpriteToMap(index)
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
+    local level = LEVELS[player.level]
     
-    local rand = math.random(1,3)
+    local rand = math.random(level.minEnemy,level.maxEnemy)
 
     local action = {
         [1] = function (x) addSnowman(posX,posY) end,
