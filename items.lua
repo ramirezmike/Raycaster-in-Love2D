@@ -11,7 +11,7 @@ function dropItem(object)
 end
 
 function testItemDrop(object)
-    createItem(object,itemTwelveDays())
+    createItem(object,itemRudolphNose())
 end
 
 function renderItems()
@@ -229,7 +229,7 @@ end
 
 function twelveDays()
     player.secondary = 7
-    return false 
+    return true 
 end
 
 function fireTwelveDays()
@@ -248,6 +248,35 @@ function fireTwelveDays()
     end
 end
 
+
+function itemRudolphNose()
+    local item = {
+        iType = 2,
+        iNum = 8,
+        func = function (x) return rudolphNose() end
+    }
+    return item
+end
+
+function rudolphNose()
+    player.secondary = 8
+    return false 
+end
+
+function fireRudolphNose()
+    if (rudolphFiring) then
+        if (rudolphFiring < 0) then
+            player.secondaryRecharge = false
+            player.secondFiring = false
+        else
+            createRudolphBullet(player)
+            rudolphFiring = rudolphFiring - 1
+        end
+    else
+        rudolphFiring = 50
+    end
+end
+
 function deleteUsedItems()
     if (#ITEMS_TO_DELETE > 0) then
         for i,v in ipairs(ITEMS_TO_DELETE) do
@@ -260,3 +289,7 @@ end
 
 SECONDARY = {}
 table.insert(SECONDARY,7,function (x) fireTwelveDays() end)
+table.insert(SECONDARY,8,function (x) fireRudolphNose() end)
+SECONDARY_RATES = {}
+table.insert(SECONDARY_RATES,7,3)
+table.insert(SECONDARY_RATES,8,17)

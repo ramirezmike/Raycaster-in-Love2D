@@ -65,7 +65,7 @@ function firePlayerWeapon(dt)
             player.fireSecondaryRate = player.maxFireRate
             fireSecondary()
         else
-            player.fireSecondaryRate = player.fireSecondaryRate - dt * 3
+            player.fireSecondaryRate = player.fireSecondaryRate - dt * SECONDARY_RATES[player.secondary] 
         end
     end
 end

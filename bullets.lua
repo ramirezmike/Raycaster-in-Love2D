@@ -243,6 +243,32 @@ function createTwelveBullet(object,rand)
     love.audio.play(soundShoot)
 end
 
+
+function createRudolphBullet(object)
+    local startX = object.x                                                                                                                                                  
+    local startY = object.y                                                
+    local angle = object.rot                                               
+    local bulletDx = 5*object.bulletSpeed * math.cos(angle)                   
+    local bulletDy = 5*object.bulletSpeed * math.sin(angle)                   
+
+    table.insert(bullets, {
+            bulletRow = 2,
+            bulletType = 8,
+            x = startX, 
+            y = startY, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false,            
+            dmg = object.fireDmg,
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0, 
+            fromTwelve = true
+    })
+    love.audio.stop(soundShoot)
+    love.audio.play(soundShoot)
+end
+
 function handleVertical(object,dt, bulletIndex)
     local peak = -100
     if not (object["peakHit"]) then

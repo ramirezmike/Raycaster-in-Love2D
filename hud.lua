@@ -44,6 +44,9 @@ function drawSecondary()
     end
     local weapon = player.secondary
     local quad = SPRITEQUAD[2][weapon]
+    if not(player.secondaryRecharge) then
+        love.graphics.setColor(100,100,100,205)
+    end
     love.graphics.drawq(wallsImgs,quad,530,390,0,2,2)
 end
 
