@@ -18,12 +18,15 @@ player = {
     health = 5,
     
     primary = 1,
+    secondary = 14,
+    secondaryRecharge = true,
     bulletSpeed = 5.5,
     bulletImg = 1,
     fireDmg = 1,
 
     maxFireRate = 0.5, 
     fireRate = 0,
+    fireSecondaryRate = 0,
     firing = false,
 
     tripleShot = false,
@@ -57,4 +60,17 @@ function firePlayerWeapon(dt)
             player.fireRate = player.fireRate - dt 
         end
     end
+    if (player.secondFiring and player.secondaryRecharge) then
+        if (player.fireSecondaryRate < 0) then
+            player.fireSecondaryRate = player.maxFireRate
+            fireSecondary()
+        else
+            player.fireSecondaryRate = player.fireSecondaryRate - dt
+        end
+    end
+end
+
+function fireSecondary()
+    local action = SECONDARY[player.secondary]    
+    action()
 end

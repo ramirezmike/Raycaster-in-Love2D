@@ -43,7 +43,7 @@ function drawSecondary()
         return
     end
     local weapon = player.secondary
-    local quad = SPRITEQUAD[4][weapon]
+    local quad = SPRITEQUAD[2][weapon]
     love.graphics.drawq(wallsImgs,quad,530,390,0,2,2)
 end
 

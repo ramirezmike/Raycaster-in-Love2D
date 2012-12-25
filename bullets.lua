@@ -21,6 +21,12 @@ function manageBullets(dt)
             end
         end
         if (isBlocking(v, v["x"], v["y"])) then
+                local bulletRow = 4
+                local bulletCol = v["bulletType"] + 1
+                if v["fromTwelve"] then
+                    bulletRow = 0 
+                    bulletCol = 14
+                end
                 table.insert(DECALS, 
                     {
                         x = v["x"] - ((v["dx"]*dt) * 3), 
@@ -28,8 +34,8 @@ function manageBullets(dt)
                         wallX = v["bulletWallPositionX"],
                         wallY = v["bulletWallPositionY"],
                         verticalPosition = v["verticalPosition"],
-                        sprite = 4, 
-                        state = v["bulletType"]+1, 
+                        sprite = bulletRow, 
+                        state = bulletCol, 
                         visible = false, 
                         decay = 0.1
                     })
@@ -77,7 +83,7 @@ function renderBullets()
                 dist = dist,                                                       
                 sx = spriteSize / mTileSize,                                
                 sy = spriteSize / 64,                                              
-                quad = SPRITEQUAD[4][v["bulletType"]]                        
+                quad = SPRITEQUAD[v["bulletRow"]][v["bulletType"]]                        
             }
 
             v["visible"] = false
@@ -108,6 +114,7 @@ function createRandomBullet(object, vertical)
     local bulletDx = vector.x * object.bulletSpeed
     local bulletDy = vector.y * object.bulletSpeed 
     table.insert(bullets, {
+            bulletRow = 4,
             bulletType = object.bulletImg, 
             x = object.x,
             y = object.y, 
@@ -134,6 +141,7 @@ function createBulletSprite(object)
     local bulletDx = nVectorX * object.bulletSpeed
     local bulletDy = nVectorY * object.bulletSpeed 
     table.insert(bullets, {
+            bulletRow = 4,
             bulletType = 1,
             x = object.x, 
             y = object.y, 
@@ -156,6 +164,7 @@ function createBullet(object,tripleShot)
     local bulletDx = object.bulletSpeed * math.cos(angle)                   
     local bulletDy = object.bulletSpeed * math.sin(angle)                   
     table.insert(bullets, {
+            bulletRow = 4,
             bulletType = object.bulletImg,
             x = startX, 
             y = startY, 
@@ -175,6 +184,7 @@ function createBullet(object,tripleShot)
         bulletDx = object.bulletSpeed * math.cos(angle)                   
         bulletDy = object.bulletSpeed * math.sin(angle)                   
         table.insert(bullets, {
+                bulletRow = 4,
                 bulletType = object.bulletImg,
                 x = startX, 
                 y = startY, 
@@ -190,6 +200,7 @@ function createBullet(object,tripleShot)
         bulletDx = object.bulletSpeed * math.cos(angle)                   
         bulletDy = object.bulletSpeed * math.sin(angle)                   
         table.insert(bullets, {
+                bulletRow = 4,
                 bulletType = object.bulletImg,
                 x = startX, 
                 y = startY, 
@@ -202,6 +213,34 @@ function createBullet(object,tripleShot)
                 verticalPosition = 0      
         })
     end
+end
+
+function createTwelveBullet(object,rand)
+    local startX = object.x                                                                                                                                                  
+    local startY = object.y                                                
+    local angle = object.rot                                               
+    local bulletDx = object.bulletSpeed * math.cos(angle)                   
+    local bulletDy = object.bulletSpeed * math.sin(angle)                   
+
+    local rd = rand + 2
+    print (rd)
+
+    table.insert(bullets, {
+            bulletRow = 1,
+            bulletType = rd,
+            x = startX, 
+            y = startY, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false,            
+            dmg = object.fireDmg,
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0,      
+            fromTwelve = true
+    })
+    love.audio.stop(soundShoot)
+    love.audio.play(soundShoot)
 end
 
 function handleVertical(object,dt, bulletIndex)

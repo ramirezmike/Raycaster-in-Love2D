@@ -20,6 +20,12 @@ function love.mousepressed(x, y, button)
             menuButtonClick(x,y)
         end
     end
+    if button == "r" then
+        print ("DERP")
+        if (gameRunning and not(gamePaused)) then
+            player.secondFiring = true 
+        end
+    end
 end
 
 function love.mousereleased(x, y, button)
@@ -66,13 +72,13 @@ function love.keypressed(key, unicode)
 
         if key == 'i' then
 --            generateMap()
---            testItemDrop(player)
+            testItemDrop(player)
 --            changeLevel()
-            fadeToBlackSetup()
         end
 
         if key == 'u' then
-            testItemDrop(player)
+--            testItemDrop(player)
+            player.secondaryRecharge = true
         end
         if key == 'a' then
             player.strafeSpeed  = -1

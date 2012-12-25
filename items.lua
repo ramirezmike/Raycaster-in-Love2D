@@ -11,7 +11,7 @@ function dropItem(object)
 end
 
 function testItemDrop(object)
-    createItem(object,itemRoastedNuts())
+    createItem(object,itemTwelveDays())
 end
 
 function renderItems()
@@ -218,6 +218,36 @@ function roastedNuts()
     return false 
 end
 
+function itemTwelveDays()
+    local item = {
+        iType = 2,
+        iNum = 7,
+        func = function (x) return twelveDays() end
+    }
+    return item
+end
+
+function twelveDays()
+    player.secondary = 7
+    return false 
+end
+
+function fireTwelveDays()
+    if (twelveDaysRate) then
+        if (twelveDaysRate >= 0) then
+            createTwelveBullet(player,twelveDaysNumber)
+            twelveDaysRate = twelveDaysRate - 1
+        else
+            twelveDaysRate = nil
+            player.secondaryRecharge = false
+            player.secondFiring = false
+        end
+    else
+        twelveDaysNumber = math.random(0,11) 
+        twelveDaysRate = twelveDaysNumber
+    end
+end
+
 function deleteUsedItems()
     if (#ITEMS_TO_DELETE > 0) then
         for i,v in ipairs(ITEMS_TO_DELETE) do
@@ -227,3 +257,6 @@ function deleteUsedItems()
     end 
 end
 
+
+SECONDARY = {}
+table.insert(SECONDARY,7,function (x) fireTwelveDays() end)
