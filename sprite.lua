@@ -70,7 +70,7 @@ function addBossToMap(index,boss)
     
     local action = {
         [1] = function (x) addFrosty(posX,posY) end,
-        [2] = function (x) addJack(posX,posY) end,
+        [2] = function (x) addJack(10.5,10.5) end,
     }
     action[boss]()
 end
@@ -277,6 +277,7 @@ function addJack(x,y)
             isSpecial = special
 
         }
+    love.audio.play(jackSound)
 end
 
 function addElf(x,y)

@@ -222,7 +222,7 @@ function switchToRoom(index)
     loadMapFromRoom(room) 
     if (isBossRoom(index)) then
         print("Is boss Room!")
-        addBoss(room,2)
+        addBoss(room,player.level)
     end
     loadItemsInRoom(index)
     player.mapGenX = MAPGEN_ROOMS[index].x

@@ -74,6 +74,9 @@ end
 
 
 function jackAI(sprite, dt)
+            if not (jackSound:isStopped()) then
+                return
+            end
             vector = {
                 x = 0,
                 y = 0 
@@ -84,7 +87,7 @@ function jackAI(sprite, dt)
                 y = 10.5 
             }
 
-            fireRandomJack(sprite,dt,false)
+                fireRandomJack(sprite,dt,false)
 
             vectorA = steerTowardPoint(sprite,pointV)
     
@@ -543,7 +546,6 @@ end
     
 function bossEndLevelCheck(sprite)
     if (sprite.health < 1) then
---        changeLevel()
         fadeToBlackSetup()
     end
 end

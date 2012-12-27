@@ -206,6 +206,7 @@ function startGame()
     ncWalk = love.audio.newSource("ncWalk.wav", "static")
     eAttack = love.audio.newSource("eToss.wav", "static")
 
+    jackSound = love.audio.newSource("track1.ogg", "static")
 
 --    music1 = love.audio.newSource("track1.ogg")
 --    love.audio.play(music1)
