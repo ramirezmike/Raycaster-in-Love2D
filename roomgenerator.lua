@@ -34,7 +34,7 @@ function createBossRoom(roomIndex)
     addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)
     addDoorRight(room,doesRoomHaveRight(roomIndex),roomIndex)
 
-    if (player.level == 1) then
+    if (player.level == 2) then
         addObstacles(room,true)
     end
 

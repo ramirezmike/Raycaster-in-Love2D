@@ -76,9 +76,10 @@ function isBlocking(object, newX, newY)
                         sprite.numberOfRoasts = player.roastNumber
                     end
 
-                    if (sprite.health < 1) then
+                    if (sprite.health < 1 and sprite.health > -50) then
                         if (sprite.boss) then
-                            bossEndLevelCheck(sprite)
+                            fadeToBlackSetup()
+                            sprite.health = -51
                             return true
                         end
                         table.insert(SPRITES_TO_DELETE, i)

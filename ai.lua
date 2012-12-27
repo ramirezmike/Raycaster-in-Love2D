@@ -19,7 +19,6 @@ function ai(dt)
                         handleSpriteHit(sprite,0.5)
                     end
                     sprite.roastedCount = sprite.roastedCount - dt 
-                    print ("ROASTING!" .. " " .. sprite.roastedCount)
                 end
                 
                 local action = {

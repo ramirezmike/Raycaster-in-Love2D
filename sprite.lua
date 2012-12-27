@@ -110,12 +110,12 @@ end
 function addSnowman(x,y)
     local rand = math.random(1,10)
     local special = false
+    local specialModifier = 1
 
     if (rand == 5) then 
        special = true 
+       specialModifier = 1.5
     end
-
-    special = true
 
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
@@ -130,7 +130,7 @@ function addSnowman(x,y)
             rot = 0,
 
             bulletImg = 1,
-            fireDmg = 0.5,
+            fireDmg = 0.5*specialModifier,
             bulletSpeed = 4.5,
             playerVisible = false,
             visiblityRange = 5,
@@ -144,7 +144,7 @@ function addSnowman(x,y)
             maxFireRate = 3,
             fireRate = math.random(2.9,7),
 
-            health = 4,
+            health = 4*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -163,6 +163,15 @@ function addSnowman(x,y)
 end
 
 function addFrosty(x,y)
+    local rand = math.random(1,10)
+    local special = false
+    local specialModifier = 1
+
+    if (rand == 5) then 
+       special = true 
+       specialModifier = 1.5
+    end
+
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
             boss = true,
@@ -178,7 +187,7 @@ function addFrosty(x,y)
 
             bulletSpeed = 6.5,
             bulletImg = 1,
-            fireDmg = 1,
+            fireDmg = 1*specialModifier,
             bulletSplash = 2,
             playerVisible = false,
             visiblityRange = 5,
@@ -193,7 +202,7 @@ function addFrosty(x,y)
             maxBullets = 8,
             fireRate = math.random(2.9,7),
 
-            health = 4,
+            health = 4*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -205,11 +214,22 @@ function addFrosty(x,y)
             wallPositionY = 0,
             objType = "sprite",
             frameTimer = 0,
-            walkAnimationSpeed = 5
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
         }
 end
 
 function addJack(x,y)
+    local rand = math.random(1,10)
+    local special = false
+    local specialModifier = 1
+
+    if (rand == 5) then 
+       special = true 
+       specialModifier = 1.5
+    end
+
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
             boss = true,
@@ -225,10 +245,10 @@ function addJack(x,y)
 
             bulletSpeed = 6.5,
             bulletImg = 11,
-            fireDmg = 1,
+            fireDmg = 1*specialModifier,
             bulletSplash = 2,
             playerVisible = false,
-            visiblityRange = 5,
+            visiblityRange = 15,
 
             rotate = false,
             rotationDirection = 0,
@@ -240,7 +260,7 @@ function addJack(x,y)
             maxBullets = 1,
             fireRate = math.random(2.9,7),
 
-            health = 4,
+            health = 4*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -252,11 +272,23 @@ function addJack(x,y)
             wallPositionY = 0,
             objType = "sprite",
             frameTimer = 0,
-            walkAnimationSpeed = 5
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
+
         }
 end
 
 function addElf(x,y)
+    local rand = math.random(1,10)
+    local special = false
+    local specialModifier = 1
+
+    if (rand == 5) then 
+        special = true 
+        specialModifier = 1.5 
+    end
+
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
             id = spriteIndex,
@@ -271,8 +303,8 @@ function addElf(x,y)
 
 
             bulletImg = 3,
-            fireDmg = 1,
-            bulletSpeed = 4.5,
+            fireDmg = 1*specialModifier,
+            bulletSpeed = 4.5*specialModifier,
             playerVisible = false,
             visiblityRange = 5,
 
@@ -281,7 +313,7 @@ function addElf(x,y)
             maxBullets = 1,
             fireRate = math.random(7),
 
-            health = 3,
+            health = 3*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -293,11 +325,23 @@ function addElf(x,y)
             wallPositionY = 0,
             objType = "sprite",
             frameTimer = 0,
-            walkAnimationSpeed = 5
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
+
         }
 end
 
 function addNutCracker(x,y)
+    local rand = math.random(1,10)
+    local special = false
+    local specialModifier = 1
+
+    if (rand == 5) then 
+       special = true 
+        specialModifier = 1.5
+    end
+
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
             id = spriteIndex,
@@ -311,16 +355,16 @@ function addNutCracker(x,y)
             rot = 0,
 
 
-            bulletSpeed = 4.5,
+            bulletSpeed = 4.5*specialModifier,
             playerVisible = false,
             visiblityRange = 15,
 
 
-            fireDmg = 1,
+            fireDmg = 1*specialModifier,
             maxFireRate = 1.5,
             fireRate = math.random(7),
 
-            health = 3,
+            health = 3*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -332,6 +376,9 @@ function addNutCracker(x,y)
             wallPositionY = 0,
             objType = "sprite",
             frameTimer = 0,
-            walkAnimationSpeed = 5
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
+
         }
 end

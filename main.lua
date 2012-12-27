@@ -199,7 +199,7 @@ function startGame()
 
     makeSpriteMap()
     loadHud()
-    
+   
     soundShoot = love.audio.newSource("shoot.wav", "static")
     soundHit1 = love.audio.newSource("hit1.wav", "static")
     ncAttack = love.audio.newSource("bite.wav", "static")
