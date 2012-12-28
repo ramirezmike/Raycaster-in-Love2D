@@ -87,7 +87,8 @@ function jackAI(sprite, dt)
                 y = 10.5 
             }
 
-                fireRandomJack(sprite,dt,false)
+            fireRandomJack(sprite,dt,false)
+            spawnEnemies(sprite,dt,5)
 
             vectorA = steerTowardPoint(sprite,pointV)
     
@@ -353,6 +354,27 @@ function handleFire(sprite,dt)
         else
             sprite.fireRate = sprite.fireRate - dt
         end
+    end
+end
+
+function spawnEnemies(sprite,dt,numberOfEnemies)
+    if (#SPRITES > 5) then
+        return
+    end
+
+    if (sprite.spawnRate < 0) then
+        sprite.spawnRate = sprite.maxSpawnRate
+    elseif (sprite.spawnRate == sprite.maxSpawnRate) then
+        sprite.spawnRate = sprite.spawnRate - dt
+        local currentRoomIndex = getCurrentRoomIndex()
+        local room = MAPGEN_ROOMS[currentRoomIndex].room
+        for i=1,numberOfEnemies do
+            local index = getEmptySpot(room,false)
+            addSpriteToMap(index,true,1,2)
+        end
+        -- add sound
+    else
+        sprite.spawnRate = sprite.spawnRate - dt
     end
 end
 

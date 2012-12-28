@@ -75,7 +75,8 @@ function love.keypressed(key, unicode)
 --            generateMap()
 --            testItemDrop(player)
 --            changeLevel()
-            createSpecialItem(player)
+--            createSpecialItem(player)
+            spawnEnemies(5)
         end
 
         if key == 'u' then

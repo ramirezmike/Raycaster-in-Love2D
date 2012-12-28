@@ -281,7 +281,7 @@ function addEnemies(room)
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then
-            addSpriteToMap(index)
+            addSpriteToMap(index,false,0,0)
         end
     end
 end

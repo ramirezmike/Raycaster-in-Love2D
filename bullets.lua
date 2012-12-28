@@ -29,9 +29,11 @@ function manageBullets(dt)
                 end
 
                 if (v["isJack"]) then
-                    local sprite = SPRITES[#SPRITES]                        
-                    sprite.x = v["x"]
-                    sprite.y = v["y"]
+                    local sprite = SPRITES[1]
+                    if (sprite) then
+                        sprite.x = v["x"]
+                        sprite.y = v["y"]
+                    end
                 end
 
                 table.insert(DECALS, 

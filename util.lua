@@ -78,7 +78,9 @@ function isBlocking(object, newX, newY)
 
                     if (sprite.health < 1 and sprite.health > -50) then
                         if (sprite.boss) then
+                            dropItem(sprite)
                             fadeToBlackSetup()
+                            deleteAllSprites()
                             sprite.health = -51
                             return true
                         end
@@ -233,6 +235,12 @@ function drawSceneChange()
     love.graphics.setColor(255,255,255)
     love.graphics.setFont(textFont)
     love.graphics.print(text, 400,415)
+end
+
+function deleteAllSprites()
+    for i, v in ipairs(SPRITES) do
+        table.insert(SPRITES_TO_DELETE,i)
+    end
 end
 
 function fadeToBlackSetup()

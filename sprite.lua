@@ -75,12 +75,16 @@ function addBossToMap(index,boss)
     action[boss]()
 end
 
-function addSpriteToMap(index)
+function addSpriteToMap(index,choice,min,max)
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
     local level = LEVELS[player.level]
     
     local rand = math.random(level.minEnemy,level.maxEnemy)
+
+    if (choice) then
+        rand = math.random(min,max)
+    end
 
     local action = {
         [1] = function (x) addSnowman(posX,posY) end,
@@ -259,6 +263,8 @@ function addJack(x,y)
             maxFireRate = 5.5,
             maxBullets = 1,
             fireRate = math.random(2.9,7),
+            maxSpawnRate = 10.5,
+            spawnRate = 16, 
 
             health = 4*specialModifier,
             hit = false,
