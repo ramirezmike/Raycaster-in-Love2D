@@ -33,8 +33,15 @@ end
 
 function love.update(dt)
     if (gameRunning and not (gamePaused)) then
-        move(player, dt)
-        firePlayerWeapon(dt)
+        print (player.health)
+        if (player.health > -0.6) then
+            move(player, dt)
+            firePlayerWeapon(dt)
+        elseif (player.dead == nil or player.dead == false) then
+            player.dead = true 
+            fadeToBlackSetup()
+        end 
+
         ai(dt)
         manageBullets(dt)
         manageDecals(dt)

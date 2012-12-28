@@ -27,8 +27,12 @@ end
 
 function drawHearts()
     love.graphics.setColor(255,0,0,255)
-    for i=0, player.health,0.5 do
-        love.graphics.rectangle("fill",218+(i*25),455,25,22)
+    if (player.health == -0.5) then
+        love.graphics.rectangle("fill",218,455,25/2,22)
+    else
+        for i=0, player.health,0.5 do
+            love.graphics.rectangle("fill",218+(i*25),455,25,22)
+        end
     end
 end
 

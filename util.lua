@@ -257,6 +257,20 @@ function fadeToBlack()
     
     if fadeAmount > 255 then
         fading = false
-        changeLevel()
+        if (player.dead) then
+            restartGame()
+        else
+            changeLevel()
+        end
     end
+end
+
+function restartGame()
+        loadMainMenu()
+        gameRunning = false
+        mainMenuDisplaying = true
+        player.dead = false
+        player.level = 0
+        player.health = 8
+        player = defaultPlayer
 end

@@ -15,7 +15,7 @@ player = {
     id = 0,
     hit = false,
     hitDecay = 10,
-    health = 5,
+    health = 8,
     
     primary = 1,
     secondary = 14,
@@ -34,6 +34,45 @@ player = {
     roastMax = 2,
     roastNumber = 4
 }
+
+
+defaultPlayer = {
+    level = 0,    
+    x = 2,
+    y = 2,
+    dir = 0,
+    rot = 0,
+    speed = 0,
+    moveSpeed = 4,
+    strafeSpeed = 0,
+--  rotSpeed =  math.pi / 180 * 2,
+--  mouseSpeed = (math.pi / 180 * 2)/12
+    rotSpeed = 2,
+    mouseSpeed = 0.05,
+    objType = "player",
+    id = 0,
+    hit = false,
+    hitDecay = 10,
+    health = 8,
+    
+    primary = 1,
+    secondary = 14,
+    secondaryRecharge = true,
+    bulletSpeed = 5.5,
+    bulletImg = 1,
+    fireDmg = 1,
+
+    maxFireRate = 0.5, 
+    fireRate = 0,
+    fireSecondaryRate = 0,
+    firing = false,
+
+    tripleShot = false,
+
+    roastMax = 2,
+    roastNumber = 4
+}
+
 
 function convertPlayerRotation()
     player.rot = (player.rot % twoPI)
