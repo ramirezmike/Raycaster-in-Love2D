@@ -26,7 +26,8 @@ function ai(dt)
                     [0] = function (x) elfAI(sprite,dt) end,
                     [1] = function (x) nutCrackerAI(sprite,dt) end,
                     [3] = function (x) frostyAI(sprite,dt) end,
-                    [6] = function (x) jackAI(sprite,dt) end
+                    [6] = function (x) jackAI(sprite,dt) end,
+                    [7] = function (x) nutTeleporterAI(sprite,dt) end
                 }
 
                 action[sprite.img]()
@@ -154,6 +155,40 @@ function elfAI(sprite, dt)
             else
                 sprite.state = 0
                 sprite.speed = 0
+            end
+            if (sprite.hit) then
+                aiHandleHit(sprite, dt)
+            end
+end
+
+function nutTeleporterAI(sprite, dt)
+            vector = {
+                x = 0,
+                y = 0 
+            }
+             
+            local vectorC = steerAwayFromWalls(sprite)
+            local vectorE = steerAwayFromSprites(sprite)
+
+            local vectorF = randomMovement(sprite,dt)
+
+            vector.x = vectorC.x + vectorE.x + vectorF.x
+            vector.y = vectorC.y + vectorE.y + vectorF.y
+            --limitVelocity(sprite,vector)
+
+
+            local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
+            
+
+
+
+            if (dist > 0.5) then
+                sprite.state = 1 
+                sprite.x = sprite.x + (vector.x  * dt)
+                sprite.y = sprite.y + (vector.y  * dt)
+            else
+                sprite.state = 0
+                handleFire(sprite,dt)
             end
             if (sprite.hit) then
                 aiHandleHit(sprite, dt)

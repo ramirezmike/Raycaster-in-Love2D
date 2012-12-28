@@ -1,8 +1,8 @@
 roomSize = 0
 
 function createRoom(roomIndex)
-    local size = 15
-    local room = createEmptyRoom(size)
+    local level = LEVELS[player.level]
+    local room = createEmptyRoom(level.roomSize)
     --printGeneratedRoom(room)
 
 
@@ -26,8 +26,8 @@ function createRoom(roomIndex)
 end
 
 function createBossRoom(roomIndex)
-    local size = 20
-    local room = createEmptyRoom(size)
+    local level = LEVELS[player.level]
+    local room = createEmptyRoom(level.bossRoomSize)
 
     addDoorTop(room,doesRoomHaveTop(roomIndex),roomIndex)
     addDoorBottom(room,doesRoomHaveBottom(roomIndex),roomIndex)

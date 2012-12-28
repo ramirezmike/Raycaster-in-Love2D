@@ -72,7 +72,11 @@ function addBossToMap(index,boss)
         [1] = function (x) addFrosty(posX,posY) end,
         [2] = function (x) addJack(10.5,10.5) end,
     }
-    action[boss]()
+    if (boss <= #action) then
+        action[boss]()
+    else
+        restartGame()
+    end
 end
 
 function addSpriteToMap(index,choice,min,max)
@@ -90,6 +94,7 @@ function addSpriteToMap(index,choice,min,max)
         [1] = function (x) addSnowman(posX,posY) end,
         [2] = function (x) addElf(posX,posY) end,
         [3] = function (x) addNutCracker(posX,posY) end,
+        [4] = function (x) addNutTeleporter(posX,posY) end
     }
 
     action[rand]()
@@ -336,6 +341,56 @@ function addElf(x,y)
 
             isSpecial = special
 
+        }
+end
+
+function addNutTeleporter(x,y)
+    local rand = math.random(1,10)
+    local special = false
+    local specialModifier = 1
+
+    if (rand == 5) then 
+       special = true 
+        specialModifier = 1.5
+    end
+
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
+            id = spriteIndex,
+            x = x,
+            y = y,
+            img = 7,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+
+
+            bulletSpeed = 4.5*specialModifier,
+            playerVisible = true,
+            visiblityRange = 15,
+
+
+            fireDmg = 1*specialModifier,
+            maxFireRate = 0.5,
+            fireRate = 0, 
+
+            health = 3*specialModifier,
+            hit = false,
+            hitPause = 0.1,
+
+            moveSpeed = 0.25,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
         }
 end
 

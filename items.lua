@@ -243,7 +243,7 @@ function roastedNuts()
     player.bulletImg = 9
     player.primary = 9
     player.roasted = true 
-    return false 
+    return true 
 end
 
 function itemTwelveDays()
@@ -288,7 +288,7 @@ end
 
 function rudolphNose()
     player.secondary = 8
-    return false 
+    return true 
 end
 
 function fireRudolphNose()
