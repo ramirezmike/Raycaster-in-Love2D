@@ -288,7 +288,8 @@ function addJack(x,y)
             isSpecial = special
 
         }
-    love.audio.play(jackSound)
+    love.audio.stop(jackIntro)
+    love.audio.play(jackIntro)
 end
 
 function addElf(x,y)

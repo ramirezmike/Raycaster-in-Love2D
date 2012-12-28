@@ -75,7 +75,7 @@ end
 
 
 function jackAI(sprite, dt)
-            if not (jackSound:isStopped()) then
+            if not (jackIntro:isStopped()) then
                 return
             end
             vector = {

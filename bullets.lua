@@ -201,8 +201,8 @@ function createJackBullet(object)
                 peakHit = false
         })
     end
-    love.audio.stop(eAttack)
-    love.audio.play(eAttack)
+    love.audio.stop(jackHit)
+    love.audio.play(jackHit)
 end
 
 function createBulletSprite(object)
