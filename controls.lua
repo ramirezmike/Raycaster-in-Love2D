@@ -8,6 +8,7 @@ function love.mousepressed(x, y, button)
         if (gameRunning and not(gamePaused)) then
             if not (love.mouse.isGrabbed()) then
                 love.mouse.setGrab(true)
+                love.mouse.setVisible(false) 
             else
     --            wallPushDirection = player.rot
     --            if not (mapProp.map[selectedWall] == 5) then
@@ -76,7 +77,8 @@ function love.keypressed(key, unicode)
 --            testItemDrop(player)
 --            changeLevel()
 --            createSpecialItem(player)
-            spawnEnemies(5)
+--            spawnEnemies(5)
+            player.health = player.health - 1
         end
 
         if key == 'u' then

@@ -33,7 +33,6 @@ end
 
 function love.update(dt)
     if (gameRunning and not (gamePaused)) then
-        print (player.health)
         if (player.health > -0.6) then
             move(player, dt)
             firePlayerWeapon(dt)
@@ -70,7 +69,10 @@ function love.load()
     sceneChange = false
     
     loadMainMenu()
-
+    mainMenuMusic = love.audio.newSource("jingleMusic.ogg")
+    love.audio.play(mainMenuMusic)
+    mainMenuMusic:setLooping(true)
+    
     love.graphics.setColorMode("modulate")
     love.graphics.setMode(640,480, false, false)
 
@@ -206,19 +208,7 @@ function startGame()
 
     makeSpriteMap()
     loadHud()
-   
-    soundShoot = love.audio.newSource("shoot.wav", "static")
-    soundHit1 = love.audio.newSource("hit1.wav", "static")
-    ncAttack = love.audio.newSource("bite.wav", "static")
-    ncWalk = love.audio.newSource("ncWalk.wav", "static")
-    eAttack = love.audio.newSource("eToss.wav", "static")
-
-    jackIntro = love.audio.newSource("jackIntro.ogg", "static")
-    jackHit = love.audio.newSource("jackHit.ogg", "static")
-
---    music1 = love.audio.newSource("track1.ogg")
---    love.audio.play(music1)
---    music1:setLooping(true)
+    loadAudio() 
 
 
 
@@ -231,4 +221,21 @@ function startGame()
     love.mouse.setVisible(false)
     love.mouse.setPosition(screenWidth/2,screenHeight/2)
     love.mouse.setGrab(true)
+end
+
+
+function loadAudio()
+
+    soundShoot = love.audio.newSource("shoot.ogg", "static")
+    soundHit1 = love.audio.newSource("hit1.ogg", "static")
+    ncAttack = love.audio.newSource("bite.ogg", "static")
+    ncWalk = love.audio.newSource("ncWalk.ogg", "static")
+    eAttack = love.audio.newSource("eToss.ogg", "static")
+    jackHit = love.audio.newSource("jackHit.ogg", "static")
+
+    jackIntro = love.audio.newSource("jackIntro.ogg", "static")
+
+    bossMusic = love.audio.newSource("bossMusic.ogg", "static")
+    level1Music = love.audio.newSource("level1Music.ogg", "static")
+    level2Music = love.audio.newSource("level2Music.ogg", "static")
 end

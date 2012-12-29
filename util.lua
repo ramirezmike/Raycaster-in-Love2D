@@ -261,16 +261,37 @@ function fadeToBlack()
             restartGame()
         else
             changeLevel()
+            playCurrentLevelMusic()
         end
     end
 end
 
 function restartGame()
+        stopAllMusic()
         loadMainMenu()
+        love.mouse.setVisible(true)
+        love.audio.play(mainMenuMusic)
+        mainMenuMusic:setLooping(true)
         gameRunning = false
         mainMenuDisplaying = true
         player.dead = false
         player.level = 0
         player.health = 8
         player = defaultPlayer
+end
+
+function stopAllMusic()
+    love.audio.stop(mainMenuMusic)
+    love.audio.stop(level1Music)
+    love.audio.stop(level2Music)
+    love.audio.stop(bossMusic)
+end
+
+function playCurrentLevelMusic()
+    stopAllMusic()
+    local music = {
+        [1] = function (x) love.audio.play(level1Music) level1Music:setLooping(true) end,
+        [2] = function (x) love.audio.play(level2Music) level2Music:setLooping(true) end
+    }
+    music[player.level]()
 end

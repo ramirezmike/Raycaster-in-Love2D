@@ -65,6 +65,9 @@ function handleSpriteHit(sprite, dmg)
 end
 
 function addBossToMap(index,boss)
+    stopAllMusic()
+    love.audio.play(bossMusic)
+
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
     

@@ -136,7 +136,6 @@ function heartPickup()
 end
 
 function itemDoubleHeart()
-    print ("Double!")
     local item = {
         iType = 2,
         iNum = 1,
@@ -158,7 +157,6 @@ function doubleHeartPickup()
 end
 
 function itemBoxOfDecorations()
-    print ("Decorations!")
     local item = {
         iType = 2,
         iNum = 2,
