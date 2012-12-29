@@ -13,6 +13,7 @@ require "roomgenerator"
 require "hud"
 require "menu"
 require "items"
+require "intro"
 
 
 function love.draw()
@@ -24,6 +25,10 @@ function love.draw()
         drawSceneChange()
     elseif (gameRunning) then
         drawGame()
+    end
+    
+    if (introDisplaying) then
+        drawIntro()
     end
 
     if (fading) then
@@ -57,6 +62,10 @@ function love.update(dt)
         menuButtonHover()
     end
 
+    if (introDisplaying) then
+        introManagement(dt)
+    end
+
     if (sceneChange) then
         
     end
@@ -65,6 +74,7 @@ end
 function love.load()
 
     mainMenuDisplaying = true 
+    introDisplaying = true
     gameRunning = false 
     sceneChange = false
     

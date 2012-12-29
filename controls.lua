@@ -1,4 +1,8 @@
 function love.mousepressed(x, y, button)
+    if (introDisplaying) then
+        introDisplaying = false
+        return
+    end
     if (sceneChange) then
         sceneChange = false
         gamePaused = false
@@ -39,6 +43,10 @@ function love.mousereleased(x, y, button)
 end
 
 function love.keypressed(key, unicode)
+    if (introDisplaying) then
+        introDisplaying = false
+    end
+
     if (sceneChange) then
         sceneChange = false
         gamePaused = false
