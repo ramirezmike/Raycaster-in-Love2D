@@ -1,6 +1,6 @@
 function drawMenu()
     love.graphics.setFont(menuFont)
-    love.graphics.draw(p,screenWidth/2,-100)
+    love.graphics.draw(p,screenWidth/2,-130)
     love.graphics.draw(q,screenWidth/2,-200)
     love.graphics.setColor(50,50,50,200)
     love.graphics.rectangle("fill", 100,screenHeight/2,screenWidth - 200,screenHeight/2)
@@ -10,7 +10,10 @@ function drawMenu()
         love.graphics.setColor(200,200,200,255)
         love.graphics.print(v["label"], v["x"]+130,v["y"]+15)
     end
-    drawDebug()
+    love.graphics.setFont(titleFont,190)
+    love.graphics.setColor(250,150,150)
+    love.graphics.print("GREEDY ST. NICK",71,100,0,3,3)
+    love.graphics.setFont(menuFont)
 end
 
 function drawPauseMenu()
@@ -43,6 +46,10 @@ end
 function loadMainMenu()
     MENU_BUTTONS = {}
     particleTime = 0
+    titleFont = love.graphics.newImageFont("titleFont.png",
+    " abcdefghijklmnopqrstuvwxyz" ..
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
+    "123456789.,!?-+/():;%&`'*#=[]\"")
     menuFont = love.graphics.newFont()
     addButton("Start Game", function () startGame()end )
     addButton("Quit Game", function () love.event.quit()end )

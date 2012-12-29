@@ -291,7 +291,8 @@ function playCurrentLevelMusic()
     stopAllMusic()
     local music = {
         [1] = function (x) love.audio.play(level1Music) level1Music:setLooping(true) end,
-        [2] = function (x) love.audio.play(level2Music) level2Music:setLooping(true) end
+        [2] = function (x) love.audio.play(level2Music) level2Music:setLooping(true) end,
+        [3] = function (x) love.audio.play(level3Music) level3Music:setLooping(true) end
     }
     music[player.level]()
 end

@@ -84,7 +84,7 @@ function love.load()
     mainMenuMusic:setLooping(true)
     
     love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, false, false)
+    love.graphics.setMode(640,480, true, false)
 
     love.mouse.setVisible(true)
 --    love.mouse.setPosition(screenWidth/2,screenHeight/2)
@@ -103,9 +103,9 @@ function setupParticles(image, life)
   p:setPosition              (50, 50) 
   p:setDirection             (0) 
   p:setSpread                (0) 
-  p:setSpeed                 (-120, 120) 
+  p:setSpeed                 (-60, 60) 
   p:setSpin                  (2) 
-  p:setGravity               (60)
+  p:setGravity               (10)
   p:setRadialAcceleration    (1)
   p:setTangentialAcceleration(2)
   p:setSizes                 (1,2,0.5,0.2,0.05,0.01)
@@ -235,7 +235,6 @@ end
 
 
 function loadAudio()
-
     soundShoot = love.audio.newSource("shoot.ogg", "static")
     soundHit1 = love.audio.newSource("hit1.ogg", "static")
     ncAttack = love.audio.newSource("bite.ogg", "static")
@@ -248,4 +247,5 @@ function loadAudio()
     bossMusic = love.audio.newSource("bossMusic.ogg", "static")
     level1Music = love.audio.newSource("level1Music.ogg", "static")
     level2Music = love.audio.newSource("level2Music.ogg", "static")
+    level3Music = love.audio.newSource("level3Music.ogg", "static")
 end

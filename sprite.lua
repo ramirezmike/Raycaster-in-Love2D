@@ -66,14 +66,16 @@ end
 
 function addBossToMap(index,boss)
     stopAllMusic()
-    love.audio.play(bossMusic)
+    if not (boss == 2) then
+        love.audio.play(bossMusic)
+    end
 
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
     
     local action = {
         [1] = function (x) addFrosty(posX,posY) end,
-        [2] = function (x) addJack(10.5,10.5) end,
+        [2] = function (x) addJack(10.5,10.5) end
     }
     if (boss <= #action) then
         action[boss]()
