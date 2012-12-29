@@ -52,6 +52,8 @@ function isBlocking(object, newX, newY)
                 if (dist < 0.3) then
                     local success = item.pickupFunction()
                     if (success) then
+                        love.audio.stop(pickup)
+                        love.audio.play(pickup)
                         table.insert(ITEMS_TO_DELETE, i)
                     end
                 end

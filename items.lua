@@ -298,7 +298,7 @@ end
 
 function rudolphNose()
     player.secondary = 8
-    return false 
+    return true 
 end
 
 function fireRudolphNose()

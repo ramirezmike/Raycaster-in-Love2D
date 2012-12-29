@@ -241,6 +241,7 @@ function loadAudio()
     ncWalk = love.audio.newSource("ncWalk.ogg", "static")
     eAttack = love.audio.newSource("eToss.ogg", "static")
     jackHit = love.audio.newSource("jackHit.ogg", "static")
+    pickup = love.audio.newSource("pickup.ogg", "static")
 
     jackIntro = love.audio.newSource("jackIntro.ogg", "static")
 
