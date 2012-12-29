@@ -30,6 +30,18 @@ function renderItems()
     local scrHeight = screenHeight
     local scrWidth = screenWidth 
     local mTileSize = mapProp.tileSize
+
+    if (itemUp) then
+        itemVerticalPosition = itemVerticalPosition + 1
+    else
+        itemVerticalPosition = itemVerticalPosition - 1
+    end
+    if (itemVerticalPosition > 10) then
+        itemUp = false
+    end
+    if (itemVerticalPosition < 0) then
+        itemUp = true
+    end
         
     for i,v in ipairs(ITEMS) do
         v["itemWallPositionX"] = floor(v["x"])
@@ -52,7 +64,7 @@ function renderItems()
             {                                                                          
                 z = z,                                                                 
                 x = left,
-                y = top + v["verticalPosition"],                                                               
+                y = top + v["verticalPosition"] + itemVerticalPosition,                                                               
                 dist = dist,                                                           
                 sx = spriteSize / mTileSize,                                    
                 sy = spriteSize / 64,                                                  
@@ -286,7 +298,7 @@ end
 
 function rudolphNose()
     player.secondary = 8
-    return true 
+    return false 
 end
 
 function fireRudolphNose()
@@ -313,6 +325,8 @@ function deleteUsedItems()
 end
 
 
+itemUp = true
+itemVerticalPosition = 0
 SECONDARY = {}
 table.insert(SECONDARY,7,function (x) fireTwelveDays() end)
 table.insert(SECONDARY,8,function (x) fireRudolphNose() end)

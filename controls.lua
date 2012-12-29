@@ -82,11 +82,11 @@ function love.keypressed(key, unicode)
 
         if key == 'i' then
 --            generateMap()
---            testItemDrop(player)
 --            changeLevel()
 --            createSpecialItem(player)
 --            spawnEnemies(5)
-            player.health = player.health - 1
+--            player.health = player.health - 1
+            testItemDrop(player)
         end
 
         if key == 'u' then
