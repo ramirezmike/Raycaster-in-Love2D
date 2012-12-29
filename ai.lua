@@ -27,7 +27,8 @@ function ai(dt)
                     [1] = function (x) nutCrackerAI(sprite,dt) end,
                     [3] = function (x) frostyAI(sprite,dt) end,
                     [6] = function (x) jackAI(sprite,dt) end,
-                    [7] = function (x) nutTeleporterAI(sprite,dt) end
+                    [7] = function (x) nutTeleporterAI(sprite,dt) end,
+                    [8] = function (x) santaAI(sprite,dt) end
                 }
 
                 action[sprite.img]()
@@ -74,6 +75,43 @@ function frostyAI(sprite, dt)
 end
 
 
+function santaAI(sprite, dt)
+            vector = {
+                x = 0,
+                y = 0 
+            }
+             
+--            fireRandomDirection(sprite,dt,false)
+            local vectorC = steerAwayFromWalls(sprite)
+            local vectorE = steerAwayFromSprites(sprite)
+            local vectorF = randomMovement(sprite,dt)
+
+            vector.x = vectorC.x + vectorE.x + vectorF.x
+            vector.y = vectorC.y + vectorE.y + vectorF.y
+
+            limitVelocity(sprite,vector)
+
+            local dist = math.sqrt(vector.x*vector.x + vector.y*vector.y)
+
+            sprite.x = sprite.x + (vector.x  * dt )
+            sprite.y = sprite.y + (vector.y  * dt )
+
+            if (dist > 0) then
+                sprite.speed = 40
+                local numWalkSprites = 4
+                if math.floor(sprite.frameTimer) > numWalkSprites then
+                    sprite.frameTimer = 1 
+                end
+                sprite.state = math.floor(sprite.frameTimer) 
+            else
+                sprite.state = 0
+                sprite.speed = 0
+            end
+            if (sprite.hit) then
+                aiHandleHit(sprite, dt)
+            end
+end
+
 function jackAI(sprite, dt)
             if not (jackIntro:isStopped()) then
                 return
@@ -113,6 +151,10 @@ function jackAI(sprite, dt)
             else
                 sprite.state = 0
                 sprite.speed = 0
+            end
+            if (sprite.state == 4) then
+                love.audio.stop(jackLand)
+                love.audio.play(jackLand)
             end
             if (sprite.hit) then
                 aiHandleHit(sprite, dt)

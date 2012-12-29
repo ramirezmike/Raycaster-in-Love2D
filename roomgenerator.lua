@@ -7,7 +7,7 @@ function createRoom(roomIndex)
 
 
     loadMapFromRoom(room) 
---    addObstacles(room)
+    addObstacles(room)
 
     clearPathsToDoors(room)
     loadMapFromRoom(room) 
@@ -264,7 +264,7 @@ function addObstacles(room,jack)
         room[211] = level.obstacle
         return
     end
-    local rand = math.random(5,15)
+    local rand = math.random(0,10)
 
     for i=0,rand do
         local index = getEmptySpot(room,false)
@@ -277,7 +277,7 @@ end
 function addEnemies(room)
     local rand = math.random(2,5)
 
-    rand = 0
+--    rand = 0
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then

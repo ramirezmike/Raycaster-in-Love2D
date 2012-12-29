@@ -286,6 +286,7 @@ function stopAllMusic()
     love.audio.stop(mainMenuMusic)
     love.audio.stop(level1Music)
     love.audio.stop(level2Music)
+    love.audio.stop(level3Music)
     love.audio.stop(bossMusic)
 end
 

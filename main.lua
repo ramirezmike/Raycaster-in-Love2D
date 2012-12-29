@@ -84,7 +84,7 @@ function love.load()
     mainMenuMusic:setLooping(true)
     
     love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, true, false)
+    love.graphics.setMode(640,480, false, false)
 
     love.mouse.setVisible(true)
 --    love.mouse.setPosition(screenWidth/2,screenHeight/2)
@@ -241,6 +241,7 @@ function loadAudio()
     ncWalk = love.audio.newSource("ncWalk.ogg", "static")
     eAttack = love.audio.newSource("eToss.ogg", "static")
     jackHit = love.audio.newSource("jackHit.ogg", "static")
+    jackLand = love.audio.newSource("jackLand.ogg", "static")
     pickup = love.audio.newSource("pickup.ogg", "static")
 
     jackIntro = love.audio.newSource("jackIntro.ogg", "static")

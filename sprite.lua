@@ -75,12 +75,14 @@ function addBossToMap(index,boss)
     
     local action = {
         [1] = function (x) addFrosty(posX,posY) end,
-        [2] = function (x) addJack(10.5,10.5) end
+        [2] = function (x) addJack(10.5,10.5) end,
+        [3] = function (x) addSanta(posX,posY) end
     }
     if (boss <= #action) then
         action[boss]()
     else
         restartGame()
+        -- roll credits
     end
 end
 
@@ -193,6 +195,65 @@ function addFrosty(x,y)
             x = x,
             y = y,
             img = 3,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+
+            bulletSpeed = 6.5,
+            bulletImg = 1,
+            fireDmg = 1*specialModifier,
+            bulletSplash = 2,
+            playerVisible = false,
+            visiblityRange = 5,
+
+            rotate = false,
+            rotationDirection = 0,
+            rotationAngle = 20,
+            rotateDelay = 3,
+            rotateDelayMax = 3,
+
+            maxFireRate = 1.5,
+            maxBullets = 8,
+            fireRate = math.random(2.9,7),
+
+            health = 4*specialModifier,
+            hit = false,
+            hitPause = 0.1,
+
+            moveSpeed = 0.09,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
+        }
+end
+
+
+function addSanta(x,y)
+    local rand = math.random(1,10)
+    local special = false
+    local specialModifier = 1
+
+    if (rand == 5) then 
+       special = true 
+       specialModifier = 1.5
+    end
+
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
+            boss = true,
+            id = spriteIndex,
+            x = x,
+            y = y,
+            img = 8,
             visible = false,
             block = true,
             speed = 0,
