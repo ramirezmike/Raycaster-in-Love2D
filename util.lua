@@ -263,7 +263,6 @@ function fadeToBlack()
             restartGame()
         else
             changeLevel()
-            playCurrentLevelMusic()
         end
     end
 end
@@ -272,10 +271,10 @@ function restartGame()
         stopAllMusic()
         loadMainMenu()
         love.mouse.setVisible(true)
-        love.audio.play(mainMenuMusic)
-        mainMenuMusic:setLooping(true)
         gameRunning = false
         mainMenuDisplaying = true
+        love.audio.play(mainMenuMusic)
+        mainMenuMusic:setLooping(true)
         player.dead = false
         player.level = 0
         player.health = 8

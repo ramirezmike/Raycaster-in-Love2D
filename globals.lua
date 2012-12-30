@@ -53,8 +53,8 @@ levelTwo = {
 
 levelThree = {
     introText = "St. Nick's Office",
-    floor = function (x) love.graphics.setColor(20,20,20) end,
-    ceiling = function (x) love.graphics.setColor(2,2,2) end,
+    floor = function (x) love.graphics.setColor(200,200,200) end,
+    ceiling = function (x) love.graphics.setColor(120,20,20) end,
     regMapSize = 25,
     roomSize = 15,
     bossRoomSize = 20,

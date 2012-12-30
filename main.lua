@@ -84,7 +84,7 @@ function love.load()
     mainMenuMusic:setLooping(true)
     
     love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, false, false)
+    love.graphics.setMode(640,480, true, false)
 
     love.mouse.setVisible(true)
 --    love.mouse.setPosition(screenWidth/2,screenHeight/2)

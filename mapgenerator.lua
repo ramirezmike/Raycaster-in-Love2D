@@ -32,11 +32,16 @@ end
 
 
 function changeLevel()
+    if (player.level == #LEVELS) then
+        setupCredits()
+        return
+    end
     local level = player.level + 1
     player.level = level
     player.secondaryRecharge = true
     sceneChange = true 
     generateMap(level)
+    playCurrentLevelMusic()
 end
 
 function generateMap(lvl)
