@@ -18,7 +18,7 @@ player = {
     health = 8,
     
     primary = 1,
-    secondary = 14,
+    secondary = 13,
     secondaryRecharge = true,
     bulletSpeed = 5.5,
     bulletImg = 1,
@@ -56,7 +56,7 @@ defaultPlayer = {
     health = 8,
     
     primary = 1,
-    secondary = 14,
+    secondary = 13,
     secondaryRecharge = true,
     bulletSpeed = 5.5,
     bulletImg = 1,

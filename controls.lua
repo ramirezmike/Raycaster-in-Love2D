@@ -27,7 +27,7 @@ function love.mousepressed(x, y, button)
     end
     if button == "r" then
         if (gameRunning and not(gamePaused)) then
-            if (player.secondary ~= 14) then
+            if (player.secondary ~= 13) then
                 player.secondFiring = true 
             end
         end

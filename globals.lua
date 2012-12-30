@@ -26,7 +26,9 @@ levelOne = {
     uDoor     = 5,
     boss      = 6,
     minEnemy  = 1,
-    maxEnemy  = 2
+    maxEnemy  = 2,
+    minEnemyNumber = 2,
+    maxEnemyNumber = 5
 }
     
 levelTwo = {
@@ -44,7 +46,9 @@ levelTwo = {
     uDoor     = 11,
     boss      = 12,
     minEnemy  = 3,
-    maxEnemy  = 4
+    maxEnemy  = 4,
+    minEnemyNumber = 1,
+    maxEnemyNumber = 3
 }
 
 levelThree = {
@@ -55,14 +59,16 @@ levelThree = {
     roomSize = 15,
     bossRoomSize = 20,
     rooms = 4,
-    door      = 7,
-    wall1     = 8,
-    wall2     = 9,
-    obstacle  = 10,
-    uDoor     = 11,
-    boss      = 12,
+    door      = 13,
+    wall1     = 14,
+    wall2     = 15,
+    obstacle  = 16,
+    uDoor     = 17,
+    boss      = 18,
     minEnemy  = 1,
-    maxEnemy  = 3
+    maxEnemy  = 5,
+    minEnemyNumber = 1,
+    maxEnemyNumber = 4
 }
 table.insert(LEVELS,levelOne)
 table.insert(LEVELS,levelTwo)

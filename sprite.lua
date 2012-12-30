@@ -101,7 +101,8 @@ function addSpriteToMap(index,choice,min,max)
         [1] = function (x) addSnowman(posX,posY) end,
         [2] = function (x) addElf(posX,posY) end,
         [3] = function (x) addNutCracker(posX,posY) end,
-        [4] = function (x) addNutTeleporter(posX,posY) end
+        [4] = function (x) addNutTeleporter(posX,posY) end,
+        [5] = function (x) addFrostMan(posX,posY) end
     }
 
     action[rand]()
@@ -165,6 +166,64 @@ function addSnowman(x,y)
             hitPause = 0.1,
 
             moveSpeed = 0.05,
+            rotSpeed = 3,
+            totalStates = 12,
+            state = 0,
+            wallPositionX = 0,
+            wallPositionY = 0,
+            objType = "sprite",
+            frameTimer = 0,
+            walkAnimationSpeed = 5,
+
+            isSpecial = special
+        }
+end
+
+function addFrostMan(x,y)
+    local rand = math.random(1,10)
+    local special = false
+    local specialModifier = 1
+
+    if (rand == 5) then 
+       special = true 
+       specialModifier = 1.5
+    end
+
+    local spriteIndex = #SPRITES + 1 
+    SPRITES[spriteIndex] = {
+            boss = true,
+            id = spriteIndex,
+            x = x,
+            y = y,
+            img = 3,
+            visible = false,
+            block = true,
+            speed = 0,
+            dir = 0,
+            rot = 0,
+
+            bulletSpeed = 6.5,
+            bulletImg = 1,
+            fireDmg = 1*specialModifier,
+            bulletSplash = 2,
+            playerVisible = false,
+            visiblityRange = 5,
+
+            rotate = false,
+            rotationDirection = 0,
+            rotationAngle = 20,
+            rotateDelay = 3,
+            rotateDelayMax = 3,
+
+            maxFireRate = 1.5,
+            maxBullets = 5,
+            fireRate = math.random(2.9,7),
+
+            health = 4*specialModifier,
+            hit = false,
+            hitPause = 0.1,
+
+            moveSpeed = 0.09,
             rotSpeed = 3,
             totalStates = 12,
             state = 0,
