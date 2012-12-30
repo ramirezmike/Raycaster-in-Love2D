@@ -191,11 +191,11 @@ function addFrostMan(x,y)
 
     local spriteIndex = #SPRITES + 1 
     SPRITES[spriteIndex] = {
-            boss = true,
+            boss = false,
             id = spriteIndex,
             x = x,
             y = y,
-            img = 3,
+            img = 9,
             visible = false,
             block = true,
             speed = 0,
@@ -323,7 +323,7 @@ function addSanta(x,y)
             bulletImg = 1,
             fireDmg = 1*specialModifier,
             bulletSplash = 2,
-            playerVisible = false,
+            playerVisible = true,
             visiblityRange = 5,
 
             rotate = false,

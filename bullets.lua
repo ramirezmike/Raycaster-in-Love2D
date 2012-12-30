@@ -316,6 +316,60 @@ function createTwelveBullet(object,rand)
     love.audio.play(soundShoot)
 end
 
+function createSantaBullet(object)
+    local tarX = player.x - object.x
+    local tarY = player.y - object.y
+    local mag = math.sqrt(tarX*tarX + tarY * tarY)
+    local nVectorX = tarX / mag    
+    local nVectorY = tarY / mag    
+    local bulletDx = nVectorX * object.bulletSpeed
+    local bulletDy = nVectorY * object.bulletSpeed 
+    table.insert(bullets, {
+            bulletRow = 4,
+            bulletType = 1,
+            x = object.x, 
+            y = object.y, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false, 
+            dmg = object.fireDmg,
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0
+    })
+    love.audio.stop(soundShoot)
+    love.audio.play(soundShoot)
+    bulletDx = object.bulletSpeed * nVectorX+1 
+    bulletDy = object.bulletSpeed * nVectorY+1
+    table.insert(bullets, {
+            bulletRow = 4,
+            bulletType = object.bulletImg,
+            x = object.x, 
+            y = object.y, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false,            
+            dmg = object.fireDmg,
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0      
+    })
+    bulletDx = object.bulletSpeed * nVectorX-1 
+    bulletDy = object.bulletSpeed * nVectorY-1
+    table.insert(bullets, {
+            bulletRow = 4,
+            bulletType = object.bulletImg,
+            x = object.x, 
+            y = object.y, 
+            dx = bulletDx, 
+            dy = bulletDy, 
+            visible = false,            
+            dmg = object.fireDmg,
+            objType = "bullet",
+            origin = object.id,
+            verticalPosition = 0      
+    })
+end
 
 function createRudolphBullet(object)
     local startX = object.x                                                                                                                                                  

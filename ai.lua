@@ -121,6 +121,8 @@ function santaAI(sprite, dt)
             }
              
 --            fireRandomDirection(sprite,dt,false)
+--            createSantaBullet(sprite)
+            handleSantaFire(sprite,dt)
             local vectorC = steerAwayFromWalls(sprite)
             local vectorE = steerAwayFromSprites(sprite)
             local vectorF = randomMovement(sprite,dt)
@@ -466,6 +468,20 @@ function handleFire(sprite,dt)
             sprite.fireRate = sprite.maxFireRate
         elseif (sprite.fireRate == sprite.maxFireRate) then
             createBulletSprite(sprite)
+            sprite.fireRate = sprite.fireRate - dt
+        else
+            sprite.fireRate = sprite.fireRate - dt
+        end
+    end
+end
+
+
+function handleSantaFire(sprite,dt)
+    if (sprite.playerVisible) then
+        if (sprite.fireRate < 0) then 
+            sprite.fireRate = sprite.maxFireRate
+        elseif (sprite.fireRate == sprite.maxFireRate) then
+            createSantaBullet(sprite)
             sprite.fireRate = sprite.fireRate - dt
         else
             sprite.fireRate = sprite.fireRate - dt
