@@ -80,6 +80,7 @@ function addBossToMap(index,boss)
     }
     if (boss <= #action) then
         action[boss]()
+        setupBossLife(SPRITES[1])
     else
         restartGame()
         -- roll credits

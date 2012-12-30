@@ -23,6 +23,7 @@ function drawHud()
     love.graphics.print(getDirectionInString(), 142, 432)
     drawPrimary()
     drawSecondary()
+    drawBossLife()
 end
 
 function drawHearts()
@@ -57,4 +58,21 @@ end
 function loadHud()
     hudImg = love.graphics.newImage("hud.png")
     mainFont = love.graphics.newFont(35)
+    healthBarRatio = 0
+end
+
+function setupBossLife(sprite)
+    maxBossHealth = sprite.health
+    healthBarRatio = 200/maxBossHealth
+end
+
+function drawBossLife()
+    if (SPRITES[1]) then
+        if (SPRITES[1].boss) then
+            local health = SPRITES[1].health
+            local bossLifeBar = health*healthBarRatio
+            love.graphics.setColor(255,0,0,255)
+            love.graphics.rectangle("fill",218,25,bossLifeBar,12)
+        end
+    end
 end
