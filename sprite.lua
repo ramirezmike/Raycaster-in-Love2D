@@ -218,7 +218,7 @@ function addFrostMan(x,y)
 
             maxFireRate = 1.5,
             maxBullets = 5,
-            fireRate = math.random(2.9,7),
+            fireRate = 2.0,
 
             health = 6*specialModifier,
             hit = false,
@@ -277,7 +277,7 @@ function addFrosty(x,y)
 
             maxFireRate = 1.5,
             maxBullets = 8,
-            fireRate = math.random(2.9,7),
+            fireRate = 2.0, 
 
             health = 14*specialModifier,
             hit = false,
