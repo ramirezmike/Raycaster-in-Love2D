@@ -68,6 +68,7 @@ function addBossToMap(index,boss)
     stopAllMusic()
     if not (boss == 2) then
         love.audio.play(bossMusic)
+        bossMusic:setLooping(true)
     end
 
     local posX = positionXFromArrayIndex(index) 

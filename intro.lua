@@ -4,15 +4,15 @@ creditsDisplaying = false
 
 INTRO_TEXT = {
     [1] = "'Santa Claus isn't real.'", 
-    [2] = 2,
-    [3] = "That's what they tell us.",
-    [4] = 3,
-    [5] = "This lie makes us do his work",
-    [6] = 3,
+    [2] = 4,
+    [3] = "That's what they say.",
+    [4] = 2,
+    [5] = "A lie to do his work",
+    [6] = 2,
     [7] = "while he profits from his royalties.",
     [8] = 3,
-    [9] = "It's time to remind him what Christmas is about.",
-    [10] = 3,
+    [9] = "He's a Greedy St. Nick.",
+    [10] = 3
 }
 
 CREDIT_TEXT = {

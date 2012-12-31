@@ -26,6 +26,7 @@ function drawPauseMenu()
         love.graphics.setColor(200,200,200,255)
         love.graphics.print(v["label"], v["x"]+130,v["y"]+15)
     end
+    love.graphics.print("(be careful) Mouse Sensitivity: " .. player.mouseSpeed, 225,215)
 end
 function mouseOverButton(pointX,pointY,rectX,rectY,rectWidth,rectHeight)
     return pointX > rectX and pointY > rectY and pointX < rectX + rectWidth and pointY < rectY + rectHeight
@@ -58,6 +59,8 @@ end
 function loadPauseMenu()
     MENU_BUTTONS = {}
     addButton("Resume Game", function () gamePaused = false end)
+    addButton("Mouse Sensitivity +", function () player.mouseSpeed = player.mouseSpeed + 0.01 end)
+    addButton("Mouse Sensitivity -", function () player.mouseSpeed = player.mouseSpeed - 0.01 end)
     addButton("Quit Game", function () love.event.quit()end )
 end
 
