@@ -64,6 +64,7 @@ function isBlocking(object, newX, newY)
 
     for i=1,#SPRITES do
         local sprite = SPRITES[i]
+
         if (sprite.block == true) then
             local dx = sprite.x - x
             local dy = sprite.y - y
@@ -78,17 +79,6 @@ function isBlocking(object, newX, newY)
                         sprite.numberOfRoasts = player.roastNumber
                     end
 
-                    if (sprite.health < 1 and sprite.health > -50) then
-                        if (sprite.boss) then
-                            dropItem(sprite)
-                            fadeToBlackSetup()
-                            deleteAllSprites()
-                            sprite.health = -51
-                            return true
-                        end
-                        table.insert(SPRITES_TO_DELETE, i)
-                        dropItem(sprite)
-                    end
                     return true
                 end
             end

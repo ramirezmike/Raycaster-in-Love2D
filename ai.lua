@@ -1,6 +1,7 @@
 function ai(dt) 
         for i = 1, #SPRITES do     
             local sprite = SPRITES[i]
+            checkHealth(sprite,i)
             if (sprite.health <= 0) then
                 sprite.state = -1
             else
@@ -37,6 +38,30 @@ function ai(dt)
     end
 
 end
+
+function checkHealth(sprite,i)
+        if (sprite.health < 1 and sprite.health > -50) then
+            if (sprite.boss) then
+                dropItem(sprite)
+                fadeToBlackSetup()
+                deleteAllSprites()
+                sprite.health = -51 
+                return
+            end 
+            table.insert(SPRITES_TO_DELETE, i)
+            dropItem(sprite)
+        end 
+end
+
+function checkForOutOfBounds(sprite)
+    local room = MAPGEN_ROOMS[getCurrentRoomIndex()].room
+    local size = #room
+    local rootSize = math.sqrt(size)
+    if (sprite.x < 0 or sprite.y < 0 or sprite.x > rootSize or sprite.y > rootSize) then
+        sprite.health = 0 
+    end 
+end
+
 
 function frostyAI(sprite, dt)
             vector = {

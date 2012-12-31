@@ -296,7 +296,6 @@ function createTwelveBullet(object,rand)
     local bulletDy = object.bulletSpeed * math.sin(angle)                   
 
     local rd = rand + 2
-    print (rd)
 
     table.insert(bullets, {
             bulletRow = 1,
