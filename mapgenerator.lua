@@ -61,7 +61,7 @@ function generateMap(lvl)
 --    print (index .. "  " .. x .. "  " .. y)
 
     createRooms(level["rooms"]) 
-    printGeneratedMap()
+--    printGeneratedMap()
 
     local specialIndex = getSpecialRoom()
     makeBossRoomForMapGenRooms(specialIndex)
@@ -86,13 +86,13 @@ function generateMap(lvl)
 
     player.x = 5
     player.y = 5
-    printGeneratedMap()
+--    printGeneratedMap()
 
 end
 
 function mapGenManagement()
-    print (#SPRITES)
-    print (#SPRITES_TO_DELETE)
+--    print (#SPRITES)
+--    print (#SPRITES_TO_DELETE)
     if not (areEnemiesDead()) then
         return
     end
@@ -111,14 +111,14 @@ function mapGenManagement()
         local topRoomIndex = mapGenIndexFromCoordinates(topRoomX,topRoomY)
 
         if (hasRoomIndexBeenMade(topRoomIndex)) then
-            print ("Room has been made!")
+--            print ("Room has been made!")
             switchToRoom(topRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
             local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].d
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)+0.5 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)-1 
         else
-            print ("Room has not been made!")
+--            print ("Room has not been made!")
             saveItemsInCurrentRoom()
             makeRoomForMapGenRooms(topRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
@@ -126,7 +126,7 @@ function mapGenManagement()
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)+0.5 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)-1 
         end
-        printGeneratedMap()
+--        printGeneratedMap()
     end
 
     -- Bottom
@@ -153,7 +153,7 @@ function mapGenManagement()
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)+0.5 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+1 
         end
-        printGeneratedMap()
+--        printGeneratedMap()
     end
 
     -- Right
@@ -167,14 +167,14 @@ function mapGenManagement()
         local rightRoomIndex = mapGenIndexFromCoordinates(rightRoomX,rightRoomY)
 
         if (hasRoomIndexBeenMade(rightRoomIndex)) then
-            print ("Room has been made!")
+--            print ("Room has been made!")
             switchToRoom(rightRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
             local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].l
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)+1 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
         else
-            print ("Room has not been made!")
+--            print ("Room has not been made!")
             saveItemsInCurrentRoom()
             makeRoomForMapGenRooms(rightRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
@@ -182,7 +182,7 @@ function mapGenManagement()
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)+1 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
         end
-        printGeneratedMap()
+--        printGeneratedMap()
     end
 
 
@@ -197,14 +197,14 @@ function mapGenManagement()
         local leftRoomIndex = mapGenIndexFromCoordinates(leftRoomX,leftRoomY)
 
         if (hasRoomIndexBeenMade(leftRoomIndex)) then
-            print ("Room has been made!")
+--            print ("Room has been made!")
             switchToRoom(leftRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
             local newPlayerPositionIndex  = MAPGEN_ROOMS[currentRoomIndex].r
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)-1 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
         else
-            print ("Room has not been made!")
+--            print ("Room has not been made!")
             saveItemsInCurrentRoom()
             makeRoomForMapGenRooms(leftRoomIndex)
             currentRoomIndex = getCurrentRoomIndex()
@@ -212,7 +212,7 @@ function mapGenManagement()
             player.x = positionXFromArrayIndex(newPlayerPositionIndex)-1 
             player.y = positionYFromArrayIndex(newPlayerPositionIndex)+0.5 
         end
-        printGeneratedMap()
+--        printGeneratedMap()
     end
 end
 
@@ -222,12 +222,9 @@ function switchToRoom(index)
     local x = mapGenPositionXFromArrayIndex(index)
     local y = mapGenPositionYFromArrayIndex(index)
 
-    print ("THIS IS THE SWITCHED TO INDEX: " .. index)
-
     local room = MAPGEN_ROOMS[index].room
     loadMapFromRoom(room) 
     if (isBossRoom(index)) then
-        print("Is boss Room!")
         addBoss(room,player.level)
     end
     loadItemsInRoom(index)

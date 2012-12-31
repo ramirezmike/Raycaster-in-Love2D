@@ -39,8 +39,6 @@ function loadMapFromDisk(mapName)
     mapProp.mapWidth =  (math.sqrt(table.getn(map)))
     mapProp.mapHeight = (math.sqrt(table.getn(map)))
     makeWallPositions()
-    print ("MAP : " .. tostring(#map))
-    print ("MAP : " .. tostring(mapProp.mapWidth))
 end
 
 function loadMapFromRoom(room)
@@ -49,6 +47,4 @@ function loadMapFromRoom(room)
     mapProp.mapWidth = size 
     mapProp.mapHeight = size 
     makeWallPositions()
-    print ("MAP : " .. tostring(#room))
-    print ("MAP : " .. tostring(mapProp.mapHeight))
 end

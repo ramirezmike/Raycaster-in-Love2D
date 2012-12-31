@@ -87,12 +87,12 @@ function love.keypressed(key, unicode)
 --            spawnEnemies(5)
 --            player.health = player.health - 1
 --            testItemDrop(player)
-            player.health = player.health - 0.1
+--            player.health = player.health - 0.1
         end
 
         if key == 'u' then
 --            testItemDrop(player)
-            player.secondaryRecharge = true
+--            player.secondaryRecharge = true
         end
         if key == 'a' then
             player.strafeSpeed  = -1
@@ -109,32 +109,16 @@ function love.keypressed(key, unicode)
             end
         end
         if key == "lshift" then
-            player.moveSpeed = 8
+--            player.moveSpeed = 8
         end
         if key == 'x' then
         --    wallPushDirection = player.rot
         --    if not (map[selectedWall] == 5) then
         --        pushWall(selectedWall)
         --    end
-           for i,v in ipairs(bullets) do 
-                table.remove(bullets,i)
-           end
-        end
-        if key == 'c' then
-            changeTexture()
-        end
-        if key == 'i' then
-            saveMapToDisk(mapProp.map)
-        end
-        if key == 'm' then
-            mapProp.displayMap = not(mapProp.displayMap)
-        end
-        if key == 'tab' then
-            displayDebug = not(displayDebug)
-        end
-        if key == '``' then
-            love.mouse.setVisible(true)
-            love.mouse.setGrab(false)
+--           for i,v in ipairs(bullets) do 
+--                table.remove(bullets,i)
+--           end
         end
     end
 end
@@ -167,8 +151,8 @@ function love.keyreleased(key, unicode)
                 player.strafeSpeed  = -1
             end
         end
-        if key == "lshift" then
-            player.moveSpeed = 4
-        end
+--        if key == "lshift" then
+--            player.moveSpeed = 4
+--        end
     end
 end

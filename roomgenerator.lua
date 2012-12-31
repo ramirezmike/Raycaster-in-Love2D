@@ -19,7 +19,7 @@ function createRoom(roomIndex)
     loadMapFromRoom(room) 
 
     addEnemies(room)
-    printGeneratedRoom(room)
+--    printGeneratedRoom(room)
 
     loadMapFromRoom(room) 
     return room
@@ -52,7 +52,7 @@ function createSpawnRoom(roomIndex)
     addDoorLeft(room,doesRoomHaveLeft(roomIndex),roomIndex)
     addDoorRight(room,doesRoomHaveRight(roomIndex),roomIndex)
 
-    printGeneratedRoom(room)
+--    printGeneratedRoom(room)
     loadMapFromRoom(room) 
     return room
 end

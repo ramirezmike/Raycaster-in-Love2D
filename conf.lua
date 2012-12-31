@@ -1,7 +1,7 @@
 function love.conf(t)
     t.title = "Greedy St. Nick"        -- The title of the window the game is in (string)
     t.author = "Michael 'factorysettings' Ramirez"        -- The author of the game (string)
-    t.url = nil                 -- The website of the game (string)
+    t.url = "http://ramirezmike.com/santa"  -- The website of the game (string)
     t.identity = nil            -- The name of the save directory (string)
     t.version = "0.8.0"         -- The LÖVE version this game was made for (string)
     t.console = false           -- Attach a console (boolean, Windows only)

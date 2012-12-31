@@ -28,8 +28,10 @@ CREDIT_TEXT = {
     [10] = 4,
     [11] = "(Programmer) Art: Michael Ramirez (except for Nutcracker, Jack and 12 Days sprites)",
     [12] = 4,
-    [13] = "Thanks for playing my game! :D",
-    [14] = 3,
+    [13] = "Special thanks to my girlfriend, Krystal! Thanks for being patient!",
+    [14] = 4,
+    [15] = "Thanks for playing my game! :D",
+    [16] = 3
 }
 
 function drawIntro()
