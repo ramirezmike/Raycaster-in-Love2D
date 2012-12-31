@@ -86,7 +86,9 @@ function love.keypressed(key, unicode)
 --            createSpecialItem(player)
 --            spawnEnemies(5)
 --            player.health = player.health - 1
-            testItemDrop(player)
+--            testItemDrop(player)
+            player.health = player.health - 0.1
+            print (player.health)
         end
 
         if key == 'u' then

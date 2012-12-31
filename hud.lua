@@ -28,7 +28,7 @@ end
 
 function drawHearts()
     love.graphics.setColor(255,0,0,255)
-    if (player.health == -0.5) then
+    if (player.health > -0.5 and player.health < 0) then
         love.graphics.rectangle("fill",218,455,25/2,22)
     else
         for i=0, player.health,0.5 do

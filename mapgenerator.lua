@@ -368,12 +368,18 @@ function numberOfConnections(index)
 end
 
 function getSpecialRoom()
+    local specials = {}
     for i,v in ipairs(MAPGEN_MAP) do
         if (numberOfConnections(i) == 1 and SPECIAL_ROOMS[i] == nil and MAPGEN_MAP[i] > 1) then
-            SPECIAL_ROOMS[i] = i
-            return i
+--            SPECIAL_ROOMS[i] = i
+--            return i
+            table.insert(specials,i)
         end
     end
+    local rand = math.random(#specials)
+    local index = specials[rand]
+    SPECIAL_ROOMS[index] = index 
+    return index 
 end
 
 function isBossRoom(index)

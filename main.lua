@@ -38,7 +38,7 @@ end
 
 function love.update(dt)
     if (gameRunning and not (gamePaused)) then
-        if (player.health > -0.6) then
+        if (player.health >= -0.5) then
             move(player, dt)
             firePlayerWeapon(dt)
         elseif (player.dead == nil or player.dead == false) then
@@ -84,7 +84,7 @@ function love.load()
     mainMenuMusic:setLooping(true)
     
     love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, true, false)
+    love.graphics.setMode(640,480, false, false)
 
     love.mouse.setVisible(true)
 --    love.mouse.setPosition(screenWidth/2,screenHeight/2)
