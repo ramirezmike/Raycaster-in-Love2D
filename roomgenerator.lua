@@ -264,7 +264,7 @@ function addObstacles(room,jack)
         room[211] = level.obstacle
         return
     end
-    local rand = math.random(0,10)
+    local rand = math.random(0,4)
 
     for i=0,rand do
         local index = getEmptySpot(room,false)
@@ -282,7 +282,7 @@ function addEnemies(room)
     for i=0,rand do
         local index = getEmptySpot(room,false)
         if (index) then
-            addSpriteToMap(index,false,0,0)
+            addSpriteToMap(index,false)
         end
     end
 end

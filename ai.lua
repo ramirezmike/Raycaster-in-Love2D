@@ -193,10 +193,6 @@ function jackAI(sprite, dt)
                 sprite.state = 0
                 sprite.speed = 0
             end
-            if (sprite.state == 4) then
-                love.audio.stop(jackLand)
-                love.audio.play(jackLand)
-            end
             if (sprite.hit) then
                 aiHandleHit(sprite, dt)
             end
@@ -502,7 +498,7 @@ function spawnEnemies(sprite,dt,numberOfEnemies)
         local room = MAPGEN_ROOMS[currentRoomIndex].room
         for i=1,numberOfEnemies do
             local index = getEmptySpot(room,false)
-            addSpriteToMap(index,true,1,2)
+            addSpriteToMap(index,true)
         end
         -- add sound
     else

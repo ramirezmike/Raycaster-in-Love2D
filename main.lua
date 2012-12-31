@@ -192,7 +192,7 @@ function drawGame()
     end
 
 --    if (mapProp.displayMap) then drawMiniMap() end
-    if (displayDebug) then drawDebug() end
+--    if (displayDebug) then drawDebug() end
     drawHud()
     drawMiniMap()
 

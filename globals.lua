@@ -18,7 +18,7 @@ levelOne = {
     regMapSize = 25,
     roomSize = 15,
     bossRoomSize = 15,
-    rooms = 2,
+    rooms     = 8,
     door      = 1,
     wall1     = 2,
     wall2     = 3,
@@ -28,7 +28,11 @@ levelOne = {
     minEnemy  = 1,
     maxEnemy  = 2,
     minEnemyNumber = 2,
-    maxEnemyNumber = 5
+    maxEnemyNumber = 5,
+    enemies = {
+        [1] = function (posX,posY) addSnowman(posX,posY) end,
+        [2] = function (posX,posY) addElf(posX,posY) end
+    }
 }
     
 levelTwo = {
@@ -38,7 +42,7 @@ levelTwo = {
     regMapSize = 25,
     roomSize = 15,
     bossRoomSize = 20,
-    rooms = 2,
+    rooms     = 12,
     door      = 7,
     wall1     = 8,
     wall2     = 9,
@@ -48,7 +52,11 @@ levelTwo = {
     minEnemy  = 3,
     maxEnemy  = 4,
     minEnemyNumber = 1,
-    maxEnemyNumber = 3
+    maxEnemyNumber = 3,
+    enemies = {
+        [1] = function (posX,posY) addNutCracker(posX,posY) end,
+        [2] = function (posX,posY) addNutTeleporter(posX,posY) end
+    }
 }
 
 levelThree = {
@@ -58,7 +66,7 @@ levelThree = {
     regMapSize = 25,
     roomSize = 15,
     bossRoomSize = 20,
-    rooms = 2,
+    rooms     = 15,
     door      = 13,
     wall1     = 14,
     wall2     = 15,
@@ -68,13 +76,16 @@ levelThree = {
     minEnemy  = 1,
     maxEnemy  = 5,
     minEnemyNumber = 1,
-    maxEnemyNumber = 4
+    maxEnemyNumber = 4,
+    enemies = {
+        [1] = function (posX,posY) addSnowman(posX,posY) end,
+        [2] = function (posX,posY) addElf(posX,posY) end,
+        [3] = function (posX,posY) addFrostMan(posX,posY) end 
+    }
 }
 table.insert(LEVELS,levelOne)
 table.insert(LEVELS,levelTwo)
 table.insert(LEVELS,levelThree)
-
-
 
 
 spriteBatch = 0

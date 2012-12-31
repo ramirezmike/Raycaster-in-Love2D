@@ -87,26 +87,25 @@ function addBossToMap(index,boss)
     end
 end
 
-function addSpriteToMap(index,choice,min,max)
+function addSpriteToMap(index,choice)
     local posX = positionXFromArrayIndex(index) 
     local posY = positionYFromArrayIndex(index) 
     local level = LEVELS[player.level]
+    local enemies = level.enemies
     
-    local rand = math.random(level.minEnemy,level.maxEnemy)
+    local rand = math.random(#enemies)
 
     if (choice) then
-        rand = math.random(min,max)
+        local action = {
+            [1] = function (x) addElf(posX,posY) end,
+        }
+        rand = math.random(#action)
+        action[rand]()
+        return
     end
 
-    local action = {
-        [1] = function (x) addSnowman(posX,posY) end,
-        [2] = function (x) addElf(posX,posY) end,
-        [3] = function (x) addNutCracker(posX,posY) end,
-        [4] = function (x) addNutTeleporter(posX,posY) end,
-        [5] = function (x) addFrostMan(posX,posY) end
-    }
 
-    action[rand]()
+    enemies[rand](posX,posY)
 end
 
 function areEnemiesDead()
@@ -204,7 +203,8 @@ function addFrostMan(x,y)
             rot = 0,
 
             bulletSpeed = 6.5,
-            bulletImg = 1,
+            bulletRow = 2,
+            bulletImg = 9,
             fireDmg = 1*specialModifier,
             bulletSplash = 2,
             playerVisible = false,
@@ -220,7 +220,7 @@ function addFrostMan(x,y)
             maxBullets = 5,
             fireRate = math.random(2.9,7),
 
-            health = 4*specialModifier,
+            health = 6*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -262,7 +262,8 @@ function addFrosty(x,y)
             rot = 0,
 
             bulletSpeed = 6.5,
-            bulletImg = 1,
+            bulletRow = 2,
+            bulletImg = 9,
             fireDmg = 1*specialModifier,
             bulletSplash = 2,
             playerVisible = false,
@@ -278,7 +279,7 @@ function addFrosty(x,y)
             maxBullets = 8,
             fireRate = math.random(2.9,7),
 
-            health = 4*specialModifier,
+            health = 14*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -321,7 +322,8 @@ function addSanta(x,y)
             rot = 0,
 
             bulletSpeed = 6.5,
-            bulletImg = 1,
+            bulletRow = 2,
+            bulletImg = 9,
             fireDmg = 1*specialModifier,
             bulletSplash = 2,
             playerVisible = true,
@@ -337,7 +339,7 @@ function addSanta(x,y)
             maxBullets = 8,
             fireRate = math.random(2.9,7),
 
-            health = 4*specialModifier,
+            health = 30*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -397,7 +399,7 @@ function addJack(x,y)
             maxSpawnRate = 10.5,
             spawnRate = 16, 
 
-            health = 4*specialModifier,
+            health = 14*specialModifier,
             hit = false,
             hitPause = 0.1,
 
@@ -441,6 +443,7 @@ function addElf(x,y)
             rot = 0,
 
 
+            bulletRow = 4,
             bulletImg = 3,
             fireDmg = 1*specialModifier,
             bulletSpeed = 4.5*specialModifier,
@@ -500,7 +503,7 @@ function addNutTeleporter(x,y)
 
 
             fireDmg = 1*specialModifier,
-            maxFireRate = 0.5,
+            maxFireRate = 1.0,
             fireRate = 0, 
 
             health = 3*specialModifier,
@@ -553,7 +556,7 @@ function addNutCracker(x,y)
             maxFireRate = 1.5,
             fireRate = math.random(7),
 
-            health = 3*specialModifier,
+            health = 2*specialModifier,
             hit = false,
             hitPause = 0.1,
 

@@ -21,7 +21,7 @@ function manageBullets(dt)
             end
         end
         if (isBlocking(v, v["x"], v["y"])) then
-                local bulletRow = 4
+                local bulletRow = v["bulletRow"] 
                 local bulletCol = v["bulletType"] + 1
                 if v["fromTwelve"] then
                     bulletRow = 0 
@@ -123,7 +123,7 @@ function createRandomBullet(object, vertical)
     local bulletDx = vector.x * object.bulletSpeed
     local bulletDy = vector.y * object.bulletSpeed 
     table.insert(bullets, {
-            bulletRow = 4,
+            bulletRow = object.bulletRow,
             bulletType = object.bulletImg, 
             x = object.x,
             y = object.y, 
@@ -214,8 +214,8 @@ function createBulletSprite(object)
     local bulletDx = nVectorX * object.bulletSpeed
     local bulletDy = nVectorY * object.bulletSpeed 
     table.insert(bullets, {
-            bulletRow = 4,
-            bulletType = 1,
+            bulletRow = 2,
+            bulletType = 9,
             x = object.x, 
             y = object.y, 
             dx = bulletDx, 
@@ -325,8 +325,8 @@ function createSantaBullet(object)
     local bulletDx = nVectorX * object.bulletSpeed
     local bulletDy = nVectorY * object.bulletSpeed 
     table.insert(bullets, {
-            bulletRow = 4,
-            bulletType = 1,
+            bulletRow = 2,
+            bulletType = 9,
             x = object.x, 
             y = object.y, 
             dx = bulletDx, 
@@ -342,7 +342,7 @@ function createSantaBullet(object)
     bulletDx = object.bulletSpeed * nVectorX+1 
     bulletDy = object.bulletSpeed * nVectorY+1
     table.insert(bullets, {
-            bulletRow = 4,
+            bulletRow = 2,
             bulletType = object.bulletImg,
             x = object.x, 
             y = object.y, 
@@ -357,7 +357,7 @@ function createSantaBullet(object)
     bulletDx = object.bulletSpeed * nVectorX-1 
     bulletDy = object.bulletSpeed * nVectorY-1
     table.insert(bullets, {
-            bulletRow = 4,
+            bulletRow = 2,
             bulletType = object.bulletImg,
             x = object.x, 
             y = object.y, 
