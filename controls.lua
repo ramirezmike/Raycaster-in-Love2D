@@ -88,23 +88,11 @@ function love.keypressed(key, unicode)
 --            player.health = player.health - 1
 --            testItemDrop(player)
 --            player.health = player.health - 0.1
-            local sprite = SPRITES[1]
-            local room = MAPGEN_ROOMS[getCurrentRoomIndex()].room
-            local size = #room
-            local rootSize = math.sqrt(size)
-            if (sprite.x < 0 or sprite.y < 0 or sprite.x > rootSize or sprite.y > rootSize) then
-                sprite.health = 0
-            else
-                print ("Sprite's Alright")
-            end
         end
 
         if key == 'u' then
 --            testItemDrop(player)
 --            player.secondaryRecharge = true
-            local sprite = SPRITES[1]
-            sprite.x = -1
-            sprite.y = -1
         end
         if key == 'a' then
             player.strafeSpeed  = -1

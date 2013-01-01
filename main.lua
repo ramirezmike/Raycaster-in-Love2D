@@ -79,12 +79,12 @@ function love.load()
     sceneChange = false
     
     loadMainMenu()
-    mainMenuMusic = love.audio.newSource("jinglemusic.ogg","static")
+    mainMenuMusic = love.audio.newSource("jinglemusic.ogg")
     love.audio.play(mainMenuMusic)
     mainMenuMusic:setLooping(true)
     
     love.graphics.setColorMode("modulate")
-    love.graphics.setMode(640,480, false, false)
+    love.graphics.setMode(640,480, true, false)
 
     love.mouse.setVisible(true)
 --    love.mouse.setPosition(screenWidth/2,screenHeight/2)
@@ -246,8 +246,8 @@ function loadAudio()
 
     jackIntro = love.audio.newSource("jackintro.ogg", "static")
 
-    bossMusic = love.audio.newSource("bossmusic.ogg", "static")
-    level1Music = love.audio.newSource("level1music.ogg", "static")
-    level2Music = love.audio.newSource("level2music.ogg", "static")
-    level3Music = love.audio.newSource("level3music.ogg", "static")
+    bossMusic = love.audio.newSource("bossmusic.ogg")
+    level1Music = love.audio.newSource("level1music.ogg")
+    level2Music = love.audio.newSource("level2music.ogg")
+    level3Music = love.audio.newSource("level3music.ogg")
 end
