@@ -93,6 +93,9 @@ end
 function mapGenManagement()
 --    print (#SPRITES)
 --    print (#SPRITES_TO_DELETE)
+    if (player.mapGenX == nil or player.mapGenY == nil) then
+        return
+    end
     if not (areEnemiesDead()) then
         return
     end
