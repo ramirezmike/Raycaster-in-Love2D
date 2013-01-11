@@ -3,6 +3,7 @@ drawCalls = {}
 QUADS = {} 
 SPRITEQUAD = {}
 BGQUAD = {}
+MINIQUAD = {}
 bullets = {}
 ITEMS = {}
 DECALS = {}

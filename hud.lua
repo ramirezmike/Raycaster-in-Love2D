@@ -24,6 +24,7 @@ function drawHud()
     drawPrimary()
     drawSecondary()
     drawBossLife()
+    love.graphics.draw(mapSpriteBatch)
 end
 
 function drawHearts()
@@ -57,6 +58,8 @@ end
 
 function loadHud()
     hudImg = love.graphics.newImage("hud.png")
+    miniRoom = love.graphics.newImage("miniroom.png")                                                                                                                          
+    miniCurrent = love.graphics.newImage("minicurrent.png")
     mainFont = love.graphics.newFont(35)
     healthBarRatio = 0
 end

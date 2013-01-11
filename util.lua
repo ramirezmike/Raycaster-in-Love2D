@@ -120,6 +120,9 @@ function setQuads(imagesPerHeight,imagesPerWidth, itemsPerHeight, itemsPerWidth)
         end
     end
     BGQUAD[1] = love.graphics.newQuad(0,0,1,480,1,480)
+    MINIQUAD[1] = love.graphics.newQuad(0,0,6,6,18,6)
+    MINIQUAD[2] = love.graphics.newQuad(6,0,6,6,18,6)
+    MINIQUAD[3] = love.graphics.newQuad(12,0,6,6,18,6)
 --    floorQuad = love.graphics.newQuad(1,1,1,1,mapProp.tileSize,mapProp.tileSize*numberOfImages)
 
 end 
@@ -164,6 +167,38 @@ function drawMiniMap()
                     x * mapProp.miniMapScale + mapOffsetX,
                     y * mapProp.miniMapScale + mapOffsetY,
                     mapProp.miniMapScale, mapProp.miniMapScale)
+            end
+            i = i + 1
+        end
+    end
+end
+
+function createMiniMap()
+    mapSpriteBatch:clear()
+    local mWidth = math.sqrt(#MAPGEN_MAP)
+    local currentRoom = getCurrentRoomCoordinates()
+    
+    miniMapWidth = mWidth * mapProp.miniMapScale
+    miniMapHeight = mWidth * mapProp.miniMapScale
+
+    mapOffsetX = 0 --500
+    mapOffsetY = 370 --340
+
+    local i=1
+    for y=0,mWidth-1 do
+        for x=0,mWidth-1 do
+            local wall = MAPGEN_MAP[i]
+   
+            if (wall>0) then
+                mapSpriteBatch:addq(MINIQUAD[1],x * mapProp.miniMapScale + mapOffsetX, y * mapProp.miniMapScale + mapOffsetY)
+
+                if (MAPGEN_ROOMS[mapGenIndexFromCoordinates(x,y)] and SPECIAL_ROOMS[mapGenIndexFromCoordinates(x,y)] == nil) then
+                    mapSpriteBatch:addq(MINIQUAD[2],x * mapProp.miniMapScale + mapOffsetX, y * mapProp.miniMapScale + mapOffsetY)
+                end
+
+                if (x == currentRoom.x and y == currentRoom.y) then
+                    mapSpriteBatch:addq(MINIQUAD[3],x * mapProp.miniMapScale + mapOffsetX, y * mapProp.miniMapScale + mapOffsetY)
+                end
             end
             i = i + 1
         end

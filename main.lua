@@ -194,8 +194,7 @@ function drawGame()
 --    if (mapProp.displayMap) then drawMiniMap() end
 --    if (displayDebug) then drawDebug() end
     drawHud()
-    drawMiniMap()
-
+    drawDebug()
 end
 
 function startGame()
@@ -206,6 +205,7 @@ function startGame()
     --setPlayerSpawnPoint()
    
     wallsImgs = love.graphics.newImage("images.png")
+    miniMapImgs = love.graphics.newImage("minimap.png")
     itemsImgs = love.graphics.newImage("items.png")
 --    bgImg = love.graphics.newImage("bg.png")
     hitImg = love.graphics.newImage("hit.png")
@@ -214,6 +214,7 @@ function startGame()
     local itemsPerHeight = (itemsImgs:getHeight()/mapProp.tileSize)
     local itemsPerWidth = (itemsImgs:getWidth()/mapProp.tileSize)
     spriteBatch = love.graphics.newSpriteBatch( wallsImgs, 9000)
+    mapSpriteBatch = love.graphics.newSpriteBatch(miniMapImgs, 100)
     setQuads(imagesPerHeight,imagesPerWidth,itemsPerHeight,itemsPerWidth)
 
     makeSpriteMap()

@@ -83,7 +83,7 @@ function generateMap(lvl)
 
     player.mapGenX = spawnX
     player.mapGenY = spawnY
-
+    createMiniMap()
     player.x = 5
     player.y = 5
 --    printGeneratedMap()
@@ -233,6 +233,7 @@ function switchToRoom(index)
     loadItemsInRoom(index)
     player.mapGenX = MAPGEN_ROOMS[index].x
     player.mapGenY = MAPGEN_ROOMS[index].y
+    createMiniMap()
 end
 
 
@@ -272,6 +273,7 @@ function makeRoomForMapGenRooms(index)
         loadMapFromRoom(rm)
         player.mapGenX = MAPGEN_ROOMS[index].x
         player.mapGenY = MAPGEN_ROOMS[index].y
+        createMiniMap()
 end
 
 function getMapGenRoomsArrayIndexFromIndex(index)
