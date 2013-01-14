@@ -192,7 +192,7 @@ function drawGame()
 --    if (mapProp.displayMap) then drawMiniMap() end
 --    if (displayDebug) then drawDebug() end
     drawHud()
-    drawDebug()
+--    drawDebug()
 end
 
 function startGame()
@@ -245,8 +245,8 @@ function loadAudio()
 
     jackIntro = love.audio.newSource("jackintro.ogg", "static")
 
-    bossMusic = love.audio.newSource("bossmusic.ogg")
-    level1Music = love.audio.newSource("level1music.ogg")
-    level2Music = love.audio.newSource("level2music.ogg")
-    level3Music = love.audio.newSource("level3music.ogg")
+    bossMusic = love.audio.newSource("bossmusic.ogg", "static")
+    level1Music = love.audio.newSource("level1music.ogg", "static")
+    level2Music = love.audio.newSource("level2music.ogg", "static")
+    level3Music = love.audio.newSource("level3music.ogg", "static")
 end

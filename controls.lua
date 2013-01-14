@@ -1,4 +1,8 @@
 function love.mousepressed(x, y, button)
+    if not (allowControls) then
+        return
+    end
+
     if (introDisplaying) then
         introDisplaying = false
         return
@@ -35,6 +39,9 @@ function love.mousepressed(x, y, button)
 end
 
 function love.mousereleased(x, y, button)
+    if not (allowControls) then
+        return
+    end
     if button == "l" then
         if (gameRunning and not(gamePaused)) then
             player.firing = false
@@ -43,6 +50,9 @@ function love.mousereleased(x, y, button)
 end
 
 function love.keypressed(key, unicode)
+    if not (allowControls) then
+        return
+    end
     if (introDisplaying) then
         introDisplaying = false
     end
@@ -124,6 +134,9 @@ function love.keypressed(key, unicode)
 end
 
 function love.keyreleased(key, unicode)
+    if not (allowControls) then
+        return
+    end
     if not (gamePaused) then
         if key == 'w' or key == 'up' then
             player.speed = 0

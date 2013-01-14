@@ -64,6 +64,7 @@ function introManagement(dt)
         if (introScreen == 3) then
             love.audio.play(mainMenuMusic)
             mainMenuMusic:setLooping(true)
+            allowControls = true
         end
         if (introDelay > INTRO_TEXT[introScreen+1]) then
             introDelay = 0
