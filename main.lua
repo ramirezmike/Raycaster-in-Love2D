@@ -80,8 +80,6 @@ function love.load()
     
     loadMainMenu()
     mainMenuMusic = love.audio.newSource("jinglemusic.ogg")
-    love.audio.play(mainMenuMusic)
-    mainMenuMusic:setLooping(true)
     
     love.graphics.setColorMode("modulate")
     love.graphics.setMode(640,480, true, false)

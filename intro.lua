@@ -3,16 +3,18 @@ introScreen = 1
 creditsDisplaying = false 
 
 INTRO_TEXT = {
-    [1] = "'Santa Claus isn't real.'", 
+    [1] = "", 
     [2] = 4,
-    [3] = "That's what they say.",
-    [4] = 2,
-    [5] = "A lie to do his work",
+    [3] = "'Santa Claus isn't real.'", 
+    [4] = 4,
+    [5] = "That's what they say.",
     [6] = 2,
-    [7] = "while he profits from his royalties.",
-    [8] = 3,
-    [9] = "He's a Greedy St. Nick.",
-    [10] = 3
+    [7] = "A lie to do his work",
+    [8] = 2,
+    [9] = "while he profits from his royalties.",
+    [10] = 3,
+    [11] = "He's a Greedy St. Nick.",
+    [12] = 3
 }
 
 CREDIT_TEXT = {
@@ -59,6 +61,10 @@ function introManagement(dt)
         end
     else
         introDelay = introDelay + dt
+        if (introScreen == 3) then
+            love.audio.play(mainMenuMusic)
+            mainMenuMusic:setLooping(true)
+        end
         if (introDelay > INTRO_TEXT[introScreen+1]) then
             introDelay = 0
             introScreen = introScreen + 2
