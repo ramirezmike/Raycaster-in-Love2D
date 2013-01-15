@@ -16,7 +16,7 @@ function dropItem(object)
 end
 
 function testItemDrop(object)
-    createItem(object,itemRudolphNose())
+    createItem(object,itemTwelveDays())
 end
 
 function renderItems()
@@ -306,6 +306,7 @@ function fireRudolphNose()
         if (rudolphFiring < 0) then
             player.secondaryRecharge = false
             player.secondFiring = false
+            rudolphFiring = 50
         else
             createRudolphBullet(player)
             rudolphFiring = rudolphFiring - 1

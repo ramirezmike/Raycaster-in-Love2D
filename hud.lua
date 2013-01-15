@@ -21,9 +21,9 @@ function drawHud()
     love.graphics.draw(hudImg,0,375,0)   
     love.graphics.setFont(mainFont)
     love.graphics.print(getDirectionInString(), 142, 432)
+    love.graphics.draw(mapSpriteBatch)
     drawPrimary()
     drawSecondary()
-    love.graphics.draw(mapSpriteBatch)
     drawBossLife()
 end
 

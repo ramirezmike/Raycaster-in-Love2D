@@ -236,6 +236,7 @@ function switchToRoom(index)
     createMiniMap()
     love.audio.stop(doorClose)
     love.audio.play(doorClose)
+    player.secondaryRecharge = true
 end
 
 
@@ -278,6 +279,7 @@ function makeRoomForMapGenRooms(index)
         createMiniMap()
         love.audio.stop(doorClose)
         love.audio.play(doorClose)
+        player.secondaryRecharge = true
 end
 
 function getMapGenRoomsArrayIndexFromIndex(index)
