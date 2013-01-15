@@ -261,6 +261,11 @@ function drawSceneChange()
     textFont = love.graphics.newFont()
     love.graphics.setColor(255,255,255)
     love.graphics.setFont(textFont)
+    if (player.mapGenX == nil) then
+        love.graphics.printf("Loading...",0,screenHeight/2,screenWidth,'center') 
+    else
+        love.graphics.printf("Press any Key",0,screenHeight/2,screenWidth,'center') 
+    end
     love.graphics.print(text, 400,415)
 end
 

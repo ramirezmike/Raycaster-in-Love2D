@@ -133,11 +133,18 @@ end
 
 function unlockAllDoors()
     local level = LEVELS[player.level]
+    local index = getCurrentRoomIndex()
+    if (MAPGEN_ROOMS[index].unlockedDoors) then
+        return
+    end
     for i = 0, #mapProp.map do
         if mapProp.map[i] == level.door then
             mapProp.map[i] = level.uDoor 
         end
     end
+    love.audio.stop(doorOpen)
+    love.audio.play(doorOpen)
+    MAPGEN_ROOMS[index].unlockedDoors = true
 end
 
 function addDoorTop(room,roomExists,index)

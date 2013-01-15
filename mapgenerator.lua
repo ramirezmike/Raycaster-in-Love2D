@@ -234,6 +234,8 @@ function switchToRoom(index)
     player.mapGenX = MAPGEN_ROOMS[index].x
     player.mapGenY = MAPGEN_ROOMS[index].y
     createMiniMap()
+    love.audio.stop(doorClose)
+    love.audio.play(doorClose)
 end
 
 
@@ -274,6 +276,8 @@ function makeRoomForMapGenRooms(index)
         player.mapGenX = MAPGEN_ROOMS[index].x
         player.mapGenY = MAPGEN_ROOMS[index].y
         createMiniMap()
+        love.audio.stop(doorClose)
+        love.audio.play(doorClose)
 end
 
 function getMapGenRoomsArrayIndexFromIndex(index)

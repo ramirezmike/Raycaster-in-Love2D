@@ -242,6 +242,8 @@ function loadAudio()
     jackHit = love.audio.newSource("jackhit.ogg", "static")
     jackLand = love.audio.newSource("jackland.ogg", "static")
     pickup = love.audio.newSource("pickup.ogg", "static")
+    doorOpen = love.audio.newSource("dooropen.ogg", "static")
+    doorClose = love.audio.newSource("doorclose.ogg", "static")
 
     jackIntro = love.audio.newSource("jackintro.ogg", "static")
 
