@@ -23,8 +23,8 @@ function drawHud()
     love.graphics.print(getDirectionInString(), 142, 432)
     drawPrimary()
     drawSecondary()
-    drawBossLife()
     love.graphics.draw(mapSpriteBatch)
+    drawBossLife()
 end
 
 function drawHearts()
